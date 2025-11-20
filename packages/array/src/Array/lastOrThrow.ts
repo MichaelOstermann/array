@@ -1,0 +1,30 @@
+import type { NonNil } from "./internals/types"
+import { dfdlT } from "@monstermann/dfdl"
+
+/**
+ * `Array.lastOrThrow(array)`
+ *
+ * Returns the last element of `array`, or throws an error if the array is empty.
+ *
+ * ## Example
+ *
+ * ```ts
+ * import { Array } from "@monstermann/array";
+ *
+ * Array.lastOrThrow([1, 2, 3, 4]); // 4
+ * ```
+ *
+ * ```ts
+ * import { Array } from "@monstermann/array";
+ *
+ * pipe([1, 2, 3, 4], Array.lastOrThrow()); // 4
+ * ```
+ */
+export const lastOrThrow: {
+    (): <T>(target: readonly T[]) => NonNil<T>
+    <T>(target: readonly T[]): NonNil<T>
+} = dfdlT(<T>(target: readonly T[]): any => {
+    const value = target.at(-1)
+    if (value != null) return value
+    throw new Error("Array.lastOrThrow: No value found.")
+}, 1)

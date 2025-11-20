@@ -1,0 +1,43 @@
+import type { ArrayMap } from "./internals/types"
+import { dfdlT } from "@monstermann/dfdl"
+import { cloneArray } from "@monstermann/remmi"
+import { resolveOffset } from "./internals/offset"
+
+/**
+ * `Array.mapAt(array, index, mapper)`
+ *
+ * Applies the `mapper` function to the element at the specified `index` in `array`, returning a new array with the mapped element.
+ *
+ * ## Example
+ *
+ * ```ts
+ * import { Array } from "@monstermann/array";
+ *
+ * Array.mapAt([1, 2, 3, 4], 1, (x) => x * 10); // [1, 20, 3, 4]
+ * ```
+ *
+ * ```ts
+ * import { Array } from "@monstermann/array";
+ *
+ * pipe(
+ *     [1, 2, 3, 4],
+ *     Array.mapAt(1, (x) => x * 10),
+ * ); // [1, 20, 3, 4]
+ * ```
+ */
+export const mapAt: {
+    <T>(idx: number, map: ArrayMap<T>): (target: T[]) => T[]
+    <T>(idx: number, map: ArrayMap<T>): (target: readonly T[]) => readonly T[]
+
+    <T>(target: T[], idx: number, map: ArrayMap<T>): T[]
+    <T>(target: readonly T[], idx: number, map: ArrayMap<T>): readonly T[]
+} = dfdlT(<T>(target: T[], idx: number, map: ArrayMap<T>): T[] => {
+    const offset = resolveOffset(target, idx)
+    if (offset < 0) return target
+    const prev = target[offset]! as T
+    const next = map(prev, offset, target)
+    if (prev === next) return target
+    target = cloneArray(target)
+    target.splice(offset, 1, next)
+    return target
+}, 3)

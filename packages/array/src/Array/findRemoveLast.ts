@@ -1,0 +1,39 @@
+import type { ArrayPredicate } from "./internals/types"
+import { dfdlT } from "@monstermann/dfdl"
+import { cloneArray } from "@monstermann/remmi"
+
+/**
+ * `Array.findRemoveLast(array, predicate)`
+ *
+ * Finds the last element in `array` that satisfies the provided `predicate` function and removes it, returning a new array without the removed element.
+ *
+ * ## Example
+ *
+ * ```ts
+ * import { Array } from "@monstermann/array";
+ *
+ * Array.findRemoveLast([1, 2, 3, 4], (x) => x > 2); // [1, 2, 3]
+ * ```
+ *
+ * ```ts
+ * import { Array } from "@monstermann/array";
+ *
+ * pipe(
+ *     [1, 2, 3, 4],
+ *     Array.findRemoveLast((x) => x > 2),
+ * ); // [1, 2, 3]
+ * ```
+ */
+export const findRemoveLast: {
+    <T>(predicate: ArrayPredicate<T>): (target: T[]) => T[]
+    <T>(predicate: ArrayPredicate<T>): (target: readonly T[]) => readonly T[]
+
+    <T>(target: T[], predicate: ArrayPredicate<T>): T[]
+    <T>(target: readonly T[], predicate: ArrayPredicate<T>): readonly T[]
+} = dfdlT(<T>(target: T[], predicate: ArrayPredicate<T>): T[] => {
+    const idx = target.findLastIndex(predicate)
+    if (idx === -1) return target
+    const result = cloneArray(target)
+    result.splice(idx, 1)
+    return result
+}, 2)
