@@ -1,1 +1,1 @@
-export * from "./Array/index";
+export * from "./Array/index"
