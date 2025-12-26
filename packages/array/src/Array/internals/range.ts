@@ -13,9 +13,12 @@ export function addRange(range: Range, idx: number): void {
     while (i--) {
         const v = range[i]!
         if (v === idx) return
-        if (idx < v) return void range.splice(i, 0, idx)
+        if (v < idx) {
+            range.splice(i + 1, 0, idx)
+            return
+        }
     }
-    range.push(idx)
+    range.unshift(idx)
 }
 
 export function spliceRange<T>(target: T[], range: Range): void {
