@@ -1,6 +1,8 @@
 # randomOr
 
-`Array.randomOr(array, fallback)`
+```ts
+function Array.randomOr(array: T[], fallback: U): T | U
+```
 
 Returns a random element from `array`, or `fallback` if the array is empty.
 

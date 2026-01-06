@@ -1,6 +1,8 @@
 # maxOr
 
-`Array.maxOr(array, fallback)`
+```ts
+function Array.maxOr(array: number[], fallback: U): number | U
+```
 
 Returns the maximum value in the number `array`, or `fallback` if the array is empty.
 

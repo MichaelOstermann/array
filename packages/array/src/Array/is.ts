@@ -1,13 +1,28 @@
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
- * `Array.is(value)`
+ * # is
+ *
+ * ```ts
+ * function Array.is(value: unknown): boolean
+ * ```
  *
  * Returns `true` if `value` is an array, otherwise returns `false`.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
+ * import { Array } from "@monstermann/array";
+ *
+ * Array.is([1, 2, 3]); // true
+ * ```
+ *
+ * ```ts [data-last]
+ * import { Array } from "@monstermann/array";
+ *
+ * pipe([1, 2, 3], Array.is()); // true
+ * ```
+ *
  */
 export const is: {
     (): (target: unknown) => target is readonly unknown[]

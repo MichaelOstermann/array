@@ -1,6 +1,8 @@
 # at
 
-`Array.at(array, offset)`
+```ts
+function Array.at(array: T[], offset: number): T | undefined
+```
 
 Returns the value at the specified `offset`.
 

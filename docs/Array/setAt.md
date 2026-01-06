@@ -1,6 +1,8 @@
 # setAt
 
-`Array.setAt(target, idx, value)`
+```ts
+function Array.setAt(array: T[], index: number, value: U): T[]
+```
 
 Sets the value at the specified `idx` in `target` to `value`. Returns the original array if the index is out of bounds or the value is already the same.
 

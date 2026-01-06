@@ -1,23 +1,28 @@
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
- * `Array.isEmpty(array)`
+ * # isEmpty
+ *
+ * ```ts
+ * function Array.isEmpty(array: T[]): boolean
+ * ```
  *
  * Returns `true` if `array` has no elements, otherwise returns `false`.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.isEmpty([]); // true
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe([], Array.isEmpty()); // true
  * ```
+ *
  */
 export const isEmpty: {
     (): <T>(target: readonly T[]) => boolean

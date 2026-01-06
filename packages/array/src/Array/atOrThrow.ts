@@ -2,23 +2,28 @@ import type { NonNil } from "./internals/types"
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
- * `Array.atOrThrow(array, offset)`
+ * # atOrThrow
+ *
+ * ```ts
+ * function Array.atOrThrow(array: T[], offset: number): T
+ * ```
  *
  * Returns the value at the specified `offset`, throws an exception if the `offset` was out of range, or the retrieved value was nullable.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.atOrThrow([1, null], -1); // Error
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe([1, null], Array.atOrThrow(-1)); // Error
  * ```
+ *
  */
 export const atOrThrow: {
     (offset: number): <T>(target: readonly T[]) => NonNil<T>

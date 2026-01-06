@@ -1,6 +1,12 @@
 # findRemoveOr
 
-`Array.findRemoveOr(array, predicate, fallback)`
+```ts
+function Array.findRemoveOr(
+    array: T[],
+    predicate: (value: T, index: number, array: T[]) => boolean,
+    fallback: U
+): T[] | U
+```
 
 Finds the first element in `array` that satisfies the provided `predicate` function and removes it, returning a new array without the removed element, or `fallback` if no element is found.
 

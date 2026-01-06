@@ -2,23 +2,28 @@ import { dfdlT } from "@monstermann/dfdl"
 import { cloneArray, markAsMutable } from "@monstermann/remmi"
 
 /**
- * `Array.takeLast(array, amount)`
+ * # takeLast
+ *
+ * ```ts
+ * function Array.takeLast(array: T[], count: number): T[]
+ * ```
  *
  * Returns a new array containing the last `amount` elements from `array`.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.takeLast([1, 2, 3, 4, 5], 3); // [3, 4, 5]
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe([1, 2, 3, 4, 5], Array.takeLast(3)); // [3, 4, 5]
  * ```
+ *
  */
 export const takeLast: {
     <T>(amount: number): (target: T[]) => T[]

@@ -4,20 +4,28 @@ import { cloneArray } from "@monstermann/remmi"
 import { resolveOffset } from "./internals/offset"
 
 /**
- * `Array.removeAtOrElse(target, idx, orElse)`
+ * # removeAtOrElse
+ *
+ * ```ts
+ * function Array.removeAtOrElse(
+ *     array: T[],
+ *     index: number,
+ *     fallback: (array: T[]) => U
+ * ): T[] | U
+ * ```
  *
  * Removes the element at index `idx` from `target` array. Supports negative indices to count from the end. If the index is out of bounds, calls the `orElse` function with the original array and returns its result.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.removeAtOrElse([1, 2, 3], 1, () => []); // [1, 3]
  * Array.removeAtOrElse([1, 2, 3], 5, (arr) => arr); // [1, 2, 3]
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe(
@@ -30,6 +38,7 @@ import { resolveOffset } from "./internals/offset"
  *     Array.removeAtOrElse(5, (arr) => arr),
  * ); // [1, 2, 3]
  * ```
+ *
  */
 export const removeAtOrElse: {
     <T, U>(idx: number, orElse: OrElse<T, U>): (target: readonly T[]) => T[] | U

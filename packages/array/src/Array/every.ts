@@ -2,13 +2,20 @@ import type { ArrayGuard, ArrayPredicate } from "./internals/types"
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
- * `Array.every(array, predicate)`
+ * # every
+ *
+ * ```ts
+ * function Array.every(
+ *     array: T[],
+ *     predicate: (value: T, index: number, array: T[]) => boolean
+ * ): boolean
+ * ```
  *
  * Tests whether all elements in the `array` pass the test implemented by the `predicate` function. It returns `true` if all elements pass, otherwise `false`.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * const isEven = (n: number) => n % 2 === 0;
@@ -17,7 +24,7 @@ import { dfdlT } from "@monstermann/dfdl"
  * Array.every([2, 4, 7], isEven); // false
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * const isEven = (n: number) => n % 2 === 0;
@@ -25,6 +32,7 @@ import { dfdlT } from "@monstermann/dfdl"
  * pipe([2, 4, 6], Array.every(isEven)); // true
  * pipe([2, 4, 7], Array.every(isEven)); // false
  * ```
+ *
  */
 export const every: {
     <T, U extends T>(predicate: ArrayGuard<T, U>): (target: readonly T[]) => target is U[]

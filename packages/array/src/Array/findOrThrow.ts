@@ -2,19 +2,26 @@ import type { ArrayGuard, ArrayPredicate, NonNil } from "./internals/types"
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
- * `Array.findOrThrow(array, predicate)`
+ * # findOrThrow
+ *
+ * ```ts
+ * function Array.findOrThrow(
+ *     array: T[],
+ *     predicate: (value: T, index: number, array: T[]) => boolean
+ * ): T
+ * ```
  *
  * Returns the first element in `array` that satisfies the provided `predicate` function, or throws an error if no element is found.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.findOrThrow([1, 2, 3, 4], (x) => x > 2); // 3
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe(
@@ -22,6 +29,7 @@ import { dfdlT } from "@monstermann/dfdl"
  *     Array.findOrThrow((x) => x > 2),
  * ); // 3
  * ```
+ *
  */
 export const findOrThrow: {
     <T, U extends T>(predicate: ArrayGuard<T, U>): (target: readonly T[]) => NonNil<U>

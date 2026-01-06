@@ -3,19 +3,26 @@ import { dfdlT } from "@monstermann/dfdl"
 import { markAsMutable } from "@monstermann/remmi"
 
 /**
- * `Array.flatMap(array, mapper)`
+ * # flatMap
+ *
+ * ```ts
+ * function Array.flatMap(
+ *     array: T[],
+ *     mapper: (value: T, index: number, array: T[]) => U[]
+ * ): U[]
+ * ```
  *
  * Maps each element in `array` using the `mapper` function and flattens the result by one level.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.flatMap([1, 2, 3], (x) => [x, x * 2]); // [1, 2, 2, 4, 3, 6]
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe(
@@ -23,6 +30,7 @@ import { markAsMutable } from "@monstermann/remmi"
  *     Array.flatMap((x) => [x, x * 2]),
  * ); // [1, 2, 2, 4, 3, 6]
  * ```
+ *
  */
 export const flatMap: {
     <T, U>(mapper: ArrayMap<T, U[]>): (target: T[]) => U[]

@@ -1,6 +1,8 @@
 # maxOrThrow
 
-`Array.maxOrThrow(array)`
+```ts
+function Array.maxOrThrow(array: number[]): number
+```
 
 Returns the maximum value from `array`, or throws an error if the array is empty.
 

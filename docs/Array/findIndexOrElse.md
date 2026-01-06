@@ -1,6 +1,12 @@
 # findIndexOrElse
 
-`Array.findIndexOrElse(target, predicate, orElse)`
+```ts
+function Array.findIndexOrElse(
+    array: T[],
+    predicate: (value: T, index: number, array: T[]) => boolean,
+    fallback: (array: T[]) => U
+): number | U
+```
 
 Returns the index of the first element in `target` that satisfies the provided `predicate` function. If no element satisfies the predicate, calls `orElse` with the original array.
 

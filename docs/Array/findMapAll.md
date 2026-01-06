@@ -1,6 +1,12 @@
 # findMapAll
 
-`Array.findMapAll(array, predicate, mapper)`
+```ts
+function Array.findMapAll(
+    array: T[],
+    predicate: (value: T, index: number, array: T[]) => boolean,
+    mapper: (value: T, index: number, array: T[]) => U
+): T[]
+```
 
 Finds all elements in `array` that satisfy the provided `predicate` function and applies the `mapper` function to each of them, returning a new array with the mapped elements.
 

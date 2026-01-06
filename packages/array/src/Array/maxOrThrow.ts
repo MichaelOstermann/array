@@ -1,25 +1,30 @@
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
- * `Array.maxOrThrow(array)`
+ * # maxOrThrow
+ *
+ * ```ts
+ * function Array.maxOrThrow(array: number[]): number
+ * ```
  *
  * Returns the maximum value from `array`, or throws an error if the array is empty.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.maxOrThrow([1, 5, 3]); // 5
  * Array.maxOrThrow([]); // throws FnError
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe([1, 5, 3], Array.maxOrThrow()); // 5
  * pipe([], Array.maxOrThrow()); // throws FnError
  * ```
+ *
  */
 export const maxOrThrow: {
     (): (target: readonly number[]) => number

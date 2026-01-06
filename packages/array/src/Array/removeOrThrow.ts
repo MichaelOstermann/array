@@ -2,25 +2,30 @@ import { dfdlT } from "@monstermann/dfdl"
 import { cloneArray } from "@monstermann/remmi"
 
 /**
- * `Array.removeOrThrow(target, value)`
+ * # removeOrThrow
+ *
+ * ```ts
+ * function Array.removeOrThrow(array: T[], value: U): T[]
+ * ```
  *
  * Removes the first occurrence of `value` from `target` array. If the value is not found, throws an error.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.removeOrThrow([1, 2, 3, 2], 2); // [1, 3, 2]
  * Array.removeOrThrow([1, 2, 3], 4); // throws FnError
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe([1, 2, 3, 2], Array.removeOrThrow(2)); // [1, 3, 2]
  * pipe([1, 2, 3], Array.removeOrThrow(4)); // throws FnError
  * ```
+ *
  */
 export const removeOrThrow: {
     <T>(value: NoInfer<T>): (target: readonly T[]) => T[]

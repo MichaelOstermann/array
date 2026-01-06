@@ -3,19 +3,27 @@ import { dfdlT } from "@monstermann/dfdl"
 import { cloneArray } from "@monstermann/remmi"
 
 /**
- * `Array.findReplace(array, predicate, replacement)`
+ * # findReplace
+ *
+ * ```ts
+ * function Array.findReplace(
+ *     array: T[],
+ *     predicate: (value: T, index: number, array: T[]) => boolean,
+ *     value: U
+ * ): T[]
+ * ```
  *
  * Finds the first element in `array` that satisfies the provided `predicate` function and replaces it with `replacement`, returning a new array with the replaced element.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.findReplace([1, 2, 3, 4], (x) => x > 2, 10); // [1, 2, 10, 4]
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe(
@@ -23,6 +31,7 @@ import { cloneArray } from "@monstermann/remmi"
  *     Array.findReplace((x) => x > 2, 10),
  * ); // [1, 2, 10, 4]
  * ```
+ *
  */
 export const findReplace: {
     <T>(predicate: ArrayPredicate<T>, replacement: NoInfer<T>): (target: T[]) => T[]

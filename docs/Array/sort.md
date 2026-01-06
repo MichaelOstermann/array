@@ -1,6 +1,8 @@
 # sort
 
-`Array.sort(target, comparator)`
+```ts
+function Array.sort(array: T[], compareFn?: (a: T, b: T) => number): T[]
+```
 
 Returns a new array with the elements of `target` sorted using the provided `comparator` function.
 

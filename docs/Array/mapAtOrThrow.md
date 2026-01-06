@@ -1,6 +1,12 @@
 # mapAtOrThrow
 
-`Array.mapAtOrThrow(array, index, mapper)`
+```ts
+function Array.mapAtOrThrow(
+    array: T[],
+    index: number,
+    mapper: (value: T, index: number, array: T[]) => U
+): T[]
+```
 
 Applies the `mapper` function to the element at the specified `index` in `array`, returning a new array with the mapped element, or throws an error if the index is out of bounds.
 

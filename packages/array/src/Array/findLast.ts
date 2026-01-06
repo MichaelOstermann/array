@@ -2,19 +2,26 @@ import type { ArrayGuard, ArrayPredicate } from "./internals/types"
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
- * `Array.findLast(array, predicate)`
+ * # findLast
+ *
+ * ```ts
+ * function Array.findLast(
+ *     array: T[],
+ *     predicate: (value: T, index: number, array: T[]) => boolean
+ * ): T | undefined
+ * ```
  *
  * Returns the last element in `array` that satisfies the provided `predicate` function, or `undefined` if no element is found.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.findLast([1, 2, 3, 4], (x) => x > 2); // 4
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe(
@@ -22,6 +29,7 @@ import { dfdlT } from "@monstermann/dfdl"
  *     Array.findLast((x) => x > 2),
  * ); // 4
  * ```
+ *
  */
 export const findLast: {
     <T, U extends T>(predicate: ArrayGuard<T, U>): (target: readonly T[]) => U | undefined

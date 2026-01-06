@@ -1,6 +1,8 @@
 # sum
 
-`Array.sum(array)`
+```ts
+function Array.sum(array: number[]): number
+```
 
 Returns the sum of all numbers in `array`.
 

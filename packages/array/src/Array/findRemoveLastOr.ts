@@ -3,19 +3,27 @@ import { dfdlT } from "@monstermann/dfdl"
 import { cloneArray } from "@monstermann/remmi"
 
 /**
- * `Array.findRemoveLastOr(array, predicate, fallback)`
+ * # findRemoveLastOr
+ *
+ * ```ts
+ * function Array.findRemoveLastOr(
+ *     array: T[],
+ *     predicate: (value: T, index: number, array: T[]) => boolean,
+ *     fallback: U
+ * ): T[] | U
+ * ```
  *
  * Finds the last element in `array` that satisfies the provided `predicate` function and removes it, returning a new array without the removed element, or `fallback` if no element is found.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.findRemoveLastOr([1, 2, 3, 4], (x) => x > 10, []); // []
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe(
@@ -23,6 +31,7 @@ import { cloneArray } from "@monstermann/remmi"
  *     Array.findRemoveLastOr((x) => x > 10, []),
  * ); // []
  * ```
+ *
  */
 export const findRemoveLastOr: {
     <T, U>(predicate: ArrayPredicate<T>, or: U): (target: readonly T[]) => T[] | U

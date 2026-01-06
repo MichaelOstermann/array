@@ -1,6 +1,8 @@
 # concat
 
-`Array.concat(array, source)`
+```ts
+function Array.concat(array: T[], source: T[]): T[]
+```
 
 Concatenates `source` array to the end of `array`, returning a new array with the combined elements.
 

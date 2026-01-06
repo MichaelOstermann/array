@@ -2,19 +2,23 @@ import type { NonNil, OrElse } from "./internals/types"
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
- * `Array.lastOrElse(array, callback)`
+ * # lastOrElse
+ *
+ * ```ts
+ * function Array.lastOrElse(array: T[], fallback: (array: T[]) => U): T | U
+ * ```
  *
  * Returns the last element of `array`, or the result of calling `callback` with the array if the array is empty.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.lastOrElse([1, 2, 3, 4], (arr) => arr.length); // 4
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe(
@@ -22,6 +26,7 @@ import { dfdlT } from "@monstermann/dfdl"
  *     Array.lastOrElse((arr) => arr.length),
  * ); // 4
  * ```
+ *
  */
 export const lastOrElse: {
     <T, U>(orElse: OrElse<T, U>): (target: readonly T[]) => NonNil<T> | U

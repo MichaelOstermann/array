@@ -1,6 +1,12 @@
 # findLastOr
 
-`Array.findLastOr(array, predicate, fallback)`
+```ts
+function Array.findLastOr(
+    array: T[],
+    predicate: (value: T, index: number, array: T[]) => boolean,
+    fallback: U
+): T | U
+```
 
 Returns the last element in `array` that satisfies the provided `predicate` function, or `fallback` if no element is found.
 

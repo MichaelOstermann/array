@@ -3,13 +3,22 @@ import { dfdlT } from "@monstermann/dfdl"
 import { cloneArray } from "@monstermann/remmi"
 
 /**
- * `Array.findMapOrElse(array, predicate, mapper, callback)`
+ * # findMapOrElse
+ *
+ * ```ts
+ * function Array.findMapOrElse(
+ *     array: T[],
+ *     predicate: (value: T, index: number, array: T[]) => boolean,
+ *     mapper: (value: T, index: number, array: T[]) => U,
+ *     fallback: (array: T[]) => V
+ * ): T[] | V
+ * ```
  *
  * Finds the first element in `array` that satisfies the provided `predicate` function and applies the `mapper` function to it, returning a new array with the mapped element, or the result of calling `callback` with the array if no element is found.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.findMapOrElse(
@@ -20,7 +29,7 @@ import { cloneArray } from "@monstermann/remmi"
  * ); // 4
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe(
@@ -32,6 +41,7 @@ import { cloneArray } from "@monstermann/remmi"
  *     ),
  * ); // 4
  * ```
+ *
  */
 export const findMapOrElse: {
     <T, U extends T, V>(predicate: ArrayGuard<T, U>, mapper: ArrayMap<T>, orElse: OrElse<T, V>): (target: T[]) => T[] | V

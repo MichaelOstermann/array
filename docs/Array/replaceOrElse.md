@@ -1,6 +1,13 @@
 # replaceOrElse
 
-`Array.replaceOrElse(target, value, replacement, orElse)`
+```ts
+function Array.replaceOrElse(
+    array: T[],
+    oldValue: U,
+    newValue: V,
+    fallback: (array: T[]) => W
+): T[] | W
+```
 
 Replaces the first occurrence of `value` in `target` with `replacement`. If `value` is not found, calls `orElse` with the original array.
 

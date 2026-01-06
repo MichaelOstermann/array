@@ -2,23 +2,28 @@ import { dfdlT } from "@monstermann/dfdl"
 import { markAsMutable } from "@monstermann/remmi"
 
 /**
- * `Array.concat(array, source)`
+ * # concat
+ *
+ * ```ts
+ * function Array.concat(array: T[], source: T[]): T[]
+ * ```
  *
  * Concatenates `source` array to the end of `array`, returning a new array with the combined elements.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.concat([1, 2], [3, 4]); // [1, 2, 3, 4]
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe([1, 2], Array.concat([3, 4])); // [1, 2, 3, 4]
  * ```
+ *
  */
 export const concat: {
     <T>(source: NoInfer<T>[]): (target: T[]) => T[]

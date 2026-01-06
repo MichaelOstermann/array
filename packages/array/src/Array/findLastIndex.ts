@@ -2,19 +2,26 @@ import type { ArrayPredicate } from "./internals/types"
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
- * `Array.findLastIndex(array, predicate)`
+ * # findLastIndex
+ *
+ * ```ts
+ * function Array.findLastIndex(
+ *     array: T[],
+ *     predicate: (value: T, index: number, array: T[]) => boolean
+ * ): number
+ * ```
  *
  * Returns the index of the last element in `array` that satisfies the provided `predicate` function, or -1 if no element is found.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.findLastIndex([1, 2, 3, 4], (x) => x > 2); // 3
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe(
@@ -22,6 +29,7 @@ import { dfdlT } from "@monstermann/dfdl"
  *     Array.findLastIndex((x) => x > 2),
  * ); // 3
  * ```
+ *
  */
 export const findLastIndex: {
     <T>(predicate: ArrayPredicate<T>): (target: readonly T[]) => number

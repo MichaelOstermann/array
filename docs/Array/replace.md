@@ -1,6 +1,8 @@
 # replace
 
-`Array.replace(target, value, replacement)`
+```ts
+function Array.replace(array: T[], oldValue: U, newValue: V): T[]
+```
 
 Replaces the first occurrence of `value` with `replacement` in `target` array. If the value is not found or if value and replacement are the same, returns the original array unchanged.
 

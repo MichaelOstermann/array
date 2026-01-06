@@ -1,6 +1,8 @@
 # append
 
-`Array.append(array, value)`
+```ts
+function Array.append(array: T[], value: T): T[]
+```
 
 Appends `value` to the end of `array`.
 

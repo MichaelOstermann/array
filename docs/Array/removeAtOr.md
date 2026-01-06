@@ -1,6 +1,8 @@
 # removeAtOr
 
-`Array.removeAtOr(target, idx, or)`
+```ts
+function Array.removeAtOr(array: T[], index: number, fallback: U): T[] | U
+```
 
 Removes the element at index `idx` from `target` array. Supports negative indices to count from the end. If the index is out of bounds, returns the fallback value `or`.
 

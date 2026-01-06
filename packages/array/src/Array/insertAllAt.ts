@@ -2,23 +2,28 @@ import { dfdlT } from "@monstermann/dfdl"
 import { markAsMutable } from "@monstermann/remmi"
 
 /**
- * `Array.insertAllAt(array, index, values)`
+ * # insertAllAt
+ *
+ * ```ts
+ * function Array.insertAllAt(array: T[], index: number, values: U[]): T[]
+ * ```
  *
  * Inserts all elements from `values` at the specified `index` in `array`, returning a new array with the inserted elements. Supports iterables for the `values` parameter.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.insertAllAt([1, 2, 3], 1, [10, 20]); // [1, 10, 20, 2, 3]
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe([1, 2, 3], Array.insertAllAt(1, [10, 20])); // [1, 10, 20, 2, 3]
  * ```
+ *
  */
 export const insertAllAt: {
     <T>(idx: number, values: Iterable<NoInfer<T>>): (target: T[]) => T[]

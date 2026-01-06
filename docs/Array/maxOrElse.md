@@ -1,6 +1,11 @@
 # maxOrElse
 
-`Array.maxOrElse(array, orElse)`
+```ts
+function Array.maxOrElse(
+    array: number[],
+    fallback: (array: number[]) => U
+): number | U
+```
 
 Returns the maximum value from `array`, or calls `orElse` if the array is empty.
 

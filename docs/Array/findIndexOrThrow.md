@@ -1,6 +1,11 @@
 # findIndexOrThrow
 
-`Array.findIndexOrThrow(target, predicate)`
+```ts
+function Array.findIndexOrThrow(
+    array: T[],
+    predicate: (value: T, index: number, array: T[]) => boolean
+): number
+```
 
 Returns the index of the first element in `target` that satisfies the provided `predicate` function. If no element satisfies the predicate, throws an error.
 

@@ -2,23 +2,28 @@ import type { NonNil } from "./internals/types"
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
- * `Array.firstOrThrow(array)`
+ * # firstOrThrow
+ *
+ * ```ts
+ * function Array.firstOrThrow(array: T[]): T
+ * ```
  *
  * Returns the first element of `array`, or throws an error if the array is empty.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.firstOrThrow([1, 2, 3, 4]); // 1
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe([1, 2, 3, 4], Array.firstOrThrow()); // 1
  * ```
+ *
  */
 export const firstOrThrow: {
     (): <T>(target: readonly T[]) => NonNil<T>

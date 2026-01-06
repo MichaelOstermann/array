@@ -2,19 +2,23 @@ import type { OrElse } from "./internals/types"
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
- * `Array.randomOrElse(array, callback)`
+ * # randomOrElse
+ *
+ * ```ts
+ * function Array.randomOrElse(array: T[], fallback: (array: T[]) => U): T | U
+ * ```
  *
  * Returns a random element from `array`, or the result of calling `callback` with the array if the array is empty.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.randomOrElse([1, 2, 3, 4], (arr) => arr.length); // 2 (random)
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe(
@@ -22,6 +26,7 @@ import { dfdlT } from "@monstermann/dfdl"
  *     Array.randomOrElse((arr) => arr.length),
  * ); // 2 (random)
  * ```
+ *
  */
 export const randomOrElse: {
     <T, U>(orElse: OrElse<T, U>): (target: readonly T[]) => T | U

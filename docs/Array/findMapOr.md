@@ -1,6 +1,13 @@
 # findMapOr
 
-`Array.findMapOr(array, predicate, mapper, fallback)`
+```ts
+function Array.findMapOr(
+    array: T[],
+    predicate: (value: T, index: number, array: T[]) => boolean,
+    mapper: (value: T, index: number, array: T[]) => U,
+    fallback: V
+): T[] | V
+```
 
 Finds the first element in `array` that satisfies the provided `predicate` function and applies the `mapper` function to it, returning a new array with the mapped element, or `fallback` if no element is found.
 

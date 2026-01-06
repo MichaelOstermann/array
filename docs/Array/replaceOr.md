@@ -1,6 +1,13 @@
 # replaceOr
 
-`Array.replaceOr(target, value, replacement, or)`
+```ts
+function Array.replaceOr(
+    array: T[],
+    oldValue: U,
+    newValue: V,
+    fallback: W
+): T[] | W
+```
 
 Replaces the first occurrence of `value` in `target` with `replacement`. If `value` is not found, returns `or`.
 

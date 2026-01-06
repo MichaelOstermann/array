@@ -2,23 +2,28 @@ import type { NonNil } from "./internals/types"
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
- * `Array.atOr(array, offset, fallback)`
+ * # atOr
+ *
+ * ```ts
+ * function Array.atOr(array: T[], offset: number, fallback: U): T | U
+ * ```
  *
  * Returns the value at the specified `offset`. Returns `fallback` if the `offset` was out of range, or the retrieved value was nullable.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.atOr([1, null], -1, 2); // 2
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe([1, null], Array.atOr(-1, 2)); // 2
  * ```
+ *
  */
 export const atOr: {
     <U>(offset: number, or: U): <T>(target: readonly T[]) => NonNil<T> | U

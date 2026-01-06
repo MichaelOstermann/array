@@ -2,13 +2,21 @@ import type { ArrayGuard, ArrayPredicate, NonNil, OrElse } from "./internals/typ
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
- * `Array.findLastOrElse(array, predicate, callback)`
+ * # findLastOrElse
+ *
+ * ```ts
+ * function Array.findLastOrElse(
+ *     array: T[],
+ *     predicate: (value: T, index: number, array: T[]) => boolean,
+ *     fallback: (array: T[]) => U
+ * ): T | U
+ * ```
  *
  * Returns the last element in `array` that satisfies the provided `predicate` function, or the result of calling `callback` with the array if no element is found.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.findLastOrElse(
@@ -18,7 +26,7 @@ import { dfdlT } from "@monstermann/dfdl"
  * ); // 4
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe(
@@ -29,6 +37,7 @@ import { dfdlT } from "@monstermann/dfdl"
  *     ),
  * ); // 4
  * ```
+ *
  */
 export const findLastOrElse: {
     <T, U extends T, V>(predicate: ArrayGuard<T, U>, orElse: OrElse<Exclude<T, U>, V>): (target: readonly T[]) => NonNil<U> | V

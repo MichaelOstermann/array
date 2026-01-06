@@ -2,25 +2,35 @@ import { dfdlT } from "@monstermann/dfdl"
 import { cloneArray } from "@monstermann/remmi"
 
 /**
- * `Array.replaceLastOr(target, value, replacement, or)`
+ * # replaceLastOr
+ *
+ * ```ts
+ * function Array.replaceLastOr(
+ *     array: T[],
+ *     oldValue: U,
+ *     newValue: V,
+ *     fallback: W
+ * ): T[] | W
+ * ```
  *
  * Replaces the last occurrence of `value` with `replacement` in `target` array. If the value is not found, returns the fallback value `or`. If value and replacement are the same, returns the original array unchanged.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.replaceLastOr([1, 2, 3, 2], 2, 5, []); // [1, 2, 3, 5]
  * Array.replaceLastOr([1, 2, 3], 4, 5, []); // []
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe([1, 2, 3, 2], Array.replaceLastOr(2, 5, [])); // [1, 2, 3, 5]
  * pipe([1, 2, 3], Array.replaceLastOr(4, 5, [])); // []
  * ```
+ *
  */
 export const replaceLastOr: {
     <T, U>(value: NoInfer<T>, replacement: NoInfer<T>, or: U): (target: T[]) => T[] | U

@@ -1,23 +1,28 @@
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
- * `Array.length(array)`
+ * # length
+ *
+ * ```ts
+ * function Array.length(array: T[]): number
+ * ```
  *
  * Returns the number of elements in `array`.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.length([1, 2, 3, 4]); // 4
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe([1, 2, 3, 4], Array.length()); // 4
  * ```
+ *
  */
 export const length: {
     (): <T>(target: readonly T[]) => number

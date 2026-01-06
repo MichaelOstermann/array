@@ -1,23 +1,28 @@
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
- * `Array.includes(array, value)`
+ * # includes
+ *
+ * ```ts
+ * function Array.includes(array: T[], value: T): boolean
+ * ```
  *
  * Returns `true` if `array` contains `value`, otherwise returns `false`.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.includes([1, 2, 3, 4], 3); // true
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe([1, 2, 3, 4], Array.includes(3)); // true
  * ```
+ *
  */
 export const includes: {
     <T>(value: NoInfer<T>): (target: readonly T[]) => boolean

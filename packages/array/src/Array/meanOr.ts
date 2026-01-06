@@ -1,23 +1,28 @@
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
- * `Array.meanOr(array, fallback)`
+ * # meanOr
+ *
+ * ```ts
+ * function Array.meanOr(array: number[], fallback: U): number | U
+ * ```
  *
  * Returns the mean (average) value of the number `array`, or `fallback` if the array is empty.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.meanOr([1, 2, 3, 4], 0); // 2.5
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe([1, 2, 3, 4], Array.meanOr(0)); // 2.5
  * ```
+ *
  */
 export const meanOr: {
     (or: number): (target: readonly number[]) => number

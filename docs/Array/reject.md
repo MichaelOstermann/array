@@ -1,6 +1,11 @@
 # reject
 
-`Array.reject(array, predicate)`
+```ts
+function Array.reject(
+    array: T[],
+    predicate: (value: T, index: number, array: T[]) => boolean
+): T[]
+```
 
 Returns a new array with elements from `array` that do not satisfy the provided `predicate` function.
 

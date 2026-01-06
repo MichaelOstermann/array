@@ -1,23 +1,28 @@
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
- * `Array.maxOr(array, fallback)`
+ * # maxOr
+ *
+ * ```ts
+ * function Array.maxOr(array: number[], fallback: U): number | U
+ * ```
  *
  * Returns the maximum value in the number `array`, or `fallback` if the array is empty.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.maxOr([1, 3, 2, 5], 0); // 5
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe([1, 3, 2, 5], Array.maxOr(0)); // 5
  * ```
+ *
  */
 export const maxOr: {
     <T>(or: T): (target: readonly number[]) => number | T

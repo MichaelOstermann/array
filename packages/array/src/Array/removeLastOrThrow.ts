@@ -2,25 +2,30 @@ import { dfdlT } from "@monstermann/dfdl"
 import { cloneArray } from "@monstermann/remmi"
 
 /**
- * `Array.removeLastOrThrow(target, value)`
+ * # removeLastOrThrow
+ *
+ * ```ts
+ * function Array.removeLastOrThrow(array: T[], value: U): T[]
+ * ```
  *
  * Removes the last occurrence of `value` from `target` array. If the value is not found, throws an error.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.removeLastOrThrow([1, 2, 3, 2], 2); // [1, 2, 3]
  * Array.removeLastOrThrow([1, 2, 3], 4); // throws FnError
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe([1, 2, 3, 2], Array.removeLastOrThrow(2)); // [1, 2, 3]
  * pipe([1, 2, 3], Array.removeLastOrThrow(4)); // throws FnError
  * ```
+ *
  */
 export const removeLastOrThrow: {
     <T>(value: NoInfer<T>): (target: readonly T[]) => T[]

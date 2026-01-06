@@ -1,6 +1,8 @@
 # join
 
-`Array.join(array, separator)`
+```ts
+function Array.join(array: T[], separator?: string): string
+```
 
 Joins all elements of `array` into a string, separated by the specified `separator`.
 

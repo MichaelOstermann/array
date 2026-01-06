@@ -1,8 +1,10 @@
 # removeAll
 
-`Array.removeAll(target, values)`
+```ts
+function Array.removeAll(array: T[], values: Iterable<T>): T[]
+```
 
-Removes all occurrences of each value in `values` from `target` array. If no values are found, returns the original array unchanged. Supports iterables for the values parameter.
+Removes all occurrences of each value in `values` from `target` array. If no values are found, returns the original array unchanged.
 
 ## Example
 

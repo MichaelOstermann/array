@@ -2,19 +2,26 @@ import type { ArrayGuard, ArrayPredicate } from "./internals/types"
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
- * `Array.none(array, predicate)`
+ * # none
+ *
+ * ```ts
+ * function Array.none(
+ *     array: T[],
+ *     predicate: (value: T, index: number, array: T[]) => boolean
+ * ): boolean
+ * ```
  *
  * Returns `true` if no elements in `array` satisfy the provided `predicate` function, otherwise returns `false`.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.none([1, 2, 3, 4], (x) => x > 10); // true
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe(
@@ -22,6 +29,7 @@ import { dfdlT } from "@monstermann/dfdl"
  *     Array.none((x) => x > 10),
  * ); // true
  * ```
+ *
  */
 export const none: {
     <T, U extends T>(predicate: ArrayGuard<T, U>): (target: readonly T[]) => target is Exclude<T, U>[]

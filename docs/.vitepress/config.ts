@@ -90,6 +90,7 @@ export default defineConfig({
                     { link: "firstOrThrow", text: "firstOrThrow" },
                     { link: "flatMap", text: "flatMap" },
                     { link: "forEach", text: "forEach" },
+                    { link: "forEachRight", text: "forEachRight" },
                     { link: "groupBy", text: "groupBy" },
                     { link: "includes", text: "includes" },
                     { link: "includesAll", text: "includesAll" },

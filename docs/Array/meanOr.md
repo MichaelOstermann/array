@@ -1,6 +1,8 @@
 # meanOr
 
-`Array.meanOr(array, fallback)`
+```ts
+function Array.meanOr(array: number[], fallback: U): number | U
+```
 
 Returns the mean (average) value of the number `array`, or `fallback` if the array is empty.
 

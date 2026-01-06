@@ -1,6 +1,8 @@
 # firstOrThrow
 
-`Array.firstOrThrow(array)`
+```ts
+function Array.firstOrThrow(array: T[]): T
+```
 
 Returns the first element of `array`, or throws an error if the array is empty.
 

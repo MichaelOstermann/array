@@ -1,6 +1,11 @@
 # findRemoveLastOrThrow
 
-`Array.findRemoveLastOrThrow(array, predicate)`
+```ts
+function Array.findRemoveLastOrThrow(
+    array: T[],
+    predicate: (value: T, index: number, array: T[]) => boolean
+): T[]
+```
 
 Finds the last element in `array` that satisfies the provided `predicate` function and removes it, returning a new array without the removed element, or throws an error if no element is found.
 

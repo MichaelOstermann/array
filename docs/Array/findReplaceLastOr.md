@@ -1,6 +1,13 @@
 # findReplaceLastOr
 
-`Array.findReplaceLastOr(array, predicate, replacement, fallback)`
+```ts
+function Array.findReplaceLastOr(
+    array: T[],
+    predicate: (value: T, index: number, array: T[]) => boolean,
+    value: U,
+    fallback: V
+): T[] | V
+```
 
 Finds the last element in `array` that satisfies the provided `predicate` function and replaces it with `replacement`, returning a new array with the replaced element, or `fallback` if no element is found.
 

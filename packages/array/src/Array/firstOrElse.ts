@@ -2,19 +2,23 @@ import type { NonNil, OrElse } from "./internals/types"
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
- * `Array.firstOrElse(array, callback)`
+ * # firstOrElse
+ *
+ * ```ts
+ * function Array.firstOrElse(array: T[], fallback: (array: T[]) => U): T | U
+ * ```
  *
  * Returns the first element of `array`, or the result of calling `callback` with the array if the array is empty.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.firstOrElse([1, 2, 3, 4], (arr) => arr.length); // 1
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe(
@@ -22,6 +26,7 @@ import { dfdlT } from "@monstermann/dfdl"
  *     Array.firstOrElse((arr) => arr.length),
  * ); // 1
  * ```
+ *
  */
 export const firstOrElse: {
     <T, U>(orElse: OrElse<T, U>): (target: readonly T[]) => NonNil<T> | U

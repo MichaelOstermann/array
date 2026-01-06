@@ -2,13 +2,21 @@ import type { ArrayPredicate, OrElse } from "./internals/types"
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
- * `Array.findIndexOrElse(target, predicate, orElse)`
+ * # findIndexOrElse
+ *
+ * ```ts
+ * function Array.findIndexOrElse(
+ *     array: T[],
+ *     predicate: (value: T, index: number, array: T[]) => boolean,
+ *     fallback: (array: T[]) => U
+ * ): number | U
+ * ```
  *
  * Returns the index of the first element in `target` that satisfies the provided `predicate` function. If no element satisfies the predicate, calls `orElse` with the original array.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.findIndexOrElse(
@@ -16,6 +24,7 @@ import { dfdlT } from "@monstermann/dfdl"
  *     (x) => x > 2,
  *     () => -1,
  * ); // 2
+ *
  * Array.findIndexOrElse(
  *     [1, 2, 3, 4],
  *     (x) => x > 5,
@@ -23,7 +32,7 @@ import { dfdlT } from "@monstermann/dfdl"
  * ); // 4
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe(
@@ -33,6 +42,7 @@ import { dfdlT } from "@monstermann/dfdl"
  *         () => -1,
  *     ),
  * ); // 2
+ *
  * pipe(
  *     [1, 2, 3, 4],
  *     Array.findIndexOrElse(
@@ -41,6 +51,7 @@ import { dfdlT } from "@monstermann/dfdl"
  *     ),
  * ); // 4
  * ```
+ *
  */
 export const findIndexOrElse: {
     <T, U>(predicate: ArrayPredicate<T>, orElse: OrElse<T, U>): (target: readonly T[]) => number | U

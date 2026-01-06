@@ -1,6 +1,12 @@
 # removeOrElse
 
-`Array.removeOrElse(target, value, orElse)`
+```ts
+function Array.removeOrElse(
+    array: T[],
+    value: U,
+    fallback: (array: T[]) => V
+): T[] | V
+```
 
 Removes the first occurrence of `value` from `target` array. If the value is not found, calls the `orElse` function with the original array and returns its result.
 

@@ -3,13 +3,21 @@ import { dfdlT } from "@monstermann/dfdl"
 import { cloneArray } from "@monstermann/remmi"
 
 /**
- * `Array.findRemoveOrElse(array, predicate, callback)`
+ * # findRemoveOrElse
+ *
+ * ```ts
+ * function Array.findRemoveOrElse(
+ *     array: T[],
+ *     predicate: (value: T, index: number, array: T[]) => boolean,
+ *     fallback: (array: T[]) => U
+ * ): T[] | U
+ * ```
  *
  * Finds the first element in `array` that satisfies the provided `predicate` function and removes it, returning a new array without the removed element, or the result of calling `callback` with the array if no element is found.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.findRemoveOrElse(
@@ -19,7 +27,7 @@ import { cloneArray } from "@monstermann/remmi"
  * ); // 4
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe(
@@ -30,6 +38,7 @@ import { cloneArray } from "@monstermann/remmi"
  *     ),
  * ); // 4
  * ```
+ *
  */
 export const findRemoveOrElse: {
     <T, U>(predicate: ArrayPredicate<T>, orElse: OrElse<T, U>): (target: readonly T[]) => T[] | U

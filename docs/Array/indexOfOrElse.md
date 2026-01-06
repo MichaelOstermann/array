@@ -1,6 +1,12 @@
 # indexOfOrElse
 
-`Array.indexOfOrElse(target, value, orElse)`
+```ts
+function Array.indexOfOrElse(
+    array: T[],
+    value: T,
+    fallback: (array: T[]) => U
+): number | U
+```
 
 Returns the index of the first occurrence of `value` in `target`. If `value` is not found, calls `orElse` with the original array.
 

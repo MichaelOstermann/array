@@ -1,6 +1,12 @@
 # findIndexOr
 
-`Array.findIndexOr(target, predicate, or)`
+```ts
+function Array.findIndexOr(
+    array: T[],
+    predicate: (value: T, index: number, array: T[]) => boolean,
+    fallback: U
+): number | U
+```
 
 Returns the index of the first element in `target` that satisfies the provided `predicate` function. If no element satisfies the predicate, returns `or`.
 

@@ -3,13 +3,17 @@ import { cloneArray } from "@monstermann/remmi"
 import { resolveOffset } from "./internals/offset"
 
 /**
- * `Array.setAtOr(target, idx, value, or)`
+ * # setAtOr
+ *
+ * ```ts
+ * function Array.setAtOr(array: T[], index: number, value: U, fallback: V): T[] | V
+ * ```
  *
  * Sets the value at the specified `idx` in `target` to `value`. If the index is out of bounds, returns `or`.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.setAtOr([1, 2, 3], 1, 9, []); // [1, 9, 3]
@@ -17,13 +21,14 @@ import { resolveOffset } from "./internals/offset"
  * Array.setAtOr([1, 2, 3], 5, 9, []); // []
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe([1, 2, 3], Array.setAtOr(1, 9, [])); // [1, 9, 3]
  * pipe([1, 2, 3], Array.setAtOr(-1, 9, [])); // [1, 2, 9]
  * pipe([1, 2, 3], Array.setAtOr(5, 9, [])); // []
  * ```
+ *
  */
 export const setAtOr: {
     <T, U>(idx: number, value: NoInfer<T>, or: U): (target: T[]) => T[] | U

@@ -1,6 +1,12 @@
 # findLastIndexOrElse
 
-`Array.findLastIndexOrElse(target, predicate, orElse)`
+```ts
+function Array.findLastIndexOrElse(
+    array: T[],
+    predicate: (value: T, index: number, array: T[]) => boolean,
+    fallback: (array: T[]) => U
+): number | U
+```
 
 Returns the index of the last element in `target` that satisfies the provided `predicate` function. If no element satisfies the predicate, calls `orElse` with the original array.
 

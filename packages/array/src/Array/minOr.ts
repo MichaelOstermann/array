@@ -1,23 +1,28 @@
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
- * `Array.minOr(array, fallback)`
+ * # minOr
+ *
+ * ```ts
+ * function Array.minOr(array: number[], fallback: U): number | U
+ * ```
  *
  * Returns the minimum value in the number `array`, or `fallback` if the array is empty.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.minOr([5, 1, 3, 2], 0); // 1
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe([5, 1, 3, 2], Array.minOr(0)); // 1
  * ```
+ *
  */
 export const minOr: {
     <T>(or: T): (target: readonly number[]) => number | T

@@ -1,6 +1,8 @@
 # unique
 
-`Array.unique(target)`
+```ts
+function Array.unique(array: T[]): T[]
+```
 
 Returns a new array with only the unique elements from `target`, preserving the order of first occurrence.
 

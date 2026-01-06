@@ -1,6 +1,13 @@
 # insertAllAtOr
 
-`Array.insertAllAtOr(target, idx, values, or)`
+```ts
+function Array.insertAllAtOr(
+    array: T[],
+    index: number,
+    values: U[],
+    fallback: V
+): T[] | V
+```
 
 Inserts all `values` at the specified `idx` in `target`. If the index is out of bounds, returns `or`. Supports iterables.
 

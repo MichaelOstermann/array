@@ -1,6 +1,8 @@
 # insertAt
 
-`Array.insertAt(array, index, value)`
+```ts
+function Array.insertAt(array: T[], index: number, value: U): T[]
+```
 
 Inserts `value` at the specified `index` in `array`, returning a new array with the inserted element.
 

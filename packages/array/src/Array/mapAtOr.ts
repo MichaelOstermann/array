@@ -4,19 +4,28 @@ import { cloneArray } from "@monstermann/remmi"
 import { resolveOffset } from "./internals/offset"
 
 /**
- * `Array.mapAtOr(array, index, mapper, fallback)`
+ * # mapAtOr
+ *
+ * ```ts
+ * function Array.mapAtOr(
+ *     array: T[],
+ *     index: number,
+ *     mapper: (value: T, index: number, array: T[]) => U,
+ *     fallback: V
+ * ): T[] | V
+ * ```
  *
  * Applies the `mapper` function to the element at the specified `index` in `array`, returning a new array with the mapped element, or `fallback` if the index is out of bounds.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.mapAtOr([1, 2, 3], 10, (x) => x * 10, []); // []
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe(
@@ -24,6 +33,7 @@ import { resolveOffset } from "./internals/offset"
  *     Array.mapAtOr(10, (x) => x * 10, []),
  * ); // []
  * ```
+ *
  */
 export const mapAtOr: {
     <T, U>(idx: number, map: ArrayMap<T>, or: U): (target: T[]) => T[] | U

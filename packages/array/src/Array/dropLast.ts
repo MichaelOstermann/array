@@ -2,23 +2,28 @@ import { dfdlT } from "@monstermann/dfdl"
 import { cloneArray, markAsMutable } from "@monstermann/remmi"
 
 /**
- * `Array.dropLast(target, amount)`
+ * # dropLast
+ *
+ * ```ts
+ * function Array.dropLast(array: T[], amount: number): T[]
+ * ```
  *
  * Removes `amount` of elements from the end of the `target` array.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.dropLast([1, 2, 3, 4, 5], 2); // [1, 2, 3]
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe([1, 2, 3, 4, 5], Array.dropLast(2)); // [1, 2, 3]
  * ```
+ *
  */
 export const dropLast: {
     (amount: number): <T>(target: T[]) => T[]

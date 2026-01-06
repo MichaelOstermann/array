@@ -1,6 +1,12 @@
 # atOrElse
 
-`Array.atOrElse(array, offset, fallback)`
+```ts
+function Array.atOrElse(
+    array: T[],
+    offset: number,
+    fallback: (array: T[]) => U
+): T | U
+```
 
 Returns the value at the specified `offset`. Calls `fallback` if the `offset` was out of range, or the retrieved value was nullable.
 

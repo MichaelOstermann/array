@@ -2,23 +2,28 @@ import type { NonNil } from "./internals/types"
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
- * `Array.lastOr(array, fallback)`
+ * # lastOr
+ *
+ * ```ts
+ * function Array.lastOr(array: T[], fallback: U): T | U
+ * ```
  *
  * Returns the last element of `array`, or `fallback` if the array is empty.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.lastOr([1, 2, 3, 4], 0); // 4
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe([1, 2, 3, 4], Array.lastOr(0)); // 4
  * ```
+ *
  */
 export const lastOr: {
     <T, U>(or: U): (target: readonly T[]) => NonNil<T> | U

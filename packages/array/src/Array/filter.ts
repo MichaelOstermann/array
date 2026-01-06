@@ -4,19 +4,26 @@ import { cloneArray } from "@monstermann/remmi"
 import { addRange, createRange, hasRange, spliceRange } from "./internals/range"
 
 /**
- * `Array.filter(target, by)`
+ * # filter
+ *
+ * ```ts
+ * function Array.filter(
+ *     array: T[],
+ *     predicate: (value: T, index: number, array: T[]) => boolean
+ * ): T[]
+ * ```
  *
  * Filters elements from `target` array based on the predicate function `by`.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.filter([1, 2, 3, 4], (x) => x > 2); // [3, 4]
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe(
@@ -24,6 +31,7 @@ import { addRange, createRange, hasRange, spliceRange } from "./internals/range"
  *     Array.filter((x) => x > 2),
  * ); // [3, 4]
  * ```
+ *
  */
 export const filter: {
     <T, U extends T>(by: ArrayGuard<T, U>): (target: T[]) => U[]

@@ -4,19 +4,27 @@ import { cloneArray } from "@monstermann/remmi"
 import { resolveOffset } from "./internals/offset"
 
 /**
- * `Array.mapAt(array, index, mapper)`
+ * # mapAt
+ *
+ * ```ts
+ * function Array.mapAt(
+ *     array: T[],
+ *     index: number,
+ *     mapper: (value: T, index: number, array: T[]) => U
+ * ): T[]
+ * ```
  *
  * Applies the `mapper` function to the element at the specified `index` in `array`, returning a new array with the mapped element.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.mapAt([1, 2, 3, 4], 1, (x) => x * 10); // [1, 20, 3, 4]
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe(
@@ -24,6 +32,7 @@ import { resolveOffset } from "./internals/offset"
  *     Array.mapAt(1, (x) => x * 10),
  * ); // [1, 20, 3, 4]
  * ```
+ *
  */
 export const mapAt: {
     <T>(idx: number, map: ArrayMap<T>): (target: T[]) => T[]

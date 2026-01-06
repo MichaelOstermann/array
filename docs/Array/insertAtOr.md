@@ -1,6 +1,8 @@
 # insertAtOr
 
-`Array.insertAtOr(array, index, value, fallback)`
+```ts
+function Array.insertAtOr(array: T[], index: number, value: U, fallback: V): T[] | V
+```
 
 Inserts `value` at the specified `index` in `array`, returning a new array with the inserted element, or `fallback` if the index is out of bounds.
 

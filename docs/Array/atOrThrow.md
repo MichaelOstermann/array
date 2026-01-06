@@ -1,6 +1,8 @@
 # atOrThrow
 
-`Array.atOrThrow(array, offset)`
+```ts
+function Array.atOrThrow(array: T[], offset: number): T
+```
 
 Returns the value at the specified `offset`, throws an exception if the `offset` was out of range, or the retrieved value was nullable.
 

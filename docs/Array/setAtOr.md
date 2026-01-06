@@ -1,6 +1,8 @@
 # setAtOr
 
-`Array.setAtOr(target, idx, value, or)`
+```ts
+function Array.setAtOr(array: T[], index: number, value: U, fallback: V): T[] | V
+```
 
 Sets the value at the specified `idx` in `target` to `value`. If the index is out of bounds, returns `or`.
 

@@ -1,6 +1,8 @@
 # is
 
-`Array.is(value)`
+```ts
+function Array.is(value: unknown): boolean
+```
 
 Returns `true` if `value` is an array, otherwise returns `false`.
 

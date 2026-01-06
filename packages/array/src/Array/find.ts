@@ -2,19 +2,26 @@ import type { ArrayGuard, ArrayPredicate } from "./internals/types"
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
- * `Array.find(array, predicate)`
+ * # find
+ *
+ * ```ts
+ * function Array.find(
+ *     array: T[],
+ *     predicate: (value: T, index: number, array: T[]) => boolean
+ * ): T | undefined
+ * ```
  *
  * Returns the first element in `array` that satisfies the provided `predicate` function, or `undefined` if no element is found.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.find([1, 2, 3, 4], (x) => x > 2); // 3
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe(
@@ -22,6 +29,7 @@ import { dfdlT } from "@monstermann/dfdl"
  *     Array.find((x) => x > 2),
  * ); // 3
  * ```
+ *
  */
 export const find: {
     <T, U extends T>(predicate: ArrayGuard<T, U>): (target: readonly T[]) => U | undefined

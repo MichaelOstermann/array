@@ -1,6 +1,8 @@
 # isShallowEqual
 
-`Array.isShallowEqual(array, other)`
+```ts
+function Array.isShallowEqual(array1: T[], array2: T[]): boolean
+```
 
 Returns `true` if `array` and `other` have the same length and their elements are equal using shallow comparison, otherwise returns `false`.
 

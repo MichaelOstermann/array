@@ -1,6 +1,8 @@
 # drop
 
-`Array.drop(array, amount)`
+```ts
+function Array.drop(array: T[], amount: number): T[]
+```
 
 Removes the first `amount` elements from `array`.
 

@@ -1,6 +1,8 @@
 # dropLast
 
-`Array.dropLast(target, amount)`
+```ts
+function Array.dropLast(array: T[], amount: number): T[]
+```
 
 Removes `amount` of elements from the end of the `target` array.
 

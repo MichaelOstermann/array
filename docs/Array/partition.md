@@ -1,6 +1,11 @@
 # partition
 
-`Array.partition(array, predicate)`
+```ts
+function Array.partition(
+    array: T[],
+    predicate: (value: T, index: number, array: T[]) => boolean
+): [T[], T[]]
+```
 
 Splits `array` into two arrays based on the `predicate` function, returning a tuple where the first array contains elements that satisfy the predicate and the second contains those that don't.
 

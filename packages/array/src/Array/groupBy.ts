@@ -1,13 +1,20 @@
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
- * `Array.groupBy(array, grouper, transform?)`
+ * # groupBy
+ *
+ * ```ts
+ * function Array.groupBy(
+ *     array: T[],
+ *     keySelector: (value: T, index: number, array: T[]) => string
+ * ): Record<string, T[]>
+ * ```
  *
  * Groups elements in `array` by the result of calling `grouper` function on each element, optionally transforming each element with `transform`, returning an object with keys as group values and values as arrays of elements.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.groupBy(
@@ -17,7 +24,7 @@ import { dfdlT } from "@monstermann/dfdl"
  * ); // { even: [20, 40], odd: [10, 30] }
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe(
@@ -28,6 +35,7 @@ import { dfdlT } from "@monstermann/dfdl"
  *     ),
  * ); // { even: [20, 40], odd: [10, 30] }
  * ```
+ *
  */
 export const groupBy: {
     <T extends object, U extends PropertyKey, V>(

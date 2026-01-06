@@ -1,6 +1,13 @@
 # replaceLastOrElse
 
-`Array.replaceLastOrElse(target, value, replacement, orElse)`
+```ts
+function Array.replaceLastOrElse(
+    array: T[],
+    oldValue: U,
+    newValue: V,
+    fallback: (array: T[]) => W
+): T[] | W
+```
 
 Replaces the last occurrence of `value` in `target` with `replacement`. If `value` is not found, calls `orElse` with the original array.
 

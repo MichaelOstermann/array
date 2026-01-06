@@ -4,13 +4,22 @@ import { cloneArray } from "@monstermann/remmi"
 import { resolveOffset } from "./internals/offset"
 
 /**
- * `Array.mapAtOrElse(array, index, mapper, callback)`
+ * # mapAtOrElse
+ *
+ * ```ts
+ * function Array.mapAtOrElse(
+ *     array: T[],
+ *     index: number,
+ *     mapper: (value: T, index: number, array: T[]) => U,
+ *     fallback: (array: T[]) => V
+ * ): T[] | V
+ * ```
  *
  * Applies the `mapper` function to the element at the specified `index` in `array`, returning a new array with the mapped element, or the result of calling `callback` with the array if the index is out of bounds.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.mapAtOrElse(
@@ -21,7 +30,7 @@ import { resolveOffset } from "./internals/offset"
  * ); // 3
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe(
@@ -33,6 +42,7 @@ import { resolveOffset } from "./internals/offset"
  *     ),
  * ); // 3
  * ```
+ *
  */
 export const mapAtOrElse: {
     <T, U>(idx: number, map: ArrayMap<T>, orElse: OrElse<T, U>): (target: T[]) => T[] | U

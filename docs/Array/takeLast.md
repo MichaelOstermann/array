@@ -1,6 +1,8 @@
 # takeLast
 
-`Array.takeLast(array, amount)`
+```ts
+function Array.takeLast(array: T[], count: number): T[]
+```
 
 Returns a new array containing the last `amount` elements from `array`.
 

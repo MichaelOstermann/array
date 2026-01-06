@@ -1,6 +1,11 @@
 # findLastOrThrow
 
-`Array.findLastOrThrow(array, predicate)`
+```ts
+function Array.findLastOrThrow(
+    array: T[],
+    predicate: (value: T, index: number, array: T[]) => boolean
+): T
+```
 
 Returns the last element in `array` that satisfies the provided `predicate` function, or throws an error if no element is found.
 

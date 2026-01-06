@@ -1,6 +1,11 @@
 # some
 
-`Array.some(array, predicate)`
+```ts
+function Array.some(
+    array: T[],
+    predicate: (value: T, index: number, array: T[]) => boolean
+): boolean
+```
 
 Returns `true` if at least one element in `array` satisfies the provided `predicate` function, otherwise returns `false`.
 

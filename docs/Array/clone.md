@@ -1,6 +1,8 @@
 # clone
 
-`Array.clone(array)`
+```ts
+function Array.clone(array: T[]): T[]
+```
 
 Creates a shallow copy of `array`, unless marked as mutable with `markAsMutable` inside a mutation context (see [@monstermann/remmi](https://michaelostermann.github.io/remmi/#clonearray-array)).
 

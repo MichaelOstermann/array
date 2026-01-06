@@ -1,23 +1,28 @@
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
- * `Array.isShallowEqual(array, other)`
+ * # isShallowEqual
+ *
+ * ```ts
+ * function Array.isShallowEqual(array1: T[], array2: T[]): boolean
+ * ```
  *
  * Returns `true` if `array` and `other` have the same length and their elements are equal using shallow comparison, otherwise returns `false`.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.isShallowEqual([1, 2, 3], [1, 2, 3]); // true
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe([1, 2, 3], Array.isShallowEqual([1, 2, 3])); // true
  * ```
+ *
  */
 export const isShallowEqual: {
     <T, U extends T>(source: readonly U[]): (target: readonly T[]) => target is U[]

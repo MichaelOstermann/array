@@ -2,19 +2,27 @@ import type { ArrayGuard, ArrayPredicate, NonNil } from "./internals/types"
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
- * `Array.findOr(array, predicate, fallback)`
+ * # findOr
+ *
+ * ```ts
+ * function Array.findOr(
+ *     array: T[],
+ *     predicate: (value: T, index: number, array: T[]) => boolean,
+ *     fallback: U
+ * ): T | U
+ * ```
  *
  * Returns the first element in `array` that satisfies the provided `predicate` function, or `fallback` if no element is found.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.findOr([1, 2, 3, 4], (x) => x > 10, 0); // 0
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe(
@@ -22,6 +30,7 @@ import { dfdlT } from "@monstermann/dfdl"
  *     Array.findOr((x) => x > 10, 0),
  * ); // 0
  * ```
+ *
  */
 export const findOr: {
     <T, U extends T, V>(predicate: ArrayGuard<T, U>, or: V): (target: readonly T[]) => NonNil<U> | V

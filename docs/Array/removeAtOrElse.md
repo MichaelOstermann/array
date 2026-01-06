@@ -1,6 +1,12 @@
 # removeAtOrElse
 
-`Array.removeAtOrElse(target, idx, orElse)`
+```ts
+function Array.removeAtOrElse(
+    array: T[],
+    index: number,
+    fallback: (array: T[]) => U
+): T[] | U
+```
 
 Removes the element at index `idx` from `target` array. Supports negative indices to count from the end. If the index is out of bounds, calls the `orElse` function with the original array and returns its result.
 

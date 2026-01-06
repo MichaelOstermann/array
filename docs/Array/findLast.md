@@ -1,6 +1,11 @@
 # findLast
 
-`Array.findLast(array, predicate)`
+```ts
+function Array.findLast(
+    array: T[],
+    predicate: (value: T, index: number, array: T[]) => boolean
+): T | undefined
+```
 
 Returns the last element in `array` that satisfies the provided `predicate` function, or `undefined` if no element is found.
 

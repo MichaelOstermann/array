@@ -3,13 +3,21 @@ import { dfdlT } from "@monstermann/dfdl"
 import { cloneArray } from "@monstermann/remmi"
 
 /**
- * `Array.findMapLast(array, predicate, mapper)`
+ * # findMapLast
+ *
+ * ```ts
+ * function Array.findMapLast(
+ *     array: T[],
+ *     predicate: (value: T, index: number, array: T[]) => boolean,
+ *     mapper: (value: T, index: number, array: T[]) => U
+ * ): T[]
+ * ```
  *
  * Finds the last element in `array` that satisfies the provided `predicate` function and applies the `mapper` function to it, returning a new array with the mapped element.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.findMapLast(
@@ -19,7 +27,7 @@ import { cloneArray } from "@monstermann/remmi"
  * ); // [1, 2, 3, 40]
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe(
@@ -30,6 +38,7 @@ import { cloneArray } from "@monstermann/remmi"
  *     ),
  * ); // [1, 2, 3, 40]
  * ```
+ *
  */
 export const findMapLast: {
     <T, U extends T>(predicate: ArrayGuard<T, U>, mapper: ArrayMap<T>): (target: T[]) => T[]

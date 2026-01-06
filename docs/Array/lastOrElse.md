@@ -1,6 +1,8 @@
 # lastOrElse
 
-`Array.lastOrElse(array, callback)`
+```ts
+function Array.lastOrElse(array: T[], fallback: (array: T[]) => U): T | U
+```
 
 Returns the last element of `array`, or the result of calling `callback` with the array if the array is empty.
 

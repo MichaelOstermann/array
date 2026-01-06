@@ -1,6 +1,11 @@
 # minOrElse
 
-`Array.minOrElse(target, orElse)`
+```ts
+function Array.minOrElse(
+    array: number[],
+    fallback: (array: number[]) => U
+): number | U
+```
 
 Returns the minimum value from `target` array, or calls `orElse` if the array is empty.
 

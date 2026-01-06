@@ -1,6 +1,8 @@
 # isEmpty
 
-`Array.isEmpty(array)`
+```ts
+function Array.isEmpty(array: T[]): boolean
+```
 
 Returns `true` if `array` has no elements, otherwise returns `false`.
 

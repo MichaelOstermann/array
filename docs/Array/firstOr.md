@@ -1,6 +1,8 @@
 # firstOr
 
-`Array.firstOr(array, fallback)`
+```ts
+function Array.firstOr(array: T[], fallback: U): T | U
+```
 
 Returns the first element of `array`, or `fallback` if the array is empty.
 

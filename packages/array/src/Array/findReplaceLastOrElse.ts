@@ -3,13 +3,22 @@ import { dfdlT } from "@monstermann/dfdl"
 import { cloneArray } from "@monstermann/remmi"
 
 /**
- * `Array.findReplaceLastOrElse(array, predicate, replacement, callback)`
+ * # findReplaceLastOrElse
+ *
+ * ```ts
+ * function Array.findReplaceLastOrElse(
+ *     array: T[],
+ *     predicate: (value: T, index: number, array: T[]) => boolean,
+ *     value: U,
+ *     fallback: (array: T[]) => V
+ * ): T[] | V
+ * ```
  *
  * Finds the last element in `array` that satisfies the provided `predicate` function and replaces it with `replacement`, returning a new array with the replaced element, or the result of calling `callback` with the array if no element is found.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.findReplaceLastOrElse(
@@ -20,7 +29,7 @@ import { cloneArray } from "@monstermann/remmi"
  * ); // 4
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe(
@@ -32,6 +41,7 @@ import { cloneArray } from "@monstermann/remmi"
  *     ),
  * ); // 4
  * ```
+ *
  */
 export const findReplaceLastOrElse: {
     <T, U>(predicate: ArrayPredicate<T>, replacement: NoInfer<T>, orElse: OrElse<T, U>): (target: T[]) => T[] | U

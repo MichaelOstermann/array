@@ -1,6 +1,8 @@
 # includesAll
 
-`Array.includesAll(array, values)`
+```ts
+function Array.includesAll(array: T[], values: T[]): boolean
+```
 
 Returns `true` if `array` contains all `values`, otherwise returns `false`. Supports iterables for the `values` parameter.
 

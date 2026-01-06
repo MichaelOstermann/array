@@ -1,6 +1,8 @@
 # firstOrElse
 
-`Array.firstOrElse(array, callback)`
+```ts
+function Array.firstOrElse(array: T[], fallback: (array: T[]) => U): T | U
+```
 
 Returns the first element of `array`, or the result of calling `callback` with the array if the array is empty.
 

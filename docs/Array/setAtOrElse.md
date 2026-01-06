@@ -1,6 +1,13 @@
 # setAtOrElse
 
-`Array.setAtOrElse(target, idx, value, orElse)`
+```ts
+function Array.setAtOrElse(
+    array: T[],
+    index: number,
+    value: U,
+    fallback: (array: T[]) => V
+): T[] | V
+```
 
 Sets the value at the specified `idx` in `target` to `value`. If the index is out of bounds, calls `orElse` with the original array.
 

@@ -1,6 +1,11 @@
 # none
 
-`Array.none(array, predicate)`
+```ts
+function Array.none(
+    array: T[],
+    predicate: (value: T, index: number, array: T[]) => boolean
+): boolean
+```
 
 Returns `true` if no elements in `array` satisfy the provided `predicate` function, otherwise returns `false`.
 

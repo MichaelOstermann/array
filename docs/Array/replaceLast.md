@@ -1,6 +1,8 @@
 # replaceLast
 
-`Array.replaceLast(target, value, replacement)`
+```ts
+function Array.replaceLast(array: T[], oldValue: U, newValue: V): T[]
+```
 
 Replaces the last occurrence of `value` with `replacement` in `target` array. If the value is not found or if value and replacement are the same, returns the original array unchanged.
 

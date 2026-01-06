@@ -4,19 +4,26 @@ import { cloneArray } from "@monstermann/remmi"
 import { addRange, createRange, hasRange, spliceRange } from "./internals/range"
 
 /**
- * `Array.reject(array, predicate)`
+ * # reject
+ *
+ * ```ts
+ * function Array.reject(
+ *     array: T[],
+ *     predicate: (value: T, index: number, array: T[]) => boolean
+ * ): T[]
+ * ```
  *
  * Returns a new array with elements from `array` that do not satisfy the provided `predicate` function.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.reject([1, 2, 3, 4, 5], (x) => x % 2 === 0); // [1, 3, 5]
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe(
@@ -24,6 +31,7 @@ import { addRange, createRange, hasRange, spliceRange } from "./internals/range"
  *     Array.reject((x) => x % 2 === 0),
  * ); // [1, 3, 5]
  * ```
+ *
  */
 export const reject: {
     <T, U extends T>(predicate: ArrayGuard<T, U>): (target: T[]) => Exclude<T, U>[]

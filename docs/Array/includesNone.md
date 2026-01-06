@@ -1,6 +1,8 @@
 # includesNone
 
-`Array.includesNone(array, values)`
+```ts
+function Array.includesNone(array: T[], values: T[]): boolean
+```
 
 Returns `true` if `array` contains none of the `values`, otherwise returns `false`. Supports iterables for the `values` parameter.
 

@@ -1,6 +1,12 @@
 # findMapLast
 
-`Array.findMapLast(array, predicate, mapper)`
+```ts
+function Array.findMapLast(
+    array: T[],
+    predicate: (value: T, index: number, array: T[]) => boolean,
+    mapper: (value: T, index: number, array: T[]) => U
+): T[]
+```
 
 Finds the last element in `array` that satisfies the provided `predicate` function and applies the `mapper` function to it, returning a new array with the mapped element.
 

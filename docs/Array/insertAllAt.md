@@ -1,6 +1,8 @@
 # insertAllAt
 
-`Array.insertAllAt(array, index, values)`
+```ts
+function Array.insertAllAt(array: T[], index: number, values: U[]): T[]
+```
 
 Inserts all elements from `values` at the specified `index` in `array`, returning a new array with the inserted elements. Supports iterables for the `values` parameter.
 

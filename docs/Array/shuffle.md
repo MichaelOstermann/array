@@ -1,6 +1,8 @@
 # shuffle
 
-`Array.shuffle(array)`
+```ts
+function Array.shuffle(array: T[]): T[]
+```
 
 Returns a new array with the elements of `array` randomly shuffled.
 

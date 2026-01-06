@@ -2,19 +2,27 @@ import type { ArrayGuard, ArrayPredicate, NonNil } from "./internals/types"
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
- * `Array.findLastOr(array, predicate, fallback)`
+ * # findLastOr
+ *
+ * ```ts
+ * function Array.findLastOr(
+ *     array: T[],
+ *     predicate: (value: T, index: number, array: T[]) => boolean,
+ *     fallback: U
+ * ): T | U
+ * ```
  *
  * Returns the last element in `array` that satisfies the provided `predicate` function, or `fallback` if no element is found.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.findLastOr([1, 2, 3, 4], (x) => x > 10, 0); // 0
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe(
@@ -22,6 +30,7 @@ import { dfdlT } from "@monstermann/dfdl"
  *     Array.findLastOr((x) => x > 10, 0),
  * ); // 0
  * ```
+ *
  */
 export const findLastOr: {
     <T, U extends T, V>(predicate: ArrayGuard<T, U>, or: V): (target: readonly T[]) => NonNil<U> | V

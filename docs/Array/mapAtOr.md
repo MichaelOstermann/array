@@ -1,6 +1,13 @@
 # mapAtOr
 
-`Array.mapAtOr(array, index, mapper, fallback)`
+```ts
+function Array.mapAtOr(
+    array: T[],
+    index: number,
+    mapper: (value: T, index: number, array: T[]) => U,
+    fallback: V
+): T[] | V
+```
 
 Applies the `mapper` function to the element at the specified `index` in `array`, returning a new array with the mapped element, or `fallback` if the index is out of bounds.
 

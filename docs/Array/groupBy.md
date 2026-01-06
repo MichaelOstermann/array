@@ -1,6 +1,11 @@
 # groupBy
 
-`Array.groupBy(array, grouper, transform?)`
+```ts
+function Array.groupBy(
+    array: T[],
+    keySelector: (value: T, index: number, array: T[]) => string
+): Record<string, T[]>
+```
 
 Groups elements in `array` by the result of calling `grouper` function on each element, optionally transforming each element with `transform`, returning an object with keys as group values and values as arrays of elements.
 

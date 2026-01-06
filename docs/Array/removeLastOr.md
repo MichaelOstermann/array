@@ -1,6 +1,8 @@
 # removeLastOr
 
-`Array.removeLastOr(target, value, or)`
+```ts
+function Array.removeLastOr(array: T[], value: U, fallback: V): T[] | V
+```
 
 Removes the last occurrence of `value` from `target` array. If the value is not found, returns the fallback value `or`.
 

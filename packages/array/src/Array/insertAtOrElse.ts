@@ -3,19 +3,28 @@ import { dfdlT } from "@monstermann/dfdl"
 import { cloneArray } from "@monstermann/remmi"
 
 /**
- * `Array.insertAtOrElse(array, index, value, callback)`
+ * # insertAtOrElse
+ *
+ * ```ts
+ * function Array.insertAtOrElse(
+ *     array: T[],
+ *     index: number,
+ *     value: U,
+ *     fallback: (array: T[]) => V
+ * ): T[] | V
+ * ```
  *
  * Inserts `value` at the specified `index` in `array`, returning a new array with the inserted element, or the result of calling `callback` with the array if the index is out of bounds.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.insertAtOrElse([1, 2, 3], 10, 99, (arr) => arr.length); // 3
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe(
@@ -23,6 +32,7 @@ import { cloneArray } from "@monstermann/remmi"
  *     Array.insertAtOrElse(10, 99, (arr) => arr.length),
  * ); // 3
  * ```
+ *
  */
 export const insertAtOrElse: {
     <T, U>(idx: number, value: NoInfer<T>, orElse: OrElse<T, U>): (target: readonly T[]) => T[] | U

@@ -1,23 +1,28 @@
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
- * `Array.random(array)`
+ * # random
+ *
+ * ```ts
+ * function Array.random(array: T[]): T | undefined
+ * ```
  *
  * Returns a random element from `array`, or `undefined` if the array is empty.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.random([1, 2, 3, 4]); // 2 (random)
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe([1, 2, 3, 4], Array.random()); // 2 (random)
  * ```
+ *
  */
 export const random: {
     (): <T>(target: readonly T[]) => T | undefined

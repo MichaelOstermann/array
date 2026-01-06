@@ -1,6 +1,8 @@
 # replaceLastOrThrow
 
-`Array.replaceLastOrThrow(target, value, replacement)`
+```ts
+function Array.replaceLastOrThrow(array: T[], oldValue: U, newValue: V): T[]
+```
 
 Replaces the last occurrence of `value` in `target` with `replacement`. If `value` is not found, throws an error.
 

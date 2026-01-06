@@ -1,6 +1,11 @@
 # indexBy
 
-`Array.indexBy(target, by, transform?)`
+```ts
+function Array.indexBy(
+    array: T[],
+    keySelector: (value: T, index: number, array: T[]) => string
+): Record<string, T>
+```
 
 Creates a record by indexing the `target` array using the `by` function to generate keys. Optionally transforms values using the `transform` function.
 

@@ -1,6 +1,11 @@
 # medianOrElse
 
-`Array.medianOrElse(array, orElse)`
+```ts
+function Array.medianOrElse(
+    array: number[],
+    fallback: (array: number[]) => U
+): number | U
+```
 
 Returns the median value from `array`, or calls `orElse` if the array is empty.
 

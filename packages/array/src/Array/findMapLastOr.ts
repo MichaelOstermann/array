@@ -3,13 +3,22 @@ import { dfdlT } from "@monstermann/dfdl"
 import { cloneArray } from "@monstermann/remmi"
 
 /**
- * `Array.findMapLastOr(array, predicate, mapper, fallback)`
+ * # findMapLastOr
+ *
+ * ```ts
+ * function Array.findMapLastOr(
+ *     array: T[],
+ *     predicate: (value: T, index: number, array: T[]) => boolean,
+ *     mapper: (value: T, index: number, array: T[]) => U,
+ *     fallback: V
+ * ): T[] | V
+ * ```
  *
  * Finds the last element in `array` that satisfies the provided `predicate` function and applies the `mapper` function to it, returning a new array with the mapped element, or `fallback` if no element is found.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.findMapLastOr(
@@ -20,7 +29,7 @@ import { cloneArray } from "@monstermann/remmi"
  * ); // []
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe(
@@ -32,6 +41,7 @@ import { cloneArray } from "@monstermann/remmi"
  *     ),
  * ); // []
  * ```
+ *
  */
 export const findMapLastOr: {
     <T, U extends T, V>(predicate: ArrayGuard<T, U>, mapper: ArrayMap<T>, or: V): (target: T[]) => T[] | V

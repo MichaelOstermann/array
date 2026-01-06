@@ -1,6 +1,8 @@
 # insertAllAtOrThrow
 
-`Array.insertAllAtOrThrow(target, idx, values)`
+```ts
+function Array.insertAllAtOrThrow(array: T[], index: number, values: U[]): T[]
+```
 
 Inserts all `values` at the specified `idx` in `target`. If the index is out of bounds, throws an error. Supports iterables.
 

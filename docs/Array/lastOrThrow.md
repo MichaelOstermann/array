@@ -1,6 +1,8 @@
 # lastOrThrow
 
-`Array.lastOrThrow(array)`
+```ts
+function Array.lastOrThrow(array: T[]): T
+```
 
 Returns the last element of `array`, or throws an error if the array is empty.
 

@@ -1,6 +1,11 @@
 # findRemoveLast
 
-`Array.findRemoveLast(array, predicate)`
+```ts
+function Array.findRemoveLast(
+    array: T[],
+    predicate: (value: T, index: number, array: T[]) => boolean
+): T[]
+```
 
 Finds the last element in `array` that satisfies the provided `predicate` function and removes it, returning a new array without the removed element.
 

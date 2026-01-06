@@ -1,6 +1,12 @@
 # findReplace
 
-`Array.findReplace(array, predicate, replacement)`
+```ts
+function Array.findReplace(
+    array: T[],
+    predicate: (value: T, index: number, array: T[]) => boolean,
+    value: U
+): T[]
+```
 
 Finds the first element in `array` that satisfies the provided `predicate` function and replaces it with `replacement`, returning a new array with the replaced element.
 

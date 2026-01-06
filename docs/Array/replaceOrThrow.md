@@ -1,6 +1,8 @@
 # replaceOrThrow
 
-`Array.replaceOrThrow(target, value, replacement)`
+```ts
+function Array.replaceOrThrow(array: T[], oldValue: U, newValue: V): T[]
+```
 
 Replaces the first occurrence of `value` in `target` with `replacement`. If `value` is not found, throws an error.
 

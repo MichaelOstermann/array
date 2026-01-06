@@ -3,19 +3,26 @@ import { dfdlT } from "@monstermann/dfdl"
 import { cloneArray } from "@monstermann/remmi"
 
 /**
- * `Array.mapEach(array, mapper)`
+ * # mapEach
+ *
+ * ```ts
+ * function Array.mapEach(
+ *     array: T[],
+ *     mapper: (value: T, index: number, array: T[]) => U
+ * ): U[]
+ * ```
  *
  * Applies the `mapper` function to each element in `array`, returning a new array with the mapped elements.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.mapEach([1, 2, 3, 4], (x) => x * 2); // [2, 4, 6, 8]
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe(
@@ -23,6 +30,7 @@ import { cloneArray } from "@monstermann/remmi"
  *     Array.mapEach((x) => x * 2),
  * ); // [2, 4, 6, 8]
  * ```
+ *
  */
 export const mapEach: {
     <T, U>(mapper: ArrayMap<T, U>): (target: T[]) => U[]

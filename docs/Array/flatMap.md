@@ -1,6 +1,11 @@
 # flatMap
 
-`Array.flatMap(array, mapper)`
+```ts
+function Array.flatMap(
+    array: T[],
+    mapper: (value: T, index: number, array: T[]) => U[]
+): U[]
+```
 
 Maps each element in `array` using the `mapper` function and flattens the result by one level.
 

@@ -1,6 +1,12 @@
 # setAtOrThrow
 
-`Array.setAtOrThrow(target, idx, value)`
+```ts
+function Array.setAtOrThrow(
+    array: T[],
+    index: number,
+    value: U
+): T[]
+```
 
 Sets the value at the specified `idx` in `target` to `value`. If the index is out of bounds, throws an error.
 

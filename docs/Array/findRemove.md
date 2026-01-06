@@ -1,6 +1,11 @@
 # findRemove
 
-`Array.findRemove(array, predicate)`
+```ts
+function Array.findRemove(
+    array: T[],
+    predicate: (value: T, index: number, array: T[]) => boolean
+): T[]
+```
 
 Finds the first element in `array` that satisfies the provided `predicate` function and removes it, returning a new array without the removed element.
 

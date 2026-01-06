@@ -1,6 +1,8 @@
 # includes
 
-`Array.includes(array, value)`
+```ts
+function Array.includes(array: T[], value: T): boolean
+```
 
 Returns `true` if `array` contains `value`, otherwise returns `false`.
 

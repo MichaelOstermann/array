@@ -2,23 +2,28 @@ import { dfdlT } from "@monstermann/dfdl"
 import { cloneArray } from "@monstermann/remmi"
 
 /**
- * `Array.union(target, source)`
+ * # union
+ *
+ * ```ts
+ * function Array.union(array1: T[], array2: T[]): T[]
+ * ```
  *
  * Returns a new array containing all unique elements from both `target` and `source`. Elements from `source` that are not already in `target` are added to the result.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.union([1, 2, 3], [3, 4, 5]); // [1, 2, 3, 4, 5]
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe([1, 2, 3], Array.union([3, 4, 5])); // [1, 2, 3, 4, 5]
  * ```
+ *
  */
 export const union: {
     <T>(source: Iterable<NoInfer<T>>): (target: T[]) => T[]

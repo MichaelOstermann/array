@@ -1,6 +1,11 @@
 # filter
 
-`Array.filter(target, by)`
+```ts
+function Array.filter(
+    array: T[],
+    predicate: (value: T, index: number, array: T[]) => boolean
+): T[]
+```
 
 Filters elements from `target` array based on the predicate function `by`.
 

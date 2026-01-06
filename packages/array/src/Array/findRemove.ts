@@ -3,19 +3,26 @@ import { dfdlT } from "@monstermann/dfdl"
 import { cloneArray } from "@monstermann/remmi"
 
 /**
- * `Array.findRemove(array, predicate)`
+ * # findRemove
+ *
+ * ```ts
+ * function Array.findRemove(
+ *     array: T[],
+ *     predicate: (value: T, index: number, array: T[]) => boolean
+ * ): T[]
+ * ```
  *
  * Finds the first element in `array` that satisfies the provided `predicate` function and removes it, returning a new array without the removed element.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.findRemove([1, 2, 3, 4], (x) => x > 2); // [1, 2, 4]
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe(
@@ -23,6 +30,7 @@ import { cloneArray } from "@monstermann/remmi"
  *     Array.findRemove((x) => x > 2),
  * ); // [1, 2, 4]
  * ```
+ *
  */
 export const findRemove: {
     <T>(predicate: ArrayPredicate<T>): (target: T[]) => T[]

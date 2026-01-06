@@ -1,6 +1,12 @@
 # findOrElse
 
-`Array.findOrElse(array, predicate, callback)`
+```ts
+function Array.findOrElse(
+    array: T[],
+    predicate: (value: T, index: number, array: T[]) => boolean,
+    fallback: (array: T[]) => U
+): T | U
+```
 
 Returns the first element in `array` that satisfies the provided `predicate` function, or the result of calling `callback` with the array if no element is found.
 

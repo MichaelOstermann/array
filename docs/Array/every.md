@@ -1,6 +1,11 @@
 # every
 
-`Array.every(array, predicate)`
+```ts
+function Array.every(
+    array: T[],
+    predicate: (value: T, index: number, array: T[]) => boolean
+): boolean
+```
 
 Tests whether all elements in the `array` pass the test implemented by the `predicate` function. It returns `true` if all elements pass, otherwise `false`.
 

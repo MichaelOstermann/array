@@ -1,6 +1,8 @@
 # length
 
-`Array.length(array)`
+```ts
+function Array.length(array: T[]): number
+```
 
 Returns the number of elements in `array`.
 

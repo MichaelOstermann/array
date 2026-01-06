@@ -1,6 +1,8 @@
 # prepend
 
-`Array.prepend(array, value)`
+```ts
+function Array.prepend(array: T[], value: U): T[]
+```
 
 Adds `value` to the beginning of `array`.
 

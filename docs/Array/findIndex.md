@@ -1,6 +1,11 @@
 # findIndex
 
-`Array.findIndex(array, predicate)`
+```ts
+function Array.findIndex(
+    array: T[],
+    predicate: (value: T, index: number, array: T[]) => boolean
+): number
+```
 
 Returns the index of the first element in `array` that satisfies the provided `predicate` function, or -1 if no element is found.
 

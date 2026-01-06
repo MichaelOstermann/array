@@ -1,6 +1,8 @@
 # removeAtOrThrow
 
-`Array.removeAtOrThrow(target, idx)`
+```ts
+function Array.removeAtOrThrow(array: T[], index: number): T[]
+```
 
 Removes the element at index `idx` from `target` array. Supports negative indices to count from the end. If the index is out of bounds, throws an error.
 

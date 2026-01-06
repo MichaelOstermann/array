@@ -1,6 +1,8 @@
 # last
 
-`Array.last(array)`
+```ts
+function Array.last(array: T[]): T | undefined
+```
 
 Returns the last element of `array`, or `undefined` if the array is empty.
 

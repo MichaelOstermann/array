@@ -1,6 +1,8 @@
 # medianOrThrow
 
-`Array.medianOrThrow(array)`
+```ts
+function Array.medianOrThrow(array: number[]): number
+```
 
 Returns the median value from `array`, or throws an error if the array is empty.
 

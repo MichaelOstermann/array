@@ -1,6 +1,8 @@
 # lastIndexOfOrThrow
 
-`Array.lastIndexOfOrThrow(target, value)`
+```ts
+function Array.lastIndexOfOrThrow(array: T[], value: T): number
+```
 
 Returns the index of the last occurrence of `value` in `target`. If `value` is not found, throws an error.
 

@@ -1,6 +1,8 @@
 # medianOr
 
-`Array.medianOr(array, fallback)`
+```ts
+function Array.medianOr(array: number[], fallback: U): number | U
+```
 
 Returns the median value of the number `array`, or `fallback` if the array is empty.
 

@@ -1,6 +1,12 @@
 # findLastIndexOr
 
-`Array.findLastIndexOr(target, predicate, or)`
+```ts
+function Array.findLastIndexOr(
+    array: T[],
+    predicate: (value: T, index: number, array: T[]) => boolean,
+    fallback: U
+): number | U
+```
 
 Returns the index of the last element in `target` that satisfies the provided `predicate` function. If no element satisfies the predicate, returns `or`.
 

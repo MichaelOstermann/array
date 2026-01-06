@@ -3,13 +3,21 @@ import { dfdlT } from "@monstermann/dfdl"
 import { cloneArray } from "@monstermann/remmi"
 
 /**
- * `Array.findMap(array, predicate, mapper)`
+ * # findMap
+ *
+ * ```ts
+ * function Array.findMap(
+ *     array: T[],
+ *     predicate: (value: T, index: number, array: T[]) => boolean,
+ *     mapper: (value: T, index: number, array: T[]) => U
+ * ): T[]
+ * ```
  *
  * Finds the first element in `array` that satisfies the provided `predicate` function and applies the `mapper` function to it, returning a new array with the mapped element.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.findMap(
@@ -19,7 +27,7 @@ import { cloneArray } from "@monstermann/remmi"
  * ); // [1, 2, 30, 4]
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe(
@@ -30,6 +38,7 @@ import { cloneArray } from "@monstermann/remmi"
  *     ),
  * ); // [1, 2, 30, 4]
  * ```
+ *
  */
 export const findMap: {
     <T, U extends T>(predicate: ArrayGuard<T, U>, mapper: ArrayMap<T>): (target: T[]) => T[]

@@ -3,13 +3,21 @@ import { dfdlT } from "@monstermann/dfdl"
 import { cloneArray } from "@monstermann/remmi"
 
 /**
- * `Array.findMapAll(array, predicate, mapper)`
+ * # findMapAll
+ *
+ * ```ts
+ * function Array.findMapAll(
+ *     array: T[],
+ *     predicate: (value: T, index: number, array: T[]) => boolean,
+ *     mapper: (value: T, index: number, array: T[]) => U
+ * ): T[]
+ * ```
  *
  * Finds all elements in `array` that satisfy the provided `predicate` function and applies the `mapper` function to each of them, returning a new array with the mapped elements.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.findMapAll(
@@ -19,7 +27,7 @@ import { cloneArray } from "@monstermann/remmi"
  * ); // [1, 2, 30, 40]
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe(
@@ -30,6 +38,7 @@ import { cloneArray } from "@monstermann/remmi"
  *     ),
  * ); // [1, 2, 30, 40]
  * ```
+ *
  */
 export const findMapAll: {
     <T, U extends T>(predicate: ArrayGuard<T, U>, mapper: ArrayMap<T>): (target: T[]) => T[]

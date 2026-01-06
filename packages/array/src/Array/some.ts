@@ -2,19 +2,26 @@ import type { ArrayPredicate } from "./internals/types"
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
- * `Array.some(array, predicate)`
+ * # some
+ *
+ * ```ts
+ * function Array.some(
+ *     array: T[],
+ *     predicate: (value: T, index: number, array: T[]) => boolean
+ * ): boolean
+ * ```
  *
  * Returns `true` if at least one element in `array` satisfies the provided `predicate` function, otherwise returns `false`.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.some([1, 2, 3, 4], (x) => x > 3); // true
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe(
@@ -22,6 +29,7 @@ import { dfdlT } from "@monstermann/dfdl"
  *     Array.some((x) => x > 3),
  * ); // true
  * ```
+ *
  */
 export const some: {
     <T>(predicate: ArrayPredicate<T>): (target: readonly T[]) => boolean

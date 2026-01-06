@@ -1,6 +1,12 @@
 # reduce
 
-`Array.reduce(array, initial, reducer)`
+```ts
+function Array.reduce(
+    array: T[],
+    reducer: (acc: U, value: T, index: number, array: T[]) => U,
+    initial: U
+): U
+```
 
 Reduces `array` to a single value by executing the `reducer` function on each element, starting with the `initial` accumulator value.
 

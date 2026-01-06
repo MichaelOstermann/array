@@ -1,6 +1,13 @@
 # findMapOrElse
 
-`Array.findMapOrElse(array, predicate, mapper, callback)`
+```ts
+function Array.findMapOrElse(
+    array: T[],
+    predicate: (value: T, index: number, array: T[]) => boolean,
+    mapper: (value: T, index: number, array: T[]) => U,
+    fallback: (array: T[]) => V
+): T[] | V
+```
 
 Finds the first element in `array` that satisfies the provided `predicate` function and applies the `mapper` function to it, returning a new array with the mapped element, or the result of calling `callback` with the array if no element is found.
 

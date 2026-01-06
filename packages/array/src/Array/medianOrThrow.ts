@@ -1,13 +1,17 @@
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
- * `Array.medianOrThrow(array)`
+ * # medianOrThrow
+ *
+ * ```ts
+ * function Array.medianOrThrow(array: number[]): number
+ * ```
  *
  * Returns the median value from `array`, or throws an error if the array is empty.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.medianOrThrow([1, 3, 5]); // 3
@@ -15,13 +19,14 @@ import { dfdlT } from "@monstermann/dfdl"
  * Array.medianOrThrow([]); // throws FnError
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe([1, 3, 5], Array.medianOrThrow()); // 3
  * pipe([1, 2, 3, 4], Array.medianOrThrow()); // 2.5
  * pipe([], Array.medianOrThrow()); // throws FnError
  * ```
+ *
  */
 export const medianOrThrow: {
     (): (target: readonly number[]) => number

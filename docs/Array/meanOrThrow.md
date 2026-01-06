@@ -1,6 +1,8 @@
 # meanOrThrow
 
-`Array.meanOrThrow(array)`
+```ts
+function Array.meanOrThrow(array: number[]): number
+```
 
 Returns the mean (average) value from `array`, or throws an error if the array is empty.
 

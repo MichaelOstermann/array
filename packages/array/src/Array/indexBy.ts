@@ -1,13 +1,20 @@
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
- * `Array.indexBy(target, by, transform?)`
+ * # indexBy
+ *
+ * ```ts
+ * function Array.indexBy(
+ *     array: T[],
+ *     keySelector: (value: T, index: number, array: T[]) => string
+ * ): Record<string, T>
+ * ```
  *
  * Creates a record by indexing the `target` array using the `by` function to generate keys. Optionally transforms values using the `transform` function.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * const users = [
@@ -25,7 +32,7 @@ import { dfdlT } from "@monstermann/dfdl"
  * ); // { 1: "Alice", 2: "Bob" }
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe(
@@ -41,6 +48,7 @@ import { dfdlT } from "@monstermann/dfdl"
  *     ),
  * ); // { 1: "Alice", 2: "Bob" }
  * ```
+ *
  */
 export const indexBy: {
     <T extends object, U extends PropertyKey, V>(

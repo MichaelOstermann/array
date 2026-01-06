@@ -1,6 +1,8 @@
 # compact
 
-`Array.compact(array)`
+```ts
+function Array.compact(array: T[]): T[]
+```
 
 Removes all nullable values from `array`.
 

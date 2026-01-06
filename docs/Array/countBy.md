@@ -1,6 +1,11 @@
 # countBy
 
-`Array.countBy(target, predicate)`
+```ts
+function Array.countBy(
+    array: T[],
+    predicate: (value: T, index: number, array: T[]) => boolean
+): number
+```
 
 Counts the number of elements in the `target` array satisfy the provided `predicate` function.
 

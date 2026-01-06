@@ -1,6 +1,13 @@
 # findReplaceOrElse
 
-`Array.findReplaceOrElse(array, predicate, replacement, callback)`
+```ts
+function Array.findReplaceOrElse(
+    array: T[],
+    predicate: (value: T, index: number, array: T[]) => boolean,
+    value: U,
+    fallback: (array: T[]) => V
+): T[] | V
+```
 
 Finds the first element in `array` that satisfies the provided `predicate` function and replaces it with `replacement`, returning a new array with the replaced element, or the result of calling `callback` with the array if no element is found.
 

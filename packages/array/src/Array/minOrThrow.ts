@@ -1,25 +1,30 @@
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
- * `Array.minOrThrow(target)`
+ * # minOrThrow
+ *
+ * ```ts
+ * function Array.minOrThrow(array: number[]): number
+ * ```
  *
  * Returns the minimum value from `target` array, or throws an error if the array is empty.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.minOrThrow([5, 2, 8, 1]); // 1
  * Array.minOrThrow([]); // throws FnError
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe([5, 2, 8, 1], Array.minOrThrow()); // 1
  * pipe([], Array.minOrThrow()); // throws FnError
  * ```
+ *
  */
 export const minOrThrow: {
     (): (target: readonly number[]) => number

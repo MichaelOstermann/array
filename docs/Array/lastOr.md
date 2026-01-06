@@ -1,6 +1,8 @@
 # lastOr
 
-`Array.lastOr(array, fallback)`
+```ts
+function Array.lastOr(array: T[], fallback: U): T | U
+```
 
 Returns the last element of `array`, or `fallback` if the array is empty.
 

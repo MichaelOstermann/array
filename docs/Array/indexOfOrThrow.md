@@ -1,6 +1,8 @@
 # indexOfOrThrow
 
-`Array.indexOfOrThrow(target, value)`
+```ts
+function Array.indexOfOrThrow(array: T[], value: T): number
+```
 
 Returns the index of the first occurrence of `value` in `target`. If `value` is not found, throws an error.
 

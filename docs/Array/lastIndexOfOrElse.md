@@ -1,6 +1,12 @@
 # lastIndexOfOrElse
 
-`Array.lastIndexOfOrElse(target, value, orElse)`
+```ts
+function Array.lastIndexOfOrElse(
+    array: T[],
+    value: T,
+    fallback: (array: T[]) => U
+): number | U
+```
 
 Returns the index of the last occurrence of `value` in `target`. If `value` is not found, calls `orElse` with the original array.
 

@@ -2,13 +2,20 @@ import type { OrElse } from "./internals/types"
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
- * `Array.medianOrElse(array, orElse)`
+ * # medianOrElse
+ *
+ * ```ts
+ * function Array.medianOrElse(
+ *     array: number[],
+ *     fallback: (array: number[]) => U
+ * ): number | U
+ * ```
  *
  * Returns the median value from `array`, or calls `orElse` if the array is empty.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.medianOrElse([1, 3, 5], () => 0); // 3
@@ -16,22 +23,25 @@ import { dfdlT } from "@monstermann/dfdl"
  * Array.medianOrElse([], () => 0); // 0
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe(
  *     [1, 3, 5],
  *     Array.medianOrElse(() => 0),
  * ); // 3
+ *
  * pipe(
  *     [1, 2, 3, 4],
  *     Array.medianOrElse(() => 0),
  * ); // 2.5
+ *
  * pipe(
  *     [],
  *     Array.medianOrElse(() => 0),
  * ); // 0
  * ```
+ *
  */
 export const medianOrElse: {
     <T>(orElse: OrElse<number, T>): (target: readonly number[]) => number | T

@@ -1,6 +1,11 @@
 # mapEach
 
-`Array.mapEach(array, mapper)`
+```ts
+function Array.mapEach(
+    array: T[],
+    mapper: (value: T, index: number, array: T[]) => U
+): U[]
+```
 
 Applies the `mapper` function to each element in `array`, returning a new array with the mapped elements.
 

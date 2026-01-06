@@ -1,6 +1,8 @@
 # take
 
-`Array.take(array, amount)`
+```ts
+function Array.take(array: T[], count: number): T[]
+```
 
 Returns a new array containing the first `amount` elements from `array`.
 

@@ -1,6 +1,8 @@
 # removeLast
 
-`Array.removeLast(target, value)`
+```ts
+function Array.removeLast(array: T[], value: U): T[]
+```
 
 Removes the last occurrence of `value` from `target` array. If the value is not found, returns the original array unchanged.
 

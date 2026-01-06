@@ -1,6 +1,11 @@
 # create
 
-`Array.create(target, map?)`
+```ts
+function Array.create(
+    target: Iterable<T> | ArrayLike<T>,
+    map?: (value: T, index: number) => U
+): U[]
+```
 
 An alias for `Array.from(target, map?)`.
 

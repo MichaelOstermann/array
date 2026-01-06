@@ -3,25 +3,30 @@ import { cloneArray } from "@monstermann/remmi"
 import { resolveOffset } from "./internals/offset"
 
 /**
- * `Array.removeAtOr(target, idx, or)`
+ * # removeAtOr
+ *
+ * ```ts
+ * function Array.removeAtOr(array: T[], index: number, fallback: U): T[] | U
+ * ```
  *
  * Removes the element at index `idx` from `target` array. Supports negative indices to count from the end. If the index is out of bounds, returns the fallback value `or`.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.removeAtOr([1, 2, 3], 1, []); // [1, 3]
  * Array.removeAtOr([1, 2, 3], 5, []); // []
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe([1, 2, 3], Array.removeAtOr(1, [])); // [1, 3]
  * pipe([1, 2, 3], Array.removeAtOr(5, [])); // []
  * ```
+ *
  */
 export const removeAtOr: {
     <U>(idx: number, or: U): <T>(target: readonly T[]) => T[] | U

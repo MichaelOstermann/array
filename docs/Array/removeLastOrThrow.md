@@ -1,6 +1,8 @@
 # removeLastOrThrow
 
-`Array.removeLastOrThrow(target, value)`
+```ts
+function Array.removeLastOrThrow(array: T[], value: U): T[]
+```
 
 Removes the last occurrence of `value` from `target` array. If the value is not found, throws an error.
 

@@ -3,20 +3,28 @@ import { dfdlT } from "@monstermann/dfdl"
 import { cloneArray } from "@monstermann/remmi"
 
 /**
- * `Array.removeOrElse(target, value, orElse)`
+ * # removeOrElse
+ *
+ * ```ts
+ * function Array.removeOrElse(
+ *     array: T[],
+ *     value: U,
+ *     fallback: (array: T[]) => V
+ * ): T[] | V
+ * ```
  *
  * Removes the first occurrence of `value` from `target` array. If the value is not found, calls the `orElse` function with the original array and returns its result.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.removeOrElse([1, 2, 3, 2], 2, () => []); // [1, 3, 2]
  * Array.removeOrElse([1, 2, 3], 4, (arr) => arr); // [1, 2, 3]
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe(
@@ -29,6 +37,7 @@ import { cloneArray } from "@monstermann/remmi"
  *     Array.removeOrElse(4, (arr) => arr),
  * ); // [1, 2, 3]
  * ```
+ *
  */
 export const removeOrElse: {
     <T, U>(value: NoInfer<T>, orElse: OrElse<T, U>): (target: readonly T[]) => T[] | U

@@ -3,19 +3,27 @@ import { dfdlT } from "@monstermann/dfdl"
 import { cloneArray } from "@monstermann/remmi"
 
 /**
- * `Array.findReplaceOrThrow(array, predicate, replacement)`
+ * # findReplaceOrThrow
+ *
+ * ```ts
+ * function Array.findReplaceOrThrow(
+ *     array: T[],
+ *     predicate: (value: T, index: number, array: T[]) => boolean,
+ *     value: U
+ * ): T[]
+ * ```
  *
  * Finds the first element in `array` that satisfies the provided `predicate` function and replaces it with `replacement`, returning a new array with the replaced element, or throws an error if no element is found.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.findReplaceOrThrow([1, 2, 3, 4], (x) => x > 2, 99); // [1, 2, 99, 4]
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe(
@@ -23,6 +31,7 @@ import { cloneArray } from "@monstermann/remmi"
  *     Array.findReplaceOrThrow((x) => x > 2, 99),
  * ); // [1, 2, 99, 4]
  * ```
+ *
  */
 export const findReplaceOrThrow: {
     <T>(predicate: ArrayPredicate<T>, replacement: NoInfer<T>): (target: T[]) => T[]

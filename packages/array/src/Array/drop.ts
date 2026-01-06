@@ -2,23 +2,28 @@ import { dfdlT } from "@monstermann/dfdl"
 import { cloneArray, markAsMutable } from "@monstermann/remmi"
 
 /**
- * `Array.drop(array, amount)`
+ * # drop
+ *
+ * ```ts
+ * function Array.drop(array: T[], amount: number): T[]
+ * ```
  *
  * Removes the first `amount` elements from `array`.
  *
  * ## Example
  *
- * ```ts
+ * ```ts [data-first]
  * import { Array } from "@monstermann/array";
  *
  * Array.drop([1, 2, 3, 4, 5], 2); // [3, 4, 5]
  * ```
  *
- * ```ts
+ * ```ts [data-last]
  * import { Array } from "@monstermann/array";
  *
  * pipe([1, 2, 3, 4, 5], Array.drop(2)); // [3, 4, 5]
  * ```
+ *
  */
 export const drop: {
     (amount: number): <T>(target: T[]) => T[]
