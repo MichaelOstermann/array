@@ -2535,10 +2535,10 @@ pipe([], Array.isEmpty()); // true
 ### isShallowEqual
 
 ```ts
-function Array.isShallowEqual(array1: T[], array2: T[]): boolean
+function Array.isShallowEqual(target: T[], source: T[]): boolean
 ```
 
-Returns `true` if `array` and `other` have the same length and their elements are equal using shallow comparison, otherwise returns `false`.
+Returns `true` if `target` and `source` have the same length and their elements are equal using shallow comparison, otherwise returns `false`.
 
 #### Example
 
@@ -4314,7 +4314,7 @@ pipe([1, 2, 3, 4, 5], Array.takeLast(3)); // [3, 4, 5]
 ### union
 
 ```ts
-function Array.union(array1: T[], array2: T[]): T[]
+function Array.union(target: T[], source: T[]): T[]
 ```
 
 Returns a new array containing all unique elements from both `target` and `source`. Elements from `source` that are not already in `target` are added to the result.

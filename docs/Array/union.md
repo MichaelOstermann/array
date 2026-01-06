@@ -1,7 +1,7 @@
 # union
 
 ```ts
-function Array.union(array1: T[], array2: T[]): T[]
+function Array.union(target: T[], source: T[]): T[]
 ```
 
 Returns a new array containing all unique elements from both `target` and `source`. Elements from `source` that are not already in `target` are added to the result.
