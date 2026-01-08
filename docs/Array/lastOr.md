@@ -1,7 +1,10 @@
 # lastOr
 
 ```ts
-function Array.lastOr(array: T[], fallback: U): T | U
+function Array.lastOr<T, U>(
+    target: readonly T[],
+    or: U,
+): Exclude<T, null | undefined> | U
 ```
 
 Returns the last element of `array`, or `fallback` if the array is empty.

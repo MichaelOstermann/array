@@ -5,7 +5,10 @@ import { cloneArray } from "@monstermann/remmi"
  * # removeOrThrow
  *
  * ```ts
- * function Array.removeOrThrow(array: T[], value: U): T[]
+ * function Array.removeOrThrow<T>(
+ *     target: readonly T[],
+ *     value: NoInfer<T>,
+ * ): T[]
  * ```
  *
  * Removes the first occurrence of `value` from `target` array. If the value is not found, throws an error.

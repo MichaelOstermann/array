@@ -4,7 +4,10 @@ import { dfdlT } from "@monstermann/dfdl"
  * # includesNone
  *
  * ```ts
- * function Array.includesNone(array: T[], values: T[]): boolean
+ * function Array.includesNone<T, U extends T>(
+ *     target: readonly T[],
+ *     values: Iterable<U>,
+ * ): target is Exclude<T, U>[]
  * ```
  *
  * Returns `true` if `array` contains none of the `values`, otherwise returns `false`. Supports iterables for the `values` parameter.

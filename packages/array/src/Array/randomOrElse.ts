@@ -1,11 +1,13 @@
-import type { OrElse } from "./internals/types"
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
  * # randomOrElse
  *
  * ```ts
- * function Array.randomOrElse(array: T[], fallback: (array: T[]) => U): T | U
+ * function Array.randomOrElse<T, U>(
+ *     target: readonly T[],
+ *     orElse: (target: readonly NoInfer<T>[]) => U,
+ * ): T | U
  * ```
  *
  * Returns a random element from `array`, or the result of calling `callback` with the array if the array is empty.
@@ -29,9 +31,9 @@ import { dfdlT } from "@monstermann/dfdl"
  *
  */
 export const randomOrElse: {
-    <T, U>(orElse: OrElse<T, U>): (target: readonly T[]) => T | U
-    <T, U>(target: readonly T[], orElse: OrElse<T, U>): T | U
-} = dfdlT(<T, U>(target: readonly T[], orElse: OrElse<T, U>): T | U => {
+    <T, U>(orElse: (target: readonly NoInfer<T>[]) => U): (target: readonly T[]) => T | U
+    <T, U>(target: readonly T[], orElse: (target: readonly NoInfer<T>[]) => U): T | U
+} = dfdlT(<T, U>(target: readonly T[], orElse: (target: readonly NoInfer<T>[]) => U): T | U => {
     if (target.length === 0) return orElse(target)
     const idx = Math.floor(Math.random() * target.length)
     return target[idx]!

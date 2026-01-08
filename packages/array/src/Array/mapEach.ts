@@ -1,4 +1,3 @@
-import type { ArrayMap } from "./internals/types"
 import { dfdlT } from "@monstermann/dfdl"
 import { cloneArray } from "@monstermann/remmi"
 
@@ -6,10 +5,14 @@ import { cloneArray } from "@monstermann/remmi"
  * # mapEach
  *
  * ```ts
- * function Array.mapEach(
- *     array: T[],
- *     mapper: (value: T, index: number, array: T[]) => U
- * ): U[]
+ * function Array.mapEach<T, U>(
+ *     target: readonly T[],
+ *     mapper: (
+ *         value: NoInfer<T>,
+ *         index: number,
+ *         target: readonly NoInfer<T>[],
+ *     ) => U,
+ * ): readonly U[]
  * ```
  *
  * Applies the `mapper` function to each element in `array`, returning a new array with the mapped elements.
@@ -33,12 +36,12 @@ import { cloneArray } from "@monstermann/remmi"
  *
  */
 export const mapEach: {
-    <T, U>(mapper: ArrayMap<T, U>): (target: T[]) => U[]
-    <T, U>(mapper: ArrayMap<T, U>): (target: readonly T[]) => readonly U[]
+    <T, U>(mapper: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => U): (target: T[]) => U[]
+    <T, U>(mapper: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => U): (target: readonly T[]) => readonly U[]
 
-    <T, U>(target: T[], mapper: ArrayMap<T, U>): U[]
-    <T, U>(target: readonly T[], mapper: ArrayMap<T, U>): readonly U[]
-} = dfdlT(<T, U>(target: T[], mapper: ArrayMap<T, U>): U[] => {
+    <T, U>(target: T[], mapper: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => U): U[]
+    <T, U>(target: readonly T[], mapper: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => U): readonly U[]
+} = dfdlT(<T, U>(target: T[], mapper: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => U): U[] => {
     let result: any
     for (let i = 0; i < target.length; i++) {
         const prev = target[i]! as T

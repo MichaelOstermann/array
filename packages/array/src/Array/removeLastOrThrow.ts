@@ -5,7 +5,10 @@ import { cloneArray } from "@monstermann/remmi"
  * # removeLastOrThrow
  *
  * ```ts
- * function Array.removeLastOrThrow(array: T[], value: U): T[]
+ * function Array.removeLastOrThrow<T>(
+ *     target: readonly T[],
+ *     value: NoInfer<T>,
+ * ): T[]
  * ```
  *
  * Removes the last occurrence of `value` from `target` array. If the value is not found, throws an error.

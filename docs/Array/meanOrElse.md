@@ -1,10 +1,10 @@
 # meanOrElse
 
 ```ts
-function Array.meanOrElse(
-    array: number[],
-    fallback: (array: number[]) => U
-): number | U
+function Array.meanOrElse<T>(
+    target: readonly number[],
+    orElse: (target: readonly number[]) => T,
+): number | T
 ```
 
 Returns the mean (average) value from `array`, or calls `orElse` if the array is empty.

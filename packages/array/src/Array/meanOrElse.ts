@@ -1,14 +1,13 @@
-import type { OrElse } from "./internals/types"
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
  * # meanOrElse
  *
  * ```ts
- * function Array.meanOrElse(
- *     array: number[],
- *     fallback: (array: number[]) => U
- * ): number | U
+ * function Array.meanOrElse<T>(
+ *     target: readonly number[],
+ *     orElse: (target: readonly number[]) => T,
+ * ): number | T
  * ```
  *
  * Returns the mean (average) value from `array`, or calls `orElse` if the array is empty.
@@ -38,9 +37,9 @@ import { dfdlT } from "@monstermann/dfdl"
  *
  */
 export const meanOrElse: {
-    <T>(orElse: OrElse<number, T>): (target: readonly number[]) => number | T
-    <T>(target: readonly number[], orElse: OrElse<number, T>): number | T
-} = dfdlT(<T>(target: readonly number[], orElse: OrElse<number, T>): number | T => {
+    <T>(orElse: (target: readonly number[]) => T): (target: readonly number[]) => number | T
+    <T>(target: readonly number[], orElse: (target: readonly number[]) => T): number | T
+} = dfdlT(<T>(target: readonly number[], orElse: (target: readonly number[]) => T): number | T => {
     if (target.length === 0) return orElse(target)
     return target.reduce((acc, val) => acc + val, 0) / target.length
 }, 2)

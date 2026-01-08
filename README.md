@@ -117,7 +117,10 @@ build({
 ### append
 
 ```ts
-function Array.append(array: T[], value: T): T[]
+function Array.append<T>(
+    target: readonly T[],
+    value: NoInfer<T>,
+): T[]
 ```
 
 Appends `value` to the end of `array`.
@@ -139,7 +142,10 @@ pipe([1, 2, 3], Array.append(4)); // [1, 2, 3, 4]
 ### at
 
 ```ts
-function Array.at(array: T[], offset: number): T | undefined
+function Array.at<T>(
+    target: readonly T[],
+    offset: number,
+): T | undefined
 ```
 
 Returns the value at the specified `offset`.
@@ -161,7 +167,11 @@ pipe([1, 2, 3], Array.at(-1)); // 3
 ### atOr
 
 ```ts
-function Array.atOr(array: T[], offset: number, fallback: U): T | U
+function Array.atOr<T, U>(
+    target: readonly T[],
+    offset: number,
+    or: U,
+): Exclude<T, null | undefined> | U
 ```
 
 Returns the value at the specified `offset`. Returns `fallback` if the `offset` was out of range, or the retrieved value was nullable.
@@ -183,11 +193,11 @@ pipe([1, null], Array.atOr(-1, 2)); // 2
 ### atOrElse
 
 ```ts
-function Array.atOrElse(
-    array: T[],
+function Array.atOrElse<T, U>(
+    target: readonly T[],
     offset: number,
-    fallback: (array: T[]) => U
-): T | U
+    orElse: (target: readonly NoInfer<T>[]) => U,
+): Exclude<T, null | undefined> | U
 ```
 
 Returns the value at the specified `offset`. Calls `fallback` if the `offset` was out of range, or the retrieved value was nullable.
@@ -212,7 +222,10 @@ pipe(
 ### atOrThrow
 
 ```ts
-function Array.atOrThrow(array: T[], offset: number): T
+function Array.atOrThrow<T>(
+    target: readonly T[],
+    offset: number,
+): Exclude<T, null | undefined>
 ```
 
 Returns the value at the specified `offset`, throws an exception if the `offset` was out of range, or the retrieved value was nullable.
@@ -234,7 +247,7 @@ pipe([1, null], Array.atOrThrow(-1)); // Error
 ### clone
 
 ```ts
-function Array.clone(array: T[]): T[]
+function Array.clone<T>(target: readonly T[]): T[]
 ```
 
 Creates a shallow copy of `array`, unless marked as mutable with `markAsMutable` inside a mutation context (see [@monstermann/remmi](https://michaelostermann.github.io/remmi/#clonearray-array)).
@@ -256,7 +269,9 @@ pipe([1, 2, 3, 4], Array.clone()); // [1, 2, 3, 4]
 ### compact
 
 ```ts
-function Array.compact(array: T[]): T[]
+function Array.compact<T>(
+    target: readonly T[],
+): readonly Exclude<T, null | undefined>[]
 ```
 
 Removes all nullable values from `array`.
@@ -278,7 +293,7 @@ pipe([1, null, undefined], Array.compact()); // [1]
 ### concat
 
 ```ts
-function Array.concat(array: T[], source: T[]): T[]
+function Array.concat<T>(target: T[], source: NoInfer<T>[]): T[]
 ```
 
 Concatenates `source` array to the end of `array`, returning a new array with the combined elements.
@@ -300,9 +315,13 @@ pipe([1, 2], Array.concat([3, 4])); // [1, 2, 3, 4]
 ### countBy
 
 ```ts
-function Array.countBy(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean
+function Array.countBy<T>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
 ): number
 ```
 
@@ -327,10 +346,7 @@ pipe([1, 2, 3, 4, 5], Array.countBy(isEven)); // 2
 ### create
 
 ```ts
-function Array.create(
-    target: Iterable<T> | ArrayLike<T>,
-    map?: (value: T, index: number) => U
-): U[]
+function Array.create(...args: any): any
 ```
 
 An alias for `Array.from(target, map?)`.
@@ -346,7 +362,10 @@ Array.create({ length: 3 }, (_, i) => i); // [0, 1, 2]
 ### drop
 
 ```ts
-function Array.drop(array: T[], amount: number): T[]
+function Array.drop<T>(
+    target: readonly T[],
+    amount: number,
+): readonly T[]
 ```
 
 Removes the first `amount` elements from `array`.
@@ -368,7 +387,10 @@ pipe([1, 2, 3, 4, 5], Array.drop(2)); // [3, 4, 5]
 ### dropLast
 
 ```ts
-function Array.dropLast(array: T[], amount: number): T[]
+function Array.dropLast<T>(
+    target: readonly T[],
+    amount: number,
+): readonly T[]
 ```
 
 Removes `amount` of elements from the end of the `target` array.
@@ -406,9 +428,13 @@ empty; // []
 ### every
 
 ```ts
-function Array.every(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean
+function Array.every<T>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
 ): boolean
 ```
 
@@ -437,10 +463,14 @@ pipe([2, 4, 7], Array.every(isEven)); // false
 ### filter
 
 ```ts
-function Array.filter(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean
-): T[]
+function Array.filter<T>(
+    target: readonly T[],
+    by: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
+): readonly T[]
 ```
 
 Filters elements from `target` array based on the predicate function `by`.
@@ -465,9 +495,13 @@ pipe(
 ### find
 
 ```ts
-function Array.find(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean
+function Array.find<T>(
+    target: T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
 ): T | undefined
 ```
 
@@ -493,9 +527,13 @@ pipe(
 ### findIndex
 
 ```ts
-function Array.findIndex(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean
+function Array.findIndex<T>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
 ): number
 ```
 
@@ -521,10 +559,14 @@ pipe(
 ### findIndexOr
 
 ```ts
-function Array.findIndexOr(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean,
-    fallback: U
+function Array.findIndexOr<T, U>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
+    or: U,
 ): number | U
 ```
 
@@ -556,10 +598,14 @@ pipe(
 ### findIndexOrElse
 
 ```ts
-function Array.findIndexOrElse(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean,
-    fallback: (array: T[]) => U
+function Array.findIndexOrElse<T, U>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
+    orElse: (target: readonly NoInfer<T>[]) => U,
 ): number | U
 ```
 
@@ -606,9 +652,13 @@ pipe(
 ### findIndexOrThrow
 
 ```ts
-function Array.findIndexOrThrow(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean
+function Array.findIndexOrThrow<T>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
 ): number
 ```
 
@@ -640,9 +690,13 @@ pipe(
 ### findLast
 
 ```ts
-function Array.findLast(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean
+function Array.findLast<T>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
 ): T | undefined
 ```
 
@@ -668,9 +722,13 @@ pipe(
 ### findLastIndex
 
 ```ts
-function Array.findLastIndex(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean
+function Array.findLastIndex<T>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
 ): number
 ```
 
@@ -696,10 +754,14 @@ pipe(
 ### findLastIndexOr
 
 ```ts
-function Array.findLastIndexOr(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean,
-    fallback: U
+function Array.findLastIndexOr<T, U>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
+    or: U,
 ): number | U
 ```
 
@@ -731,10 +793,14 @@ pipe(
 ### findLastIndexOrElse
 
 ```ts
-function Array.findLastIndexOrElse(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean,
-    fallback: (array: T[]) => U
+function Array.findLastIndexOrElse<T, U>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
+    orElse: (target: readonly NoInfer<T>[]) => U,
 ): number | U
 ```
 
@@ -781,9 +847,13 @@ pipe(
 ### findLastIndexOrThrow
 
 ```ts
-function Array.findLastIndexOrThrow(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean
+function Array.findLastIndexOrThrow<T>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
 ): number
 ```
 
@@ -815,11 +885,15 @@ pipe(
 ### findLastOr
 
 ```ts
-function Array.findLastOr(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean,
-    fallback: U
-): T | U
+function Array.findLastOr<T, V>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
+    or: V,
+): Exclude<T, null | undefined> | V
 ```
 
 Returns the last element in `array` that satisfies the provided `predicate` function, or `fallback` if no element is found.
@@ -844,11 +918,15 @@ pipe(
 ### findLastOrElse
 
 ```ts
-function Array.findLastOrElse(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean,
-    fallback: (array: T[]) => U
-): T | U
+function Array.findLastOrElse<T, V>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
+    orElse: (target: readonly NoInfer<T>[]) => V,
+): Exclude<T, null | undefined> | V
 ```
 
 Returns the last element in `array` that satisfies the provided `predicate` function, or the result of calling `callback` with the array if no element is found.
@@ -880,10 +958,14 @@ pipe(
 ### findLastOrThrow
 
 ```ts
-function Array.findLastOrThrow(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean
-): T
+function Array.findLastOrThrow<T>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
+): Exclude<T, null | undefined>
 ```
 
 Returns the last element in `array` that satisfies the provided `predicate` function, or throws an error if no element is found.
@@ -908,11 +990,19 @@ pipe(
 ### findMap
 
 ```ts
-function Array.findMap(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean,
-    mapper: (value: T, index: number, array: T[]) => U
-): T[]
+function Array.findMap<T>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
+    mapper: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => T,
+): readonly T[]
 ```
 
 Finds the first element in `array` that satisfies the provided `predicate` function and applies the `mapper` function to it, returning a new array with the mapped element.
@@ -944,11 +1034,19 @@ pipe(
 ### findMapAll
 
 ```ts
-function Array.findMapAll(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean,
-    mapper: (value: T, index: number, array: T[]) => U
-): T[]
+function Array.findMapAll<T>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
+    mapper: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => T,
+): readonly T[]
 ```
 
 Finds all elements in `array` that satisfy the provided `predicate` function and applies the `mapper` function to each of them, returning a new array with the mapped elements.
@@ -980,11 +1078,19 @@ pipe(
 ### findMapLast
 
 ```ts
-function Array.findMapLast(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean,
-    mapper: (value: T, index: number, array: T[]) => U
-): T[]
+function Array.findMapLast<T>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
+    mapper: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => T,
+): readonly T[]
 ```
 
 Finds the last element in `array` that satisfies the provided `predicate` function and applies the `mapper` function to it, returning a new array with the mapped element.
@@ -1016,12 +1122,20 @@ pipe(
 ### findMapLastOr
 
 ```ts
-function Array.findMapLastOr(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean,
-    mapper: (value: T, index: number, array: T[]) => U,
-    fallback: V
-): T[] | V
+function Array.findMapLastOr<T, V>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
+    mapper: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => T,
+    or: V,
+): readonly T[] | V
 ```
 
 Finds the last element in `array` that satisfies the provided `predicate` function and applies the `mapper` function to it, returning a new array with the mapped element, or `fallback` if no element is found.
@@ -1055,12 +1169,20 @@ pipe(
 ### findMapLastOrElse
 
 ```ts
-function Array.findMapLastOrElse(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean,
-    mapper: (value: T, index: number, array: T[]) => U,
-    fallback: (array: T[]) => V
-): T[] | V
+function Array.findMapLastOrElse<T, V>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
+    mapper: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => T,
+    orElse: (target: readonly NoInfer<T>[]) => V,
+): readonly T[] | V
 ```
 
 Finds the last element in `array` that satisfies the provided `predicate` function and applies the `mapper` function to it, returning a new array with the mapped element, or the result of calling `callback` with the array if no element is found.
@@ -1094,11 +1216,19 @@ pipe(
 ### findMapLastOrThrow
 
 ```ts
-function Array.findMapLastOrThrow(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean,
-    mapper: (value: T, index: number, array: T[]) => U
-): T[]
+function Array.findMapLastOrThrow<T>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
+    mapper: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => T,
+): readonly T[]
 ```
 
 Finds the last element in `array` that satisfies the provided `predicate` function and applies the `mapper` function to it, returning a new array with the mapped element, or throws an error if no element is found.
@@ -1130,12 +1260,20 @@ pipe(
 ### findMapOr
 
 ```ts
-function Array.findMapOr(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean,
-    mapper: (value: T, index: number, array: T[]) => U,
-    fallback: V
-): T[] | V
+function Array.findMapOr<T, V>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
+    mapper: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => T,
+    or: V,
+): readonly T[] | V
 ```
 
 Finds the first element in `array` that satisfies the provided `predicate` function and applies the `mapper` function to it, returning a new array with the mapped element, or `fallback` if no element is found.
@@ -1169,12 +1307,20 @@ pipe(
 ### findMapOrElse
 
 ```ts
-function Array.findMapOrElse(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean,
-    mapper: (value: T, index: number, array: T[]) => U,
-    fallback: (array: T[]) => V
-): T[] | V
+function Array.findMapOrElse<T, V>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
+    mapper: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => T,
+    orElse: (target: readonly NoInfer<T>[]) => V,
+): readonly T[] | V
 ```
 
 Finds the first element in `array` that satisfies the provided `predicate` function and applies the `mapper` function to it, returning a new array with the mapped element, or the result of calling `callback` with the array if no element is found.
@@ -1208,11 +1354,19 @@ pipe(
 ### findMapOrThrow
 
 ```ts
-function Array.findMapOrThrow(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean,
-    mapper: (value: T, index: number, array: T[]) => U
-): T[]
+function Array.findMapOrThrow<T>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
+    mapper: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => T,
+): readonly T[]
 ```
 
 Finds the first element in `array` that satisfies the provided `predicate` function and applies the `mapper` function to it, returning a new array with the mapped element, or throws an error if no element is found.
@@ -1244,11 +1398,15 @@ pipe(
 ### findOr
 
 ```ts
-function Array.findOr(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean,
-    fallback: U
-): T | U
+function Array.findOr<T, V>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
+    or: V,
+): Exclude<T, null | undefined> | V
 ```
 
 Returns the first element in `array` that satisfies the provided `predicate` function, or `fallback` if no element is found.
@@ -1273,11 +1431,15 @@ pipe(
 ### findOrElse
 
 ```ts
-function Array.findOrElse(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean,
-    fallback: (array: T[]) => U
-): T | U
+function Array.findOrElse<T, V>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
+    orElse: (target: readonly NoInfer<T>[]) => V,
+): Exclude<T, null | undefined> | V
 ```
 
 Returns the first element in `array` that satisfies the provided `predicate` function, or the result of calling `callback` with the array if no element is found.
@@ -1309,10 +1471,14 @@ pipe(
 ### findOrThrow
 
 ```ts
-function Array.findOrThrow(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean
-): T
+function Array.findOrThrow<T>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
+): Exclude<T, null | undefined>
 ```
 
 Returns the first element in `array` that satisfies the provided `predicate` function, or throws an error if no element is found.
@@ -1337,10 +1503,14 @@ pipe(
 ### findRemove
 
 ```ts
-function Array.findRemove(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean
-): T[]
+function Array.findRemove<T>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
+): readonly T[]
 ```
 
 Finds the first element in `array` that satisfies the provided `predicate` function and removes it, returning a new array without the removed element.
@@ -1365,10 +1535,14 @@ pipe(
 ### findRemoveLast
 
 ```ts
-function Array.findRemoveLast(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean
-): T[]
+function Array.findRemoveLast<T>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
+): readonly T[]
 ```
 
 Finds the last element in `array` that satisfies the provided `predicate` function and removes it, returning a new array without the removed element.
@@ -1393,10 +1567,14 @@ pipe(
 ### findRemoveLastOr
 
 ```ts
-function Array.findRemoveLastOr(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean,
-    fallback: U
+function Array.findRemoveLastOr<T, U>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
+    or: U,
 ): T[] | U
 ```
 
@@ -1422,10 +1600,14 @@ pipe(
 ### findRemoveLastOrElse
 
 ```ts
-function Array.findRemoveLastOrElse(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean,
-    fallback: (array: T[]) => U
+function Array.findRemoveLastOrElse<T, U>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
+    orElse: (target: readonly NoInfer<T>[]) => U,
 ): T[] | U
 ```
 
@@ -1458,9 +1640,13 @@ pipe(
 ### findRemoveLastOrThrow
 
 ```ts
-function Array.findRemoveLastOrThrow(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean
+function Array.findRemoveLastOrThrow<T>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
 ): T[]
 ```
 
@@ -1486,10 +1672,14 @@ pipe(
 ### findRemoveOr
 
 ```ts
-function Array.findRemoveOr(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean,
-    fallback: U
+function Array.findRemoveOr<T, U>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
+    or: U,
 ): T[] | U
 ```
 
@@ -1515,10 +1705,14 @@ pipe(
 ### findRemoveOrElse
 
 ```ts
-function Array.findRemoveOrElse(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean,
-    fallback: (array: T[]) => U
+function Array.findRemoveOrElse<T, U>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
+    orElse: (target: readonly NoInfer<T>[]) => U,
 ): T[] | U
 ```
 
@@ -1551,9 +1745,13 @@ pipe(
 ### findRemoveOrThrow
 
 ```ts
-function Array.findRemoveOrThrow(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean
+function Array.findRemoveOrThrow<T>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
 ): T[]
 ```
 
@@ -1579,11 +1777,15 @@ pipe(
 ### findReplace
 
 ```ts
-function Array.findReplace(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean,
-    value: U
-): T[]
+function Array.findReplace<T>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
+    replacement: NoInfer<T>,
+): readonly T[]
 ```
 
 Finds the first element in `array` that satisfies the provided `predicate` function and replaces it with `replacement`, returning a new array with the replaced element.
@@ -1608,11 +1810,15 @@ pipe(
 ### findReplaceLast
 
 ```ts
-function Array.findReplaceLast(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean,
-    value: U
-): T[]
+function Array.findReplaceLast<T>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
+    replacement: NoInfer<T>,
+): readonly T[]
 ```
 
 Finds the last element in `array` that satisfies the provided `predicate` function and replaces it with `replacement`, returning a new array with the replaced element.
@@ -1637,12 +1843,16 @@ pipe(
 ### findReplaceLastOr
 
 ```ts
-function Array.findReplaceLastOr(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean,
-    value: U,
-    fallback: V
-): T[] | V
+function Array.findReplaceLastOr<T, U>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
+    replacement: NoInfer<T>,
+    or: U,
+): readonly T[] | U
 ```
 
 Finds the last element in `array` that satisfies the provided `predicate` function and replaces it with `replacement`, returning a new array with the replaced element, or `fallback` if no element is found.
@@ -1667,12 +1877,16 @@ pipe(
 ### findReplaceLastOrElse
 
 ```ts
-function Array.findReplaceLastOrElse(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean,
-    value: U,
-    fallback: (array: T[]) => V
-): T[] | V
+function Array.findReplaceLastOrElse<T, U>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
+    replacement: NoInfer<T>,
+    orElse: (target: readonly NoInfer<T>[]) => U,
+): readonly T[] | U
 ```
 
 Finds the last element in `array` that satisfies the provided `predicate` function and replaces it with `replacement`, returning a new array with the replaced element, or the result of calling `callback` with the array if no element is found.
@@ -1706,11 +1920,15 @@ pipe(
 ### findReplaceLastOrThrow
 
 ```ts
-function Array.findReplaceLastOrThrow(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean,
-    value: U
-): T[]
+function Array.findReplaceLastOrThrow<T>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
+    replacement: NoInfer<T>,
+): readonly T[]
 ```
 
 Finds the last element in `array` that satisfies the provided `predicate` function and replaces it with `replacement`, returning a new array with the replaced element, or throws an error if no element is found.
@@ -1735,12 +1953,16 @@ pipe(
 ### findReplaceOr
 
 ```ts
-function Array.findReplaceOr(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean,
-    value: U,
-    fallback: V
-): T[] | V
+function Array.findReplaceOr<T, U>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
+    replacement: NoInfer<T>,
+    or: U,
+): readonly T[] | U
 ```
 
 Finds the first element in `array` that satisfies the provided `predicate` function and replaces it with `replacement`, returning a new array with the replaced element, or `fallback` if no element is found.
@@ -1765,12 +1987,16 @@ pipe(
 ### findReplaceOrElse
 
 ```ts
-function Array.findReplaceOrElse(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean,
-    value: U,
-    fallback: (array: T[]) => V
-): T[] | V
+function Array.findReplaceOrElse<T, U>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
+    replacement: NoInfer<T>,
+    orElse: (target: readonly NoInfer<T>[]) => U,
+): readonly T[] | U
 ```
 
 Finds the first element in `array` that satisfies the provided `predicate` function and replaces it with `replacement`, returning a new array with the replaced element, or the result of calling `callback` with the array if no element is found.
@@ -1804,11 +2030,15 @@ pipe(
 ### findReplaceOrThrow
 
 ```ts
-function Array.findReplaceOrThrow(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean,
-    value: U
-): T[]
+function Array.findReplaceOrThrow<T>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
+    replacement: NoInfer<T>,
+): readonly T[]
 ```
 
 Finds the first element in `array` that satisfies the provided `predicate` function and replaces it with `replacement`, returning a new array with the replaced element, or throws an error if no element is found.
@@ -1833,7 +2063,7 @@ pipe(
 ### first
 
 ```ts
-function Array.first(array: T[]): T | undefined
+function Array.first<T>(target: readonly T[]): T | undefined
 ```
 
 Returns the first element of `array`, or `undefined` if the array is empty.
@@ -1855,7 +2085,10 @@ pipe([1, 2, 3, 4], Array.first()); // 1
 ### firstOr
 
 ```ts
-function Array.firstOr(array: T[], fallback: U): T | U
+function Array.firstOr<T, U>(
+    target: readonly T[],
+    or: U,
+): Exclude<T, null | undefined> | U
 ```
 
 Returns the first element of `array`, or `fallback` if the array is empty.
@@ -1877,7 +2110,10 @@ pipe([1, 2, 3, 4], Array.firstOr(0)); // 1
 ### firstOrElse
 
 ```ts
-function Array.firstOrElse(array: T[], fallback: (array: T[]) => U): T | U
+function Array.firstOrElse<T, U>(
+    target: readonly T[],
+    orElse: (target: readonly NoInfer<T>[]) => U,
+): Exclude<T, null | undefined> | U
 ```
 
 Returns the first element of `array`, or the result of calling `callback` with the array if the array is empty.
@@ -1902,7 +2138,9 @@ pipe(
 ### firstOrThrow
 
 ```ts
-function Array.firstOrThrow(array: T[]): T
+function Array.firstOrThrow<T>(
+    target: readonly T[],
+): Exclude<T, null | undefined>
 ```
 
 Returns the first element of `array`, or throws an error if the array is empty.
@@ -1924,10 +2162,14 @@ pipe([1, 2, 3, 4], Array.firstOrThrow()); // 1
 ### flatMap
 
 ```ts
-function Array.flatMap(
-    array: T[],
-    mapper: (value: T, index: number, array: T[]) => U[]
-): U[]
+function Array.flatMap<T, U>(
+    target: readonly T[],
+    mapper: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => U[],
+): readonly U[]
 ```
 
 Maps each element in `array` using the `mapper` function and flattens the result by one level.
@@ -1952,10 +2194,14 @@ pipe(
 ### forEach
 
 ```ts
-function Array.forEach(
-    array: T[],
-    callback: (value: T, index: number, array: T[]) => void
-): T[]
+function Array.forEach<T>(
+    target: readonly T[],
+    callback: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => any,
+): readonly T[]
 ```
 
 Executes the provided `callback` function once for each element in `array` and returns the original array.
@@ -1980,10 +2226,14 @@ pipe(
 ### forEachRight
 
 ```ts
-function Array.forEachRight(
-    array: T[],
-    callback: (value: T, index: number, array: T[]) => void
-): T[]
+function Array.forEachRight<T>(
+    target: readonly T[],
+    callback: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => any,
+): readonly T[]
 ```
 
 Executes the provided `callback` function once for each element in `array` in reverse order and returns the original array.
@@ -2008,10 +2258,14 @@ pipe(
 ### groupBy
 
 ```ts
-function Array.groupBy(
-    array: T[],
-    keySelector: (value: T, index: number, array: T[]) => string
-): Record<string, T[]>
+function Array.groupBy<T extends object, U extends PropertyKey>(
+    target: readonly T[],
+    by: (
+        value: NoInfer<T>,
+        idx: number,
+        target: readonly NoInfer<T>[],
+    ) => U,
+): Record<U, T[]>
 ```
 
 Groups elements in `array` by the result of calling `grouper` function on each element, optionally transforming each element with `transform`, returning an object with keys as group values and values as arrays of elements.
@@ -2043,7 +2297,10 @@ pipe(
 ### includes
 
 ```ts
-function Array.includes(array: T[], value: T): boolean
+function Array.includes<T>(
+    target: readonly T[],
+    value: NoInfer<T>,
+): boolean
 ```
 
 Returns `true` if `array` contains `value`, otherwise returns `false`.
@@ -2065,7 +2322,10 @@ pipe([1, 2, 3, 4], Array.includes(3)); // true
 ### includesAll
 
 ```ts
-function Array.includesAll(array: T[], values: T[]): boolean
+function Array.includesAll<T>(
+    target: readonly T[],
+    values: Iterable<NoInfer<T>>,
+): boolean
 ```
 
 Returns `true` if `array` contains all `values`, otherwise returns `false`. Supports iterables for the `values` parameter.
@@ -2087,7 +2347,10 @@ pipe([1, 2, 3, 4], Array.includesAll([2, 3])); // true
 ### includesAny
 
 ```ts
-function Array.includesAny(array: T[], values: T[]): boolean
+function Array.includesAny<T>(
+    target: readonly T[],
+    values: Iterable<NoInfer<T>>,
+): boolean
 ```
 
 Returns `true` if `array` contains any of the `values`, otherwise returns `false`. Supports iterables for the `values` parameter.
@@ -2109,7 +2372,10 @@ pipe([1, 2, 3, 4], Array.includesAny([5, 6, 2])); // true
 ### includesNone
 
 ```ts
-function Array.includesNone(array: T[], values: T[]): boolean
+function Array.includesNone<T, U extends T>(
+    target: readonly T[],
+    values: Iterable<U>,
+): target is Exclude<T, U>[]
 ```
 
 Returns `true` if `array` contains none of the `values`, otherwise returns `false`. Supports iterables for the `values` parameter.
@@ -2131,10 +2397,14 @@ pipe([1, 2, 3, 4], Array.includesNone([5, 6, 7])); // true
 ### indexBy
 
 ```ts
-function Array.indexBy(
-    array: T[],
-    keySelector: (value: T, index: number, array: T[]) => string
-): Record<string, T>
+function Array.indexBy<T extends object, U extends PropertyKey>(
+    target: readonly T[],
+    by: (
+        value: NoInfer<T>,
+        idx: number,
+        target: readonly NoInfer<T>[],
+    ) => U,
+): Record<U, T>
 ```
 
 Creates a record by indexing the `target` array using the `by` function to generate keys. Optionally transforms values using the `transform` function.
@@ -2179,7 +2449,10 @@ pipe(
 ### indexOf
 
 ```ts
-function Array.indexOf(array: T[], value: T): number
+function Array.indexOf<T>(
+    target: readonly T[],
+    value: NoInfer<T>,
+): number
 ```
 
 Returns the first index at which `value` can be found in `array`, or -1 if it is not present.
@@ -2201,7 +2474,11 @@ pipe([1, 2, 3, 2, 4], Array.indexOf(2)); // 1
 ### indexOfOr
 
 ```ts
-function Array.indexOfOr(array: T[], value: T, fallback: U): number | U
+function Array.indexOfOr<T, U>(
+    target: readonly T[],
+    value: NoInfer<T>,
+    or: U,
+): number | U
 ```
 
 Returns the index of the first occurrence of `value` in `target`. If `value` is not found, returns `or`.
@@ -2225,10 +2502,10 @@ pipe([1, 2, 3], Array.indexOfOr(4, -1)); // -1
 ### indexOfOrElse
 
 ```ts
-function Array.indexOfOrElse(
-    array: T[],
-    value: T,
-    fallback: (array: T[]) => U
+function Array.indexOfOrElse<T, U>(
+    target: readonly T[],
+    value: NoInfer<T>,
+    orElse: (target: readonly NoInfer<T>[]) => U,
 ): number | U
 ```
 
@@ -2260,7 +2537,10 @@ pipe(
 ### indexOfOrThrow
 
 ```ts
-function Array.indexOfOrThrow(array: T[], value: T): number
+function Array.indexOfOrThrow<T>(
+    target: readonly T[],
+    value: NoInfer<T>,
+): number
 ```
 
 Returns the index of the first occurrence of `value` in `target`. If `value` is not found, throws an error.
@@ -2284,7 +2564,11 @@ pipe([1, 2, 3], Array.indexOfOrThrow(4)); // throws FnError
 ### insertAllAt
 
 ```ts
-function Array.insertAllAt(array: T[], index: number, values: U[]): T[]
+function Array.insertAllAt<T>(
+    target: readonly T[],
+    idx: number,
+    values: Iterable<NoInfer<T>>,
+): readonly T[]
 ```
 
 Inserts all elements from `values` at the specified `index` in `array`, returning a new array with the inserted elements. Supports iterables for the `values` parameter.
@@ -2306,12 +2590,12 @@ pipe([1, 2, 3], Array.insertAllAt(1, [10, 20])); // [1, 10, 20, 2, 3]
 ### insertAllAtOr
 
 ```ts
-function Array.insertAllAtOr(
-    array: T[],
-    index: number,
-    values: U[],
-    fallback: V
-): T[] | V
+function Array.insertAllAtOr<T, U>(
+    target: readonly T[],
+    idx: number,
+    values: Iterable<NoInfer<T>>,
+    or: U,
+): readonly T[] | U
 ```
 
 Inserts all `values` at the specified `idx` in `target`. If the index is out of bounds, returns `or`. Supports iterables.
@@ -2335,12 +2619,12 @@ pipe([1, 2, 3], Array.insertAllAtOr(5, [8, 9], [])); // []
 ### insertAllAtOrElse
 
 ```ts
-function Array.insertAllAtOrElse(
-    array: T[],
-    index: number,
-    values: U[],
-    fallback: (array: T[]) => V
-): T[] | V
+function Array.insertAllAtOrElse<T, U>(
+    target: readonly T[],
+    idx: number,
+    values: Iterable<NoInfer<T>>,
+    orElse: (target: readonly NoInfer<T>[]) => U,
+): readonly T[] | U
 ```
 
 Inserts all `values` at the specified `idx` in `target`. If the index is out of bounds, calls `orElse` with the original array. Supports iterables.
@@ -2371,7 +2655,11 @@ pipe(
 ### insertAllAtOrThrow
 
 ```ts
-function Array.insertAllAtOrThrow(array: T[], index: number, values: U[]): T[]
+function Array.insertAllAtOrThrow<T>(
+    target: readonly T[],
+    idx: number,
+    values: Iterable<NoInfer<T>>,
+): readonly T[]
 ```
 
 Inserts all `values` at the specified `idx` in `target`. If the index is out of bounds, throws an error. Supports iterables.
@@ -2395,7 +2683,11 @@ pipe([1, 2, 3], Array.insertAllAtOrThrow(5, [8, 9])); // throws FnError
 ### insertAt
 
 ```ts
-function Array.insertAt(array: T[], index: number, value: U): T[]
+function Array.insertAt<T>(
+    target: readonly T[],
+    idx: number,
+    value: NoInfer<T>,
+): readonly T[]
 ```
 
 Inserts `value` at the specified `index` in `array`, returning a new array with the inserted element.
@@ -2417,7 +2709,12 @@ pipe([1, 2, 3], Array.insertAt(1, 10)); // [1, 10, 2, 3]
 ### insertAtOr
 
 ```ts
-function Array.insertAtOr(array: T[], index: number, value: U, fallback: V): T[] | V
+function Array.insertAtOr<T, U>(
+    target: readonly T[],
+    idx: number,
+    value: NoInfer<T>,
+    or: U,
+): T[] | U
 ```
 
 Inserts `value` at the specified `index` in `array`, returning a new array with the inserted element, or `fallback` if the index is out of bounds.
@@ -2439,12 +2736,12 @@ pipe([1, 2, 3], Array.insertAtOr(10, 99, [])); // []
 ### insertAtOrElse
 
 ```ts
-function Array.insertAtOrElse(
-    array: T[],
-    index: number,
-    value: U,
-    fallback: (array: T[]) => V
-): T[] | V
+function Array.insertAtOrElse<T, U>(
+    target: readonly T[],
+    idx: number,
+    value: NoInfer<T>,
+    orElse: (target: readonly NoInfer<T>[]) => U,
+): T[] | U
 ```
 
 Inserts `value` at the specified `index` in `array`, returning a new array with the inserted element, or the result of calling `callback` with the array if the index is out of bounds.
@@ -2469,7 +2766,11 @@ pipe(
 ### insertAtOrThrow
 
 ```ts
-function Array.insertAtOrThrow(array: T[], index: number, value: U): T[]
+function Array.insertAtOrThrow<T>(
+    target: readonly T[],
+    idx: number,
+    value: NoInfer<T>,
+): T[]
 ```
 
 Inserts `value` at the specified `index` in `array`, returning a new array with the inserted element, or throws an error if the index is out of bounds.
@@ -2491,7 +2792,7 @@ pipe([1, 2, 3], Array.insertAtOrThrow(1, 10)); // [1, 10, 2, 3]
 ### is
 
 ```ts
-function Array.is(value: unknown): boolean
+function Array.is(target: unknown): target is readonly unknown[]
 ```
 
 Returns `true` if `value` is an array, otherwise returns `false`.
@@ -2513,7 +2814,7 @@ pipe([1, 2, 3], Array.is()); // true
 ### isEmpty
 
 ```ts
-function Array.isEmpty(array: T[]): boolean
+function Array.isEmpty<T>(target: readonly T[]): boolean
 ```
 
 Returns `true` if `array` has no elements, otherwise returns `false`.
@@ -2535,7 +2836,10 @@ pipe([], Array.isEmpty()); // true
 ### isShallowEqual
 
 ```ts
-function Array.isShallowEqual(target: T[], source: T[]): boolean
+function Array.isShallowEqual<T, U extends T>(
+    target: readonly T[],
+    source: readonly U[],
+): target is U[]
 ```
 
 Returns `true` if `target` and `source` have the same length and their elements are equal using shallow comparison, otherwise returns `false`.
@@ -2557,7 +2861,10 @@ pipe([1, 2, 3], Array.isShallowEqual([1, 2, 3])); // true
 ### join
 
 ```ts
-function Array.join(array: T[], separator?: string): string
+function Array.join<T>(
+    target: readonly T[],
+    separator: string,
+): string
 ```
 
 Joins all elements of `array` into a string, separated by the specified `separator`.
@@ -2579,7 +2886,7 @@ pipe([1, 2, 3], Array.join(", ")); // "1, 2, 3"
 ### last
 
 ```ts
-function Array.last(array: T[]): T | undefined
+function Array.last<T>(target: readonly T[]): T | undefined
 ```
 
 Returns the last element of `array`, or `undefined` if the array is empty.
@@ -2601,7 +2908,10 @@ pipe([1, 2, 3, 4], Array.last()); // 4
 ### lastIndexOf
 
 ```ts
-function Array.lastIndexOf(array: T[], value: T): number
+function Array.lastIndexOf<T>(
+    target: readonly T[],
+    value: NoInfer<T>,
+): number
 ```
 
 Returns the last index at which `value` can be found in `array`, or -1 if it is not present.
@@ -2623,7 +2933,11 @@ pipe([1, 2, 3, 2, 4], Array.lastIndexOf(2)); // 3
 ### lastIndexOfOr
 
 ```ts
-function Array.lastIndexOfOr(array: T[], value: T, fallback: U): number | U
+function Array.lastIndexOfOr<T, U>(
+    target: readonly T[],
+    value: NoInfer<T>,
+    or: U,
+): number | U
 ```
 
 Returns the index of the last occurrence of `value` in `target`. If `value` is not found, returns `or`.
@@ -2647,10 +2961,10 @@ pipe([1, 2, 3], Array.lastIndexOfOr(4, -1)); // -1
 ### lastIndexOfOrElse
 
 ```ts
-function Array.lastIndexOfOrElse(
-    array: T[],
-    value: T,
-    fallback: (array: T[]) => U
+function Array.lastIndexOfOrElse<T, U>(
+    target: readonly T[],
+    value: NoInfer<T>,
+    orElse: (target: readonly NoInfer<T>[]) => U,
 ): number | U
 ```
 
@@ -2682,7 +2996,10 @@ pipe(
 ### lastIndexOfOrThrow
 
 ```ts
-function Array.lastIndexOfOrThrow(array: T[], value: T): number
+function Array.lastIndexOfOrThrow<T>(
+    target: readonly T[],
+    value: NoInfer<T>,
+): number
 ```
 
 Returns the index of the last occurrence of `value` in `target`. If `value` is not found, throws an error.
@@ -2706,7 +3023,10 @@ pipe([1, 2, 3], Array.lastIndexOfOrThrow(4)); // throws FnError
 ### lastOr
 
 ```ts
-function Array.lastOr(array: T[], fallback: U): T | U
+function Array.lastOr<T, U>(
+    target: readonly T[],
+    or: U,
+): Exclude<T, null | undefined> | U
 ```
 
 Returns the last element of `array`, or `fallback` if the array is empty.
@@ -2728,7 +3048,10 @@ pipe([1, 2, 3, 4], Array.lastOr(0)); // 4
 ### lastOrElse
 
 ```ts
-function Array.lastOrElse(array: T[], fallback: (array: T[]) => U): T | U
+function Array.lastOrElse<T, U>(
+    target: readonly T[],
+    orElse: (target: readonly NoInfer<T>[]) => U,
+): Exclude<T, null | undefined> | U
 ```
 
 Returns the last element of `array`, or the result of calling `callback` with the array if the array is empty.
@@ -2753,7 +3076,9 @@ pipe(
 ### lastOrThrow
 
 ```ts
-function Array.lastOrThrow(array: T[]): T
+function Array.lastOrThrow<T>(
+    target: readonly T[],
+): Exclude<T, null | undefined>
 ```
 
 Returns the last element of `array`, or throws an error if the array is empty.
@@ -2775,7 +3100,7 @@ pipe([1, 2, 3, 4], Array.lastOrThrow()); // 4
 ### length
 
 ```ts
-function Array.length(array: T[]): number
+function Array.length<T>(target: readonly T[]): number
 ```
 
 Returns the number of elements in `array`.
@@ -2797,11 +3122,15 @@ pipe([1, 2, 3, 4], Array.length()); // 4
 ### mapAt
 
 ```ts
-function Array.mapAt(
-    array: T[],
-    index: number,
-    mapper: (value: T, index: number, array: T[]) => U
-): T[]
+function Array.mapAt<T>(
+    target: readonly T[],
+    idx: number,
+    map: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => T,
+): readonly T[]
 ```
 
 Applies the `mapper` function to the element at the specified `index` in `array`, returning a new array with the mapped element.
@@ -2826,12 +3155,16 @@ pipe(
 ### mapAtOr
 
 ```ts
-function Array.mapAtOr(
-    array: T[],
-    index: number,
-    mapper: (value: T, index: number, array: T[]) => U,
-    fallback: V
-): T[] | V
+function Array.mapAtOr<T, U>(
+    target: readonly T[],
+    idx: number,
+    map: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => T,
+    or: U,
+): readonly T[] | U
 ```
 
 Applies the `mapper` function to the element at the specified `index` in `array`, returning a new array with the mapped element, or `fallback` if the index is out of bounds.
@@ -2856,12 +3189,16 @@ pipe(
 ### mapAtOrElse
 
 ```ts
-function Array.mapAtOrElse(
-    array: T[],
-    index: number,
-    mapper: (value: T, index: number, array: T[]) => U,
-    fallback: (array: T[]) => V
-): T[] | V
+function Array.mapAtOrElse<T, U>(
+    target: readonly T[],
+    idx: number,
+    map: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => T,
+    orElse: (target: readonly NoInfer<T>[]) => U,
+): readonly T[] | U
 ```
 
 Applies the `mapper` function to the element at the specified `index` in `array`, returning a new array with the mapped element, or the result of calling `callback` with the array if the index is out of bounds.
@@ -2895,11 +3232,15 @@ pipe(
 ### mapAtOrThrow
 
 ```ts
-function Array.mapAtOrThrow(
-    array: T[],
-    index: number,
-    mapper: (value: T, index: number, array: T[]) => U
-): T[]
+function Array.mapAtOrThrow<T>(
+    target: readonly T[],
+    idx: number,
+    map: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => T,
+): readonly T[]
 ```
 
 Applies the `mapper` function to the element at the specified `index` in `array`, returning a new array with the mapped element, or throws an error if the index is out of bounds.
@@ -2924,10 +3265,14 @@ pipe(
 ### mapEach
 
 ```ts
-function Array.mapEach(
-    array: T[],
-    mapper: (value: T, index: number, array: T[]) => U
-): U[]
+function Array.mapEach<T, U>(
+    target: readonly T[],
+    mapper: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => U,
+): readonly U[]
 ```
 
 Applies the `mapper` function to each element in `array`, returning a new array with the mapped elements.
@@ -2952,7 +3297,10 @@ pipe(
 ### maxOr
 
 ```ts
-function Array.maxOr(array: number[], fallback: U): number | U
+function Array.maxOr<T>(
+    target: readonly number[],
+    or: T,
+): number | T
 ```
 
 Returns the maximum value in the number `array`, or `fallback` if the array is empty.
@@ -2974,10 +3322,10 @@ pipe([1, 3, 2, 5], Array.maxOr(0)); // 5
 ### maxOrElse
 
 ```ts
-function Array.maxOrElse(
-    array: number[],
-    fallback: (array: number[]) => U
-): number | U
+function Array.maxOrElse<T>(
+    target: readonly number[],
+    orElse: (target: readonly number[]) => T,
+): number | T
 ```
 
 Returns the maximum value from `array`, or calls `orElse` if the array is empty.
@@ -3008,7 +3356,7 @@ pipe(
 ### maxOrThrow
 
 ```ts
-function Array.maxOrThrow(array: number[]): number
+function Array.maxOrThrow(target: readonly number[]): number
 ```
 
 Returns the maximum value from `array`, or throws an error if the array is empty.
@@ -3032,7 +3380,10 @@ pipe([], Array.maxOrThrow()); // throws FnError
 ### meanOr
 
 ```ts
-function Array.meanOr(array: number[], fallback: U): number | U
+function Array.meanOr(
+    target: readonly number[],
+    or: number,
+): number
 ```
 
 Returns the mean (average) value of the number `array`, or `fallback` if the array is empty.
@@ -3054,10 +3405,10 @@ pipe([1, 2, 3, 4], Array.meanOr(0)); // 2.5
 ### meanOrElse
 
 ```ts
-function Array.meanOrElse(
-    array: number[],
-    fallback: (array: number[]) => U
-): number | U
+function Array.meanOrElse<T>(
+    target: readonly number[],
+    orElse: (target: readonly number[]) => T,
+): number | T
 ```
 
 Returns the mean (average) value from `array`, or calls `orElse` if the array is empty.
@@ -3088,7 +3439,7 @@ pipe(
 ### meanOrThrow
 
 ```ts
-function Array.meanOrThrow(array: number[]): number
+function Array.meanOrThrow(target: readonly number[]): number
 ```
 
 Returns the mean (average) value from `array`, or throws an error if the array is empty.
@@ -3112,7 +3463,10 @@ pipe([], Array.meanOrThrow()); // throws FnError
 ### medianOr
 
 ```ts
-function Array.medianOr(array: number[], fallback: U): number | U
+function Array.medianOr(
+    target: readonly number[],
+    or: number,
+): number
 ```
 
 Returns the median value of the number `array`, or `fallback` if the array is empty.
@@ -3134,10 +3488,10 @@ pipe([1, 2, 3, 4, 5], Array.medianOr(0)); // 3
 ### medianOrElse
 
 ```ts
-function Array.medianOrElse(
-    array: number[],
-    fallback: (array: number[]) => U
-): number | U
+function Array.medianOrElse<T>(
+    target: readonly number[],
+    orElse: (target: readonly number[]) => T,
+): number | T
 ```
 
 Returns the median value from `array`, or calls `orElse` if the array is empty.
@@ -3174,7 +3528,7 @@ pipe(
 ### medianOrThrow
 
 ```ts
-function Array.medianOrThrow(array: number[]): number
+function Array.medianOrThrow(target: readonly number[]): number
 ```
 
 Returns the median value from `array`, or throws an error if the array is empty.
@@ -3200,7 +3554,10 @@ pipe([], Array.medianOrThrow()); // throws FnError
 ### minOr
 
 ```ts
-function Array.minOr(array: number[], fallback: U): number | U
+function Array.minOr<T>(
+    target: readonly number[],
+    or: T,
+): number | T
 ```
 
 Returns the minimum value in the number `array`, or `fallback` if the array is empty.
@@ -3222,10 +3579,10 @@ pipe([5, 1, 3, 2], Array.minOr(0)); // 1
 ### minOrElse
 
 ```ts
-function Array.minOrElse(
-    array: number[],
-    fallback: (array: number[]) => U
-): number | U
+function Array.minOrElse<T>(
+    target: readonly number[],
+    orElse: (target: readonly NoInfer<number>[]) => T,
+): number | T
 ```
 
 Returns the minimum value from `target` array, or calls `orElse` if the array is empty.
@@ -3256,7 +3613,7 @@ pipe(
 ### minOrThrow
 
 ```ts
-function Array.minOrThrow(array: number[]): number
+function Array.minOrThrow(target: readonly number[]): number
 ```
 
 Returns the minimum value from `target` array, or throws an error if the array is empty.
@@ -3280,9 +3637,13 @@ pipe([], Array.minOrThrow()); // throws FnError
 ### none
 
 ```ts
-function Array.none(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean
+function Array.none<T>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
 ): boolean
 ```
 
@@ -3308,9 +3669,13 @@ pipe(
 ### partition
 
 ```ts
-function Array.partition(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean
+function Array.partition<T>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
 ): [T[], T[]]
 ```
 
@@ -3336,7 +3701,10 @@ pipe(
 ### prepend
 
 ```ts
-function Array.prepend(array: T[], value: U): T[]
+function Array.prepend<T>(
+    target: readonly T[],
+    value: NoInfer<T>,
+): T[]
 ```
 
 Adds `value` to the beginning of `array`.
@@ -3358,7 +3726,7 @@ pipe([2, 3, 4], Array.prepend(1)); // [1, 2, 3, 4]
 ### random
 
 ```ts
-function Array.random(array: T[]): T | undefined
+function Array.random<T>(target: readonly T[]): T | undefined
 ```
 
 Returns a random element from `array`, or `undefined` if the array is empty.
@@ -3380,7 +3748,7 @@ pipe([1, 2, 3, 4], Array.random()); // 2 (random)
 ### randomOr
 
 ```ts
-function Array.randomOr(array: T[], fallback: U): T | U
+function Array.randomOr<T, U>(target: readonly T[], or: U): T | U
 ```
 
 Returns a random element from `array`, or `fallback` if the array is empty.
@@ -3402,7 +3770,10 @@ pipe([1, 2, 3, 4], Array.randomOr(0)); // 2 (random)
 ### randomOrElse
 
 ```ts
-function Array.randomOrElse(array: T[], fallback: (array: T[]) => U): T | U
+function Array.randomOrElse<T, U>(
+    target: readonly T[],
+    orElse: (target: readonly NoInfer<T>[]) => U,
+): T | U
 ```
 
 Returns a random element from `array`, or the result of calling `callback` with the array if the array is empty.
@@ -3427,10 +3798,15 @@ pipe(
 ### reduce
 
 ```ts
-function Array.reduce(
-    array: T[],
-    reducer: (acc: U, value: T, index: number, array: T[]) => U,
-    initial: U
+function Array.reduce<T, U>(
+    target: readonly T[],
+    acc: U,
+    reducer: (
+        acc: NoInfer<U>,
+        value: NoInfer<T>,
+        idx: number,
+        target: readonly NoInfer<T>[],
+    ) => NoInfer<U>,
 ): U
 ```
 
@@ -3456,10 +3832,14 @@ pipe(
 ### reject
 
 ```ts
-function Array.reject(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean
-): T[]
+function Array.reject<T>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
+): readonly T[]
 ```
 
 Returns a new array with elements from `array` that do not satisfy the provided `predicate` function.
@@ -3484,7 +3864,10 @@ pipe(
 ### remove
 
 ```ts
-function Array.remove(array: T[], value: U): T[]
+function Array.remove<T>(
+    target: readonly T[],
+    value: NoInfer<T>,
+): readonly T[]
 ```
 
 Removes the first occurrence of `value` from `target` array. If the value is not found, returns the original array unchanged.
@@ -3506,7 +3889,12 @@ pipe([1, 2, 3, 2], Array.remove(2)); // [1, 3, 2]
 ### removeAll
 
 ```ts
-function Array.removeAll(array: T[], values: Iterable<T>): T[]
+function Array.removeAll<T, const U extends T>(
+    target: readonly T[],
+    values: Iterable<U>,
+): IsLiteral<U> extends true
+    ? readonly Exclude<T, U>[]
+    : readonly T[]
 ```
 
 Removes all occurrences of each value in `values` from `target` array. If no values are found, returns the original array unchanged.
@@ -3528,7 +3916,10 @@ pipe([1, 2, 3, 2, 4], Array.removeAll([2, 4])); // [1, 3]
 ### removeAt
 
 ```ts
-function Array.removeAt(array: T[], index: number): T[]
+function Array.removeAt<T>(
+    target: readonly T[],
+    idx: number,
+): readonly T[]
 ```
 
 Removes the element at index `idx` from `target` array. Supports negative indices to count from the end. If the index is out of bounds, returns the original array unchanged.
@@ -3550,7 +3941,11 @@ pipe([1, 2, 3, 4], Array.removeAt(1)); // [1, 3, 4]
 ### removeAtOr
 
 ```ts
-function Array.removeAtOr(array: T[], index: number, fallback: U): T[] | U
+function Array.removeAtOr<T, U>(
+    target: readonly T[],
+    idx: number,
+    or: U,
+): T[] | U
 ```
 
 Removes the element at index `idx` from `target` array. Supports negative indices to count from the end. If the index is out of bounds, returns the fallback value `or`.
@@ -3574,10 +3969,10 @@ pipe([1, 2, 3], Array.removeAtOr(5, [])); // []
 ### removeAtOrElse
 
 ```ts
-function Array.removeAtOrElse(
-    array: T[],
-    index: number,
-    fallback: (array: T[]) => U
+function Array.removeAtOrElse<T, U>(
+    target: readonly T[],
+    idx: number,
+    orElse: (target: readonly NoInfer<T>[]) => U,
 ): T[] | U
 ```
 
@@ -3609,7 +4004,10 @@ pipe(
 ### removeAtOrThrow
 
 ```ts
-function Array.removeAtOrThrow(array: T[], index: number): T[]
+function Array.removeAtOrThrow<T>(
+    target: readonly T[],
+    idx: number,
+): T[]
 ```
 
 Removes the element at index `idx` from `target` array. Supports negative indices to count from the end. If the index is out of bounds, throws an error.
@@ -3631,7 +4029,10 @@ pipe([1, 2, 3], Array.removeAtOrThrow(1)); // [1, 3]
 ### removeLast
 
 ```ts
-function Array.removeLast(array: T[], value: U): T[]
+function Array.removeLast<T>(
+    target: readonly T[],
+    value: NoInfer<T>,
+): readonly T[]
 ```
 
 Removes the last occurrence of `value` from `target` array. If the value is not found, returns the original array unchanged.
@@ -3653,7 +4054,11 @@ pipe([1, 2, 3, 2], Array.removeLast(2)); // [1, 2, 3]
 ### removeLastOr
 
 ```ts
-function Array.removeLastOr(array: T[], value: U, fallback: V): T[] | V
+function Array.removeLastOr<T, U>(
+    target: readonly T[],
+    value: NoInfer<T>,
+    or: U,
+): T[] | U
 ```
 
 Removes the last occurrence of `value` from `target` array. If the value is not found, returns the fallback value `or`.
@@ -3677,11 +4082,11 @@ pipe([1, 2, 3], Array.removeLastOr(4, [])); // []
 ### removeLastOrElse
 
 ```ts
-function Array.removeLastOrElse(
-    array: T[],
-    value: U,
-    fallback: (array: T[]) => V
-): T[] | V
+function Array.removeLastOrElse<T, U>(
+    target: readonly T[],
+    value: NoInfer<T>,
+    orElse: (target: readonly NoInfer<T>[]) => U,
+): T[] | U
 ```
 
 Removes the last occurrence of `value` from `target` array. If the value is not found, calls the `orElse` function with the original array and returns its result.
@@ -3712,7 +4117,10 @@ pipe(
 ### removeLastOrThrow
 
 ```ts
-function Array.removeLastOrThrow(array: T[], value: U): T[]
+function Array.removeLastOrThrow<T>(
+    target: readonly T[],
+    value: NoInfer<T>,
+): T[]
 ```
 
 Removes the last occurrence of `value` from `target` array. If the value is not found, throws an error.
@@ -3736,11 +4144,11 @@ pipe([1, 2, 3], Array.removeLastOrThrow(4)); // throws FnError
 ### removeOrElse
 
 ```ts
-function Array.removeOrElse(
-    array: T[],
-    value: U,
-    fallback: (array: T[]) => V
-): T[] | V
+function Array.removeOrElse<T, U>(
+    target: readonly T[],
+    value: NoInfer<T>,
+    orElse: (target: readonly NoInfer<T>[]) => U,
+): T[] | U
 ```
 
 Removes the first occurrence of `value` from `target` array. If the value is not found, calls the `orElse` function with the original array and returns its result.
@@ -3771,7 +4179,10 @@ pipe(
 ### removeOrThrow
 
 ```ts
-function Array.removeOrThrow(array: T[], value: U): T[]
+function Array.removeOrThrow<T>(
+    target: readonly T[],
+    value: NoInfer<T>,
+): T[]
 ```
 
 Removes the first occurrence of `value` from `target` array. If the value is not found, throws an error.
@@ -3795,7 +4206,11 @@ pipe([1, 2, 3], Array.removeOrThrow(4)); // throws FnError
 ### replace
 
 ```ts
-function Array.replace(array: T[], oldValue: U, newValue: V): T[]
+function Array.replace<T>(
+    target: readonly T[],
+    value: NoInfer<T>,
+    replacement: NoInfer<T>,
+): readonly T[]
 ```
 
 Replaces the first occurrence of `value` with `replacement` in `target` array. If the value is not found or if value and replacement are the same, returns the original array unchanged.
@@ -3817,7 +4232,11 @@ pipe([1, 2, 3, 2], Array.replace(2, 5)); // [1, 5, 3, 2]
 ### replaceLast
 
 ```ts
-function Array.replaceLast(array: T[], oldValue: U, newValue: V): T[]
+function Array.replaceLast<T>(
+    target: readonly T[],
+    value: NoInfer<T>,
+    replacement: NoInfer<T>,
+): readonly T[]
 ```
 
 Replaces the last occurrence of `value` with `replacement` in `target` array. If the value is not found or if value and replacement are the same, returns the original array unchanged.
@@ -3839,12 +4258,12 @@ pipe([1, 2, 3, 2], Array.replaceLast(2, 5)); // [1, 2, 3, 5]
 ### replaceLastOr
 
 ```ts
-function Array.replaceLastOr(
-    array: T[],
-    oldValue: U,
-    newValue: V,
-    fallback: W
-): T[] | W
+function Array.replaceLastOr<T, U>(
+    target: readonly T[],
+    value: NoInfer<T>,
+    replacement: NoInfer<T>,
+    or: U,
+): readonly T[] | U
 ```
 
 Replaces the last occurrence of `value` with `replacement` in `target` array. If the value is not found, returns the fallback value `or`. If value and replacement are the same, returns the original array unchanged.
@@ -3868,12 +4287,12 @@ pipe([1, 2, 3], Array.replaceLastOr(4, 5, [])); // []
 ### replaceLastOrElse
 
 ```ts
-function Array.replaceLastOrElse(
-    array: T[],
-    oldValue: U,
-    newValue: V,
-    fallback: (array: T[]) => W
-): T[] | W
+function Array.replaceLastOrElse<T, U>(
+    target: readonly T[],
+    value: NoInfer<T>,
+    replacement: NoInfer<T>,
+    orElse: (target: readonly NoInfer<T>[]) => U,
+): readonly T[] | U
 ```
 
 Replaces the last occurrence of `value` in `target` with `replacement`. If `value` is not found, calls `orElse` with the original array.
@@ -3904,7 +4323,11 @@ pipe(
 ### replaceLastOrThrow
 
 ```ts
-function Array.replaceLastOrThrow(array: T[], oldValue: U, newValue: V): T[]
+function Array.replaceLastOrThrow<T>(
+    target: readonly T[],
+    value: NoInfer<T>,
+    replacement: NoInfer<T>,
+): readonly T[]
 ```
 
 Replaces the last occurrence of `value` in `target` with `replacement`. If `value` is not found, throws an error.
@@ -3928,12 +4351,12 @@ pipe([1, 2, 3], Array.replaceLastOrThrow(4, 9)); // throws FnError
 ### replaceOr
 
 ```ts
-function Array.replaceOr(
-    array: T[],
-    oldValue: U,
-    newValue: V,
-    fallback: W
-): T[] | W
+function Array.replaceOr<T, U>(
+    target: readonly T[],
+    value: NoInfer<T>,
+    replacement: NoInfer<T>,
+    or: U,
+): readonly T[] | U
 ```
 
 Replaces the first occurrence of `value` in `target` with `replacement`. If `value` is not found, returns `or`.
@@ -3957,12 +4380,12 @@ pipe([1, 2, 3], Array.replaceOr(4, 9, [])); // []
 ### replaceOrElse
 
 ```ts
-function Array.replaceOrElse(
-    array: T[],
-    oldValue: U,
-    newValue: V,
-    fallback: (array: T[]) => W
-): T[] | W
+function Array.replaceOrElse<T, U>(
+    target: readonly T[],
+    value: NoInfer<T>,
+    replacement: NoInfer<T>,
+    orElse: (target: readonly NoInfer<T>[]) => U,
+): readonly T[] | U
 ```
 
 Replaces the first occurrence of `value` in `target` with `replacement`. If `value` is not found, calls `orElse` with the original array.
@@ -3993,7 +4416,11 @@ pipe(
 ### replaceOrThrow
 
 ```ts
-function Array.replaceOrThrow(array: T[], oldValue: U, newValue: V): T[]
+function Array.replaceOrThrow<T>(
+    target: readonly T[],
+    value: NoInfer<T>,
+    replacement: NoInfer<T>,
+): readonly T[]
 ```
 
 Replaces the first occurrence of `value` in `target` with `replacement`. If `value` is not found, throws an error.
@@ -4017,7 +4444,11 @@ pipe([1, 2, 3], Array.replaceOrThrow(4, 9)); // throws FnError
 ### setAt
 
 ```ts
-function Array.setAt(array: T[], index: number, value: U): T[]
+function Array.setAt<T>(
+    target: readonly T[],
+    idx: number,
+    value: NoInfer<T>,
+): readonly T[]
 ```
 
 Sets the value at the specified `idx` in `target` to `value`. Returns the original array if the index is out of bounds or the value is already the same.
@@ -4043,7 +4474,12 @@ pipe([1, 2, 3], Array.setAt(5, 9)); // [1, 2, 3]
 ### setAtOr
 
 ```ts
-function Array.setAtOr(array: T[], index: number, value: U, fallback: V): T[] | V
+function Array.setAtOr<T, U>(
+    target: readonly T[],
+    idx: number,
+    value: NoInfer<T>,
+    or: U,
+): readonly T[] | U
 ```
 
 Sets the value at the specified `idx` in `target` to `value`. If the index is out of bounds, returns `or`.
@@ -4069,12 +4505,12 @@ pipe([1, 2, 3], Array.setAtOr(5, 9, [])); // []
 ### setAtOrElse
 
 ```ts
-function Array.setAtOrElse(
-    array: T[],
-    index: number,
-    value: U,
-    fallback: (array: T[]) => V
-): T[] | V
+function Array.setAtOrElse<T, U>(
+    target: readonly T[],
+    idx: number,
+    value: NoInfer<T>,
+    orElse: (target: readonly NoInfer<T>[]) => U,
+): readonly T[] | U
 ```
 
 Sets the value at the specified `idx` in `target` to `value`. If the index is out of bounds, calls `orElse` with the original array.
@@ -4111,11 +4547,11 @@ pipe(
 ### setAtOrThrow
 
 ```ts
-function Array.setAtOrThrow(
-    array: T[],
-    index: number,
-    value: U
-): T[]
+function Array.setAtOrThrow<T>(
+    target: readonly T[],
+    idx: number,
+    value: NoInfer<T>,
+): readonly T[]
 ```
 
 Sets the value at the specified `idx` in `target` to `value`. If the index is out of bounds, throws an error.
@@ -4141,7 +4577,7 @@ pipe([1, 2, 3], Array.setAtOrThrow(5, 9)); // throws FnError
 ### shuffle
 
 ```ts
-function Array.shuffle(array: T[]): T[]
+function Array.shuffle<T>(target: readonly T[]): T[]
 ```
 
 Returns a new array with the elements of `array` randomly shuffled.
@@ -4163,7 +4599,11 @@ pipe([1, 2, 3, 4], Array.shuffle()); // [3, 1, 4, 2] (random)
 ### slice
 
 ```ts
-function Array.slice(array: T[], start?: number, end?: number): T[]
+function Array.slice<T>(
+    target: readonly T[],
+    start: number,
+    end?: number,
+): T[]
 ```
 
 Extracts a section of `target` array from `start` index to `end` index (exclusive). If `end` is not provided, extracts to the end of the array.
@@ -4189,9 +4629,13 @@ pipe([1, 2, 3, 4, 5], Array.slice(-2)); // [4, 5]
 ### some
 
 ```ts
-function Array.some(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean
+function Array.some<T>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
 ): boolean
 ```
 
@@ -4217,7 +4661,10 @@ pipe(
 ### sort
 
 ```ts
-function Array.sort(array: T[], compareFn?: (a: T, b: T) => number): T[]
+function Array.sort<T>(
+    target: readonly T[],
+    comparator: (a: NoInfer<T>, b: NoInfer<T>) => number,
+): T[]
 ```
 
 Returns a new array with the elements of `target` sorted using the provided `comparator` function.
@@ -4248,7 +4695,7 @@ pipe(
 ### sum
 
 ```ts
-function Array.sum(array: number[]): number
+function Array.sum(target: readonly number[]): number
 ```
 
 Returns the sum of all numbers in `array`.
@@ -4270,7 +4717,10 @@ pipe([1, 2, 3, 4], Array.sum()); // 10
 ### take
 
 ```ts
-function Array.take(array: T[], count: number): T[]
+function Array.take<T>(
+    target: readonly T[],
+    amount: number,
+): readonly T[]
 ```
 
 Returns a new array containing the first `amount` elements from `array`.
@@ -4292,7 +4742,10 @@ pipe([1, 2, 3, 4, 5], Array.take(3)); // [1, 2, 3]
 ### takeLast
 
 ```ts
-function Array.takeLast(array: T[], count: number): T[]
+function Array.takeLast<T>(
+    target: readonly T[],
+    amount: number,
+): readonly T[]
 ```
 
 Returns a new array containing the last `amount` elements from `array`.
@@ -4314,7 +4767,10 @@ pipe([1, 2, 3, 4, 5], Array.takeLast(3)); // [3, 4, 5]
 ### union
 
 ```ts
-function Array.union(target: T[], source: T[]): T[]
+function Array.union<T>(
+    target: readonly T[],
+    source: Iterable<NoInfer<T>>,
+): readonly T[]
 ```
 
 Returns a new array containing all unique elements from both `target` and `source`. Elements from `source` that are not already in `target` are added to the result.
@@ -4336,7 +4792,7 @@ pipe([1, 2, 3], Array.union([3, 4, 5])); // [1, 2, 3, 4, 5]
 ### unique
 
 ```ts
-function Array.unique(array: T[]): T[]
+function Array.unique<T>(target: readonly T[]): readonly T[]
 ```
 
 Returns a new array with only the unique elements from `target`, preserving the order of first occurrence.

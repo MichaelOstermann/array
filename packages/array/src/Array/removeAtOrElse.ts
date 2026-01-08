@@ -1,4 +1,3 @@
-import type { OrElse } from "./internals/types"
 import { dfdlT } from "@monstermann/dfdl"
 import { cloneArray } from "@monstermann/remmi"
 import { resolveOffset } from "./internals/offset"
@@ -7,10 +6,10 @@ import { resolveOffset } from "./internals/offset"
  * # removeAtOrElse
  *
  * ```ts
- * function Array.removeAtOrElse(
- *     array: T[],
- *     index: number,
- *     fallback: (array: T[]) => U
+ * function Array.removeAtOrElse<T, U>(
+ *     target: readonly T[],
+ *     idx: number,
+ *     orElse: (target: readonly NoInfer<T>[]) => U,
  * ): T[] | U
  * ```
  *
@@ -41,9 +40,9 @@ import { resolveOffset } from "./internals/offset"
  *
  */
 export const removeAtOrElse: {
-    <T, U>(idx: number, orElse: OrElse<T, U>): (target: readonly T[]) => T[] | U
-    <T, U>(target: readonly T[], idx: number, orElse: OrElse<T, U>): T[] | U
-} = dfdlT(<T, U>(target: readonly T[], idx: number, orElse: OrElse<T, U>): T[] | U => {
+    <T, U>(idx: number, orElse: (target: readonly NoInfer<T>[]) => U): (target: readonly T[]) => T[] | U
+    <T, U>(target: readonly T[], idx: number, orElse: (target: readonly NoInfer<T>[]) => U): T[] | U
+} = dfdlT(<T, U>(target: readonly T[], idx: number, orElse: (target: readonly NoInfer<T>[]) => U): T[] | U => {
     const offset = resolveOffset(target, idx)
     if (offset < 0) return orElse(target)
     const result = cloneArray(target)

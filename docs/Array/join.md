@@ -1,7 +1,10 @@
 # join
 
 ```ts
-function Array.join(array: T[], separator?: string): string
+function Array.join<T>(
+    target: readonly T[],
+    separator: string,
+): string
 ```
 
 Joins all elements of `array` into a string, separated by the specified `separator`.

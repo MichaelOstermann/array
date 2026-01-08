@@ -1,4 +1,3 @@
-import type { ArrayMap, OrElse } from "./internals/types"
 import { dfdlT } from "@monstermann/dfdl"
 import { cloneArray } from "@monstermann/remmi"
 import { resolveOffset } from "./internals/offset"
@@ -7,12 +6,16 @@ import { resolveOffset } from "./internals/offset"
  * # mapAtOrElse
  *
  * ```ts
- * function Array.mapAtOrElse(
- *     array: T[],
- *     index: number,
- *     mapper: (value: T, index: number, array: T[]) => U,
- *     fallback: (array: T[]) => V
- * ): T[] | V
+ * function Array.mapAtOrElse<T, U>(
+ *     target: readonly T[],
+ *     idx: number,
+ *     map: (
+ *         value: NoInfer<T>,
+ *         index: number,
+ *         target: readonly NoInfer<T>[],
+ *     ) => T,
+ *     orElse: (target: readonly NoInfer<T>[]) => U,
+ * ): readonly T[] | U
  * ```
  *
  * Applies the `mapper` function to the element at the specified `index` in `array`, returning a new array with the mapped element, or the result of calling `callback` with the array if the index is out of bounds.
@@ -45,12 +48,12 @@ import { resolveOffset } from "./internals/offset"
  *
  */
 export const mapAtOrElse: {
-    <T, U>(idx: number, map: ArrayMap<T>, orElse: OrElse<T, U>): (target: T[]) => T[] | U
-    <T, U>(idx: number, map: ArrayMap<T>, orElse: OrElse<T, U>): (target: readonly T[]) => readonly T[] | U
+    <T, U>(idx: number, map: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => T, orElse: (target: readonly NoInfer<T>[]) => U): (target: T[]) => T[] | U
+    <T, U>(idx: number, map: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => T, orElse: (target: readonly NoInfer<T>[]) => U): (target: readonly T[]) => readonly T[] | U
 
-    <T, U>(target: T[], idx: number, map: ArrayMap<T>, orElse: OrElse<T, U>): T[] | U
-    <T, U>(target: readonly T[], idx: number, map: ArrayMap<T>, orElse: OrElse<T, U>): readonly T[] | U
-} = dfdlT(<T, U>(target: T[], idx: number, map: ArrayMap<T>, orElse: OrElse<T, U>): T[] | U => {
+    <T, U>(target: T[], idx: number, map: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => T, orElse: (target: readonly NoInfer<T>[]) => U): T[] | U
+    <T, U>(target: readonly T[], idx: number, map: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => T, orElse: (target: readonly NoInfer<T>[]) => U): readonly T[] | U
+} = dfdlT(<T, U>(target: T[], idx: number, map: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => T, orElse: (target: readonly NoInfer<T>[]) => U): T[] | U => {
     const offset = resolveOffset(target, idx)
     if (offset < 0) return orElse(target)
     const prev = target[offset]! as T

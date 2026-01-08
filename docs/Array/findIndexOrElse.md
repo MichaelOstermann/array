@@ -1,10 +1,14 @@
 # findIndexOrElse
 
 ```ts
-function Array.findIndexOrElse(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean,
-    fallback: (array: T[]) => U
+function Array.findIndexOrElse<T, U>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
+    orElse: (target: readonly NoInfer<T>[]) => U,
 ): number | U
 ```
 

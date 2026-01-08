@@ -1,10 +1,10 @@
 # maxOrElse
 
 ```ts
-function Array.maxOrElse(
-    array: number[],
-    fallback: (array: number[]) => U
-): number | U
+function Array.maxOrElse<T>(
+    target: readonly number[],
+    orElse: (target: readonly number[]) => T,
+): number | T
 ```
 
 Returns the maximum value from `array`, or calls `orElse` if the array is empty.

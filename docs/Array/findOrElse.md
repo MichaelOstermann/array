@@ -1,11 +1,15 @@
 # findOrElse
 
 ```ts
-function Array.findOrElse(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean,
-    fallback: (array: T[]) => U
-): T | U
+function Array.findOrElse<T, V>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
+    orElse: (target: readonly NoInfer<T>[]) => V,
+): Exclude<T, null | undefined> | V
 ```
 
 Returns the first element in `array` that satisfies the provided `predicate` function, or the result of calling `callback` with the array if no element is found.

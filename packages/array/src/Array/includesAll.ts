@@ -4,7 +4,10 @@ import { dfdlT } from "@monstermann/dfdl"
  * # includesAll
  *
  * ```ts
- * function Array.includesAll(array: T[], values: T[]): boolean
+ * function Array.includesAll<T>(
+ *     target: readonly T[],
+ *     values: Iterable<NoInfer<T>>,
+ * ): boolean
  * ```
  *
  * Returns `true` if `array` contains all `values`, otherwise returns `false`. Supports iterables for the `values` parameter.

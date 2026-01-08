@@ -1,12 +1,16 @@
 # findReplaceOr
 
 ```ts
-function Array.findReplaceOr(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean,
-    value: U,
-    fallback: V
-): T[] | V
+function Array.findReplaceOr<T, U>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
+    replacement: NoInfer<T>,
+    or: U,
+): readonly T[] | U
 ```
 
 Finds the first element in `array` that satisfies the provided `predicate` function and replaces it with `replacement`, returning a new array with the replaced element, or `fallback` if no element is found.

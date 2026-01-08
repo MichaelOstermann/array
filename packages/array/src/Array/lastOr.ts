@@ -1,11 +1,13 @@
-import type { NonNil } from "./internals/types"
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
  * # lastOr
  *
  * ```ts
- * function Array.lastOr(array: T[], fallback: U): T | U
+ * function Array.lastOr<T, U>(
+ *     target: readonly T[],
+ *     or: U,
+ * ): Exclude<T, null | undefined> | U
  * ```
  *
  * Returns the last element of `array`, or `fallback` if the array is empty.
@@ -26,8 +28,8 @@ import { dfdlT } from "@monstermann/dfdl"
  *
  */
 export const lastOr: {
-    <T, U>(or: U): (target: readonly T[]) => NonNil<T> | U
-    <T, U>(target: readonly T[], or: U): NonNil<T> | U
+    <T, U>(or: U): (target: readonly T[]) => Exclude<T, null | undefined> | U
+    <T, U>(target: readonly T[], or: U): Exclude<T, null | undefined> | U
 } = dfdlT(<T, U>(target: readonly T[], or: U): any => {
     return target.at(-1) ?? or
 }, 2)

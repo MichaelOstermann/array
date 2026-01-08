@@ -1,10 +1,10 @@
 # lastIndexOfOrElse
 
 ```ts
-function Array.lastIndexOfOrElse(
-    array: T[],
-    value: T,
-    fallback: (array: T[]) => U
+function Array.lastIndexOfOrElse<T, U>(
+    target: readonly T[],
+    value: NoInfer<T>,
+    orElse: (target: readonly NoInfer<T>[]) => U,
 ): number | U
 ```
 

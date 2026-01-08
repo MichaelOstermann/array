@@ -1,11 +1,13 @@
-import type { NonNil } from "./internals/types"
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
  * # atOrThrow
  *
  * ```ts
- * function Array.atOrThrow(array: T[], offset: number): T
+ * function Array.atOrThrow<T>(
+ *     target: readonly T[],
+ *     offset: number,
+ * ): Exclude<T, null | undefined>
  * ```
  *
  * Returns the value at the specified `offset`, throws an exception if the `offset` was out of range, or the retrieved value was nullable.
@@ -26,10 +28,10 @@ import { dfdlT } from "@monstermann/dfdl"
  *
  */
 export const atOrThrow: {
-    (offset: number): <T>(target: readonly T[]) => NonNil<T>
-    <T>(target: readonly T[], offset: number): NonNil<T>
-} = dfdlT(<T>(target: readonly T[], offset: number): NonNil<T> => {
+    (offset: number): <T>(target: readonly T[]) => Exclude<T, null | undefined>
+    <T>(target: readonly T[], offset: number): Exclude<T, null | undefined>
+} = dfdlT(<T>(target: readonly T[], offset: number): Exclude<T, null | undefined> => {
     const value = target.at(offset)
-    if (value != null) return value as NonNil<T>
+    if (value != null) return value as Exclude<T, null | undefined>
     throw new Error("Array.atOrThrow: No value found.")
 }, 2)

@@ -1,10 +1,14 @@
 # reject
 
 ```ts
-function Array.reject(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean
-): T[]
+function Array.reject<T>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
+): readonly T[]
 ```
 
 Returns a new array with elements from `array` that do not satisfy the provided `predicate` function.

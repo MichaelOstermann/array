@@ -1,11 +1,11 @@
 # atOrElse
 
 ```ts
-function Array.atOrElse(
-    array: T[],
+function Array.atOrElse<T, U>(
+    target: readonly T[],
     offset: number,
-    fallback: (array: T[]) => U
-): T | U
+    orElse: (target: readonly NoInfer<T>[]) => U,
+): Exclude<T, null | undefined> | U
 ```
 
 Returns the value at the specified `offset`. Calls `fallback` if the `offset` was out of range, or the retrieved value was nullable.

@@ -1,7 +1,10 @@
 # remove
 
 ```ts
-function Array.remove(array: T[], value: U): T[]
+function Array.remove<T>(
+    target: readonly T[],
+    value: NoInfer<T>,
+): readonly T[]
 ```
 
 Removes the first occurrence of `value` from `target` array. If the value is not found, returns the original array unchanged.

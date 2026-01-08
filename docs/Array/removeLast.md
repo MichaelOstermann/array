@@ -1,7 +1,10 @@
 # removeLast
 
 ```ts
-function Array.removeLast(array: T[], value: U): T[]
+function Array.removeLast<T>(
+    target: readonly T[],
+    value: NoInfer<T>,
+): readonly T[]
 ```
 
 Removes the last occurrence of `value` from `target` array. If the value is not found, returns the original array unchanged.

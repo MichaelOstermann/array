@@ -1,11 +1,19 @@
 # findMapOrThrow
 
 ```ts
-function Array.findMapOrThrow(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean,
-    mapper: (value: T, index: number, array: T[]) => U
-): T[]
+function Array.findMapOrThrow<T>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
+    mapper: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => T,
+): readonly T[]
 ```
 
 Finds the first element in `array` that satisfies the provided `predicate` function and applies the `mapper` function to it, returning a new array with the mapped element, or throws an error if no element is found.

@@ -1,7 +1,10 @@
 # includesAny
 
 ```ts
-function Array.includesAny(array: T[], values: T[]): boolean
+function Array.includesAny<T>(
+    target: readonly T[],
+    values: Iterable<NoInfer<T>>,
+): boolean
 ```
 
 Returns `true` if `array` contains any of the `values`, otherwise returns `false`. Supports iterables for the `values` parameter.

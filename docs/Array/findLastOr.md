@@ -1,11 +1,15 @@
 # findLastOr
 
 ```ts
-function Array.findLastOr(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean,
-    fallback: U
-): T | U
+function Array.findLastOr<T, V>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
+    or: V,
+): Exclude<T, null | undefined> | V
 ```
 
 Returns the last element in `array` that satisfies the provided `predicate` function, or `fallback` if no element is found.

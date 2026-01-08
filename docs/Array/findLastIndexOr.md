@@ -1,10 +1,14 @@
 # findLastIndexOr
 
 ```ts
-function Array.findLastIndexOr(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean,
-    fallback: U
+function Array.findLastIndexOr<T, U>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
+    or: U,
 ): number | U
 ```
 

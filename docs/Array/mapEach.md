@@ -1,10 +1,14 @@
 # mapEach
 
 ```ts
-function Array.mapEach(
-    array: T[],
-    mapper: (value: T, index: number, array: T[]) => U
-): U[]
+function Array.mapEach<T, U>(
+    target: readonly T[],
+    mapper: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => U,
+): readonly U[]
 ```
 
 Applies the `mapper` function to each element in `array`, returning a new array with the mapped elements.

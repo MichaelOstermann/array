@@ -1,7 +1,10 @@
 # firstOrElse
 
 ```ts
-function Array.firstOrElse(array: T[], fallback: (array: T[]) => U): T | U
+function Array.firstOrElse<T, U>(
+    target: readonly T[],
+    orElse: (target: readonly NoInfer<T>[]) => U,
+): Exclude<T, null | undefined> | U
 ```
 
 Returns the first element of `array`, or the result of calling `callback` with the array if the array is empty.

@@ -5,7 +5,10 @@ import { cloneArray, markAsMutable } from "@monstermann/remmi"
  * # drop
  *
  * ```ts
- * function Array.drop(array: T[], amount: number): T[]
+ * function Array.drop<T>(
+ *     target: readonly T[],
+ *     amount: number,
+ * ): readonly T[]
  * ```
  *
  * Removes the first `amount` elements from `array`.

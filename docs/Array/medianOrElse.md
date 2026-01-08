@@ -1,10 +1,10 @@
 # medianOrElse
 
 ```ts
-function Array.medianOrElse(
-    array: number[],
-    fallback: (array: number[]) => U
-): number | U
+function Array.medianOrElse<T>(
+    target: readonly number[],
+    orElse: (target: readonly number[]) => T,
+): number | T
 ```
 
 Returns the median value from `array`, or calls `orElse` if the array is empty.

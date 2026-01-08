@@ -1,13 +1,16 @@
-import type { ArrayPredicate } from "./internals/types"
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
  * # findIndex
  *
  * ```ts
- * function Array.findIndex(
- *     array: T[],
- *     predicate: (value: T, index: number, array: T[]) => boolean
+ * function Array.findIndex<T>(
+ *     target: readonly T[],
+ *     predicate: (
+ *         value: NoInfer<T>,
+ *         index: number,
+ *         target: readonly NoInfer<T>[],
+ *     ) => boolean,
  * ): number
  * ```
  *
@@ -32,8 +35,8 @@ import { dfdlT } from "@monstermann/dfdl"
  *
  */
 export const findIndex: {
-    <T>(predicate: ArrayPredicate<T>): (target: readonly T[]) => number
-    <T>(target: readonly T[], predicate: ArrayPredicate<T>): number
-} = dfdlT(<T>(target: readonly T[], predicate: ArrayPredicate<T>): number => {
+    <T>(predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean): (target: readonly T[]) => number
+    <T>(target: readonly T[], predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean): number
+} = dfdlT(<T>(target: readonly T[], predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean): number => {
     return target.findIndex(predicate)
 }, 2)

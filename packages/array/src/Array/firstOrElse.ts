@@ -1,11 +1,13 @@
-import type { NonNil, OrElse } from "./internals/types"
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
  * # firstOrElse
  *
  * ```ts
- * function Array.firstOrElse(array: T[], fallback: (array: T[]) => U): T | U
+ * function Array.firstOrElse<T, U>(
+ *     target: readonly T[],
+ *     orElse: (target: readonly NoInfer<T>[]) => U,
+ * ): Exclude<T, null | undefined> | U
  * ```
  *
  * Returns the first element of `array`, or the result of calling `callback` with the array if the array is empty.
@@ -29,8 +31,8 @@ import { dfdlT } from "@monstermann/dfdl"
  *
  */
 export const firstOrElse: {
-    <T, U>(orElse: OrElse<T, U>): (target: readonly T[]) => NonNil<T> | U
-    <T, U>(target: readonly T[], orElse: OrElse<T, U>): NonNil<T> | U
-} = dfdlT(<T, U>(target: readonly T[], orElse: OrElse<T, U>): any => {
+    <T, U>(orElse: (target: readonly NoInfer<T>[]) => U): (target: readonly T[]) => Exclude<T, null | undefined> | U
+    <T, U>(target: readonly T[], orElse: (target: readonly NoInfer<T>[]) => U): Exclude<T, null | undefined> | U
+} = dfdlT(<T, U>(target: readonly T[], orElse: (target: readonly NoInfer<T>[]) => U): any => {
     return target[0] ?? orElse(target)
 }, 2)

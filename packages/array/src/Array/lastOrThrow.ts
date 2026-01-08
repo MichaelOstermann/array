@@ -1,11 +1,12 @@
-import type { NonNil } from "./internals/types"
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
  * # lastOrThrow
  *
  * ```ts
- * function Array.lastOrThrow(array: T[]): T
+ * function Array.lastOrThrow<T>(
+ *     target: readonly T[],
+ * ): Exclude<T, null | undefined>
  * ```
  *
  * Returns the last element of `array`, or throws an error if the array is empty.
@@ -26,8 +27,8 @@ import { dfdlT } from "@monstermann/dfdl"
  *
  */
 export const lastOrThrow: {
-    (): <T>(target: readonly T[]) => NonNil<T>
-    <T>(target: readonly T[]): NonNil<T>
+    (): <T>(target: readonly T[]) => Exclude<T, null | undefined>
+    <T>(target: readonly T[]): Exclude<T, null | undefined>
 } = dfdlT(<T>(target: readonly T[]): any => {
     const value = target.at(-1)
     if (value != null) return value

@@ -1,7 +1,7 @@
 # unique
 
 ```ts
-function Array.unique(array: T[]): T[]
+function Array.unique<T>(target: readonly T[]): readonly T[]
 ```
 
 Returns a new array with only the unique elements from `target`, preserving the order of first occurrence.

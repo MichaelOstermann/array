@@ -1,10 +1,10 @@
 # indexOfOrElse
 
 ```ts
-function Array.indexOfOrElse(
-    array: T[],
-    value: T,
-    fallback: (array: T[]) => U
+function Array.indexOfOrElse<T, U>(
+    target: readonly T[],
+    value: NoInfer<T>,
+    orElse: (target: readonly NoInfer<T>[]) => U,
 ): number | U
 ```
 

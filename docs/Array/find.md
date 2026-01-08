@@ -1,9 +1,13 @@
 # find
 
 ```ts
-function Array.find(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean
+function Array.find<T>(
+    target: T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
 ): T | undefined
 ```
 

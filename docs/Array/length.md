@@ -1,7 +1,7 @@
 # length
 
 ```ts
-function Array.length(array: T[]): number
+function Array.length<T>(target: readonly T[]): number
 ```
 
 Returns the number of elements in `array`.

@@ -1,7 +1,10 @@
 # removeAt
 
 ```ts
-function Array.removeAt(array: T[], index: number): T[]
+function Array.removeAt<T>(
+    target: readonly T[],
+    idx: number,
+): readonly T[]
 ```
 
 Removes the element at index `idx` from `target` array. Supports negative indices to count from the end. If the index is out of bounds, returns the original array unchanged.

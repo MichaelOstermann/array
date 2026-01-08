@@ -4,7 +4,10 @@ import { dfdlT } from "@monstermann/dfdl"
  * # minOr
  *
  * ```ts
- * function Array.minOr(array: number[], fallback: U): number | U
+ * function Array.minOr<T>(
+ *     target: readonly number[],
+ *     or: T,
+ * ): number | T
  * ```
  *
  * Returns the minimum value in the number `array`, or `fallback` if the array is empty.

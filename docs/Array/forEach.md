@@ -1,10 +1,14 @@
 # forEach
 
 ```ts
-function Array.forEach(
-    array: T[],
-    callback: (value: T, index: number, array: T[]) => void
-): T[]
+function Array.forEach<T>(
+    target: readonly T[],
+    callback: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => any,
+): readonly T[]
 ```
 
 Executes the provided `callback` function once for each element in `array` and returns the original array.

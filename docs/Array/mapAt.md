@@ -1,11 +1,15 @@
 # mapAt
 
 ```ts
-function Array.mapAt(
-    array: T[],
-    index: number,
-    mapper: (value: T, index: number, array: T[]) => U
-): T[]
+function Array.mapAt<T>(
+    target: readonly T[],
+    idx: number,
+    map: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => T,
+): readonly T[]
 ```
 
 Applies the `mapper` function to the element at the specified `index` in `array`, returning a new array with the mapped element.

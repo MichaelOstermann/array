@@ -4,7 +4,10 @@ import { dfdlT } from "@monstermann/dfdl"
  * # isShallowEqual
  *
  * ```ts
- * function Array.isShallowEqual(target: T[], source: T[]): boolean
+ * function Array.isShallowEqual<T, U extends T>(
+ *     target: readonly T[],
+ *     source: readonly U[],
+ * ): target is U[]
  * ```
  *
  * Returns `true` if `target` and `source` have the same length and their elements are equal using shallow comparison, otherwise returns `false`.

@@ -1,4 +1,3 @@
-import type { ArrayGuard, ArrayMap, ArrayPredicate } from "./internals/types"
 import { dfdlT } from "@monstermann/dfdl"
 import { cloneArray } from "@monstermann/remmi"
 
@@ -6,11 +5,19 @@ import { cloneArray } from "@monstermann/remmi"
  * # findMapAll
  *
  * ```ts
- * function Array.findMapAll(
- *     array: T[],
- *     predicate: (value: T, index: number, array: T[]) => boolean,
- *     mapper: (value: T, index: number, array: T[]) => U
- * ): T[]
+ * function Array.findMapAll<T>(
+ *     target: readonly T[],
+ *     predicate: (
+ *         value: NoInfer<T>,
+ *         index: number,
+ *         target: readonly NoInfer<T>[],
+ *     ) => boolean,
+ *     mapper: (
+ *         value: NoInfer<T>,
+ *         index: number,
+ *         target: readonly NoInfer<T>[],
+ *     ) => T,
+ * ): readonly T[]
  * ```
  *
  * Finds all elements in `array` that satisfy the provided `predicate` function and applies the `mapper` function to each of them, returning a new array with the mapped elements.
@@ -41,18 +48,18 @@ import { cloneArray } from "@monstermann/remmi"
  *
  */
 export const findMapAll: {
-    <T, U extends T>(predicate: ArrayGuard<T, U>, mapper: ArrayMap<T>): (target: T[]) => T[]
-    <T, U extends T>(predicate: ArrayGuard<T, U>, mapper: ArrayMap<T>): (target: readonly T[]) => readonly T[]
+    <T, U extends T>(predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => value is U, mapper: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => T): (target: T[]) => T[]
+    <T, U extends T>(predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => value is U, mapper: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => T): (target: readonly T[]) => readonly T[]
 
-    <T>(predicate: ArrayPredicate<T>, mapper: ArrayMap<T>): (target: T[]) => T[]
-    <T>(predicate: ArrayPredicate<T>, mapper: ArrayMap<T>): (target: readonly T[]) => readonly T[]
+    <T>(predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean, mapper: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => T): (target: T[]) => T[]
+    <T>(predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean, mapper: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => T): (target: readonly T[]) => readonly T[]
 
-    <T, U extends T>(target: T[], predicate: ArrayGuard<T, U>, mapper: ArrayMap<T>): T[]
-    <T, U extends T>(target: readonly T[], predicate: ArrayGuard<T, U>, mapper: ArrayMap<T>): readonly T[]
+    <T, U extends T>(target: T[], predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => value is U, mapper: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => T): T[]
+    <T, U extends T>(target: readonly T[], predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => value is U, mapper: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => T): readonly T[]
 
-    <T>(target: T[], predicate: ArrayPredicate<T>, mapper: ArrayMap<T>): T[]
-    <T>(target: readonly T[], predicate: ArrayPredicate<T>, mapper: ArrayMap<T>): readonly T[]
-} = dfdlT(<T, U extends T>(target: T[], predicate: ArrayGuard<T, U>, mapper: ArrayMap<T>): T[] => {
+    <T>(target: T[], predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean, mapper: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => T): T[]
+    <T>(target: readonly T[], predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean, mapper: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => T): readonly T[]
+} = dfdlT(<T, U extends T>(target: T[], predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => value is U, mapper: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => T): T[] => {
     let result
     for (let i = 0; i < target.length; i++) {
         const prev = target[i]!

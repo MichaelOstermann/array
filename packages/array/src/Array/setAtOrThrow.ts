@@ -6,11 +6,11 @@ import { resolveOffset } from "./internals/offset"
  * # setAtOrThrow
  *
  * ```ts
- * function Array.setAtOrThrow(
- *     array: T[],
- *     index: number,
- *     value: U
- * ): T[]
+ * function Array.setAtOrThrow<T>(
+ *     target: readonly T[],
+ *     idx: number,
+ *     value: NoInfer<T>,
+ * ): readonly T[]
  * ```
  *
  * Sets the value at the specified `idx` in `target` to `value`. If the index is out of bounds, throws an error.

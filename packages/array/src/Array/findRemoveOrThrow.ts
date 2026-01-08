@@ -1,4 +1,3 @@
-import type { ArrayPredicate } from "./internals/types"
 import { dfdlT } from "@monstermann/dfdl"
 import { cloneArray } from "@monstermann/remmi"
 
@@ -6,9 +5,13 @@ import { cloneArray } from "@monstermann/remmi"
  * # findRemoveOrThrow
  *
  * ```ts
- * function Array.findRemoveOrThrow(
- *     array: T[],
- *     predicate: (value: T, index: number, array: T[]) => boolean
+ * function Array.findRemoveOrThrow<T>(
+ *     target: readonly T[],
+ *     predicate: (
+ *         value: NoInfer<T>,
+ *         index: number,
+ *         target: readonly NoInfer<T>[],
+ *     ) => boolean,
  * ): T[]
  * ```
  *
@@ -33,9 +36,9 @@ import { cloneArray } from "@monstermann/remmi"
  *
  */
 export const findRemoveOrThrow: {
-    <T>(predicate: ArrayPredicate<T>): (target: readonly T[]) => T[]
-    <T>(target: readonly T[], predicate: ArrayPredicate<T>): T[]
-} = dfdlT(<T>(target: readonly T[], predicate: ArrayPredicate<T>): T[] => {
+    <T>(predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean): (target: readonly T[]) => T[]
+    <T>(target: readonly T[], predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean): T[]
+} = dfdlT(<T>(target: readonly T[], predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean): T[] => {
     const idx = target.findIndex(predicate)
     if (idx === -1) throw new Error("Array.findRemoveOrThrow: Value not found.")
     const result = cloneArray(target)

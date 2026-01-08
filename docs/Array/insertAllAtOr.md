@@ -1,12 +1,12 @@
 # insertAllAtOr
 
 ```ts
-function Array.insertAllAtOr(
-    array: T[],
-    index: number,
-    values: U[],
-    fallback: V
-): T[] | V
+function Array.insertAllAtOr<T, U>(
+    target: readonly T[],
+    idx: number,
+    values: Iterable<NoInfer<T>>,
+    or: U,
+): readonly T[] | U
 ```
 
 Inserts all `values` at the specified `idx` in `target`. If the index is out of bounds, returns `or`. Supports iterables.

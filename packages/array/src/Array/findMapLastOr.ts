@@ -1,4 +1,3 @@
-import type { ArrayGuard, ArrayMap, ArrayPredicate } from "./internals/types"
 import { dfdlT } from "@monstermann/dfdl"
 import { cloneArray } from "@monstermann/remmi"
 
@@ -6,12 +5,20 @@ import { cloneArray } from "@monstermann/remmi"
  * # findMapLastOr
  *
  * ```ts
- * function Array.findMapLastOr(
- *     array: T[],
- *     predicate: (value: T, index: number, array: T[]) => boolean,
- *     mapper: (value: T, index: number, array: T[]) => U,
- *     fallback: V
- * ): T[] | V
+ * function Array.findMapLastOr<T, V>(
+ *     target: readonly T[],
+ *     predicate: (
+ *         value: NoInfer<T>,
+ *         index: number,
+ *         target: readonly NoInfer<T>[],
+ *     ) => boolean,
+ *     mapper: (
+ *         value: NoInfer<T>,
+ *         index: number,
+ *         target: readonly NoInfer<T>[],
+ *     ) => T,
+ *     or: V,
+ * ): readonly T[] | V
  * ```
  *
  * Finds the last element in `array` that satisfies the provided `predicate` function and applies the `mapper` function to it, returning a new array with the mapped element, or `fallback` if no element is found.
@@ -44,18 +51,18 @@ import { cloneArray } from "@monstermann/remmi"
  *
  */
 export const findMapLastOr: {
-    <T, U extends T, V>(predicate: ArrayGuard<T, U>, mapper: ArrayMap<T>, or: V): (target: T[]) => T[] | V
-    <T, U extends T, V>(predicate: ArrayGuard<T, U>, mapper: ArrayMap<T>, or: V): (target: readonly T[]) => readonly T[] | V
+    <T, U extends T, V>(predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => value is U, mapper: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => T, or: V): (target: T[]) => T[] | V
+    <T, U extends T, V>(predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => value is U, mapper: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => T, or: V): (target: readonly T[]) => readonly T[] | V
 
-    <T, V>(predicate: ArrayPredicate<T>, mapper: ArrayMap<T>, or: V): (target: T[]) => T[] | V
-    <T, V>(predicate: ArrayPredicate<T>, mapper: ArrayMap<T>, or: V): (target: readonly T[]) => readonly T[] | V
+    <T, V>(predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean, mapper: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => T, or: V): (target: T[]) => T[] | V
+    <T, V>(predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean, mapper: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => T, or: V): (target: readonly T[]) => readonly T[] | V
 
-    <T, U extends T, V>(target: T[], predicate: ArrayGuard<T, U>, mapper: ArrayMap<T>, or: V): T[] | V
-    <T, U extends T, V>(target: readonly T[], predicate: ArrayGuard<T, U>, mapper: ArrayMap<T>, or: V): readonly T[] | V
+    <T, U extends T, V>(target: T[], predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => value is U, mapper: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => T, or: V): T[] | V
+    <T, U extends T, V>(target: readonly T[], predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => value is U, mapper: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => T, or: V): readonly T[] | V
 
-    <T, V>(target: T[], predicate: ArrayPredicate<T>, mapper: ArrayMap<T>, or: V): T[] | V
-    <T, V>(target: readonly T[], predicate: ArrayPredicate<T>, mapper: ArrayMap<T>, or: V): readonly T[] | V
-} = dfdlT(<T, V>(target: T[], predicate: ArrayPredicate<T>, mapper: ArrayMap<T>, or: V): T[] | V => {
+    <T, V>(target: T[], predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean, mapper: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => T, or: V): T[] | V
+    <T, V>(target: readonly T[], predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean, mapper: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => T, or: V): readonly T[] | V
+} = dfdlT(<T, V>(target: T[], predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean, mapper: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => T, or: V): T[] | V => {
     const idx = target.findLastIndex(predicate)
     if (idx === -1) return or
     const prev = target[idx]! as T

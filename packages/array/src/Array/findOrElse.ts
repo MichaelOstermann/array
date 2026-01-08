@@ -1,15 +1,18 @@
-import type { ArrayGuard, ArrayPredicate, NonNil, OrElse } from "./internals/types"
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
  * # findOrElse
  *
  * ```ts
- * function Array.findOrElse(
- *     array: T[],
- *     predicate: (value: T, index: number, array: T[]) => boolean,
- *     fallback: (array: T[]) => U
- * ): T | U
+ * function Array.findOrElse<T, V>(
+ *     target: readonly T[],
+ *     predicate: (
+ *         value: NoInfer<T>,
+ *         index: number,
+ *         target: readonly NoInfer<T>[],
+ *     ) => boolean,
+ *     orElse: (target: readonly NoInfer<T>[]) => V,
+ * ): Exclude<T, null | undefined> | V
  * ```
  *
  * Returns the first element in `array` that satisfies the provided `predicate` function, or the result of calling `callback` with the array if no element is found.
@@ -40,10 +43,10 @@ import { dfdlT } from "@monstermann/dfdl"
  *
  */
 export const findOrElse: {
-    <T, U extends T, V>(predicate: ArrayGuard<T, U>, orElse: OrElse<Exclude<T, U>, V>): (target: readonly T[]) => NonNil<U> | V
-    <T, V>(predicate: ArrayPredicate<T>, orElse: OrElse<T, V>): (target: readonly T[]) => NonNil<T> | V
-    <T, U extends T, V>(target: readonly T[], predicate: ArrayGuard<T, U>, orElse: OrElse<Exclude<T, U>, V>): NonNil<U> | V
-    <T, V>(target: readonly T[], predicate: ArrayPredicate<T>, orElse: OrElse<T, V>): NonNil<T> | V
-} = dfdlT(<T, V>(target: readonly T[], predicate: ArrayPredicate<T>, orElse: OrElse<T, V>): any => {
+    <T, U extends T, V>(predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => value is U, orElse: (target: readonly Exclude<T, U>[]) => V): (target: readonly T[]) => Exclude<U, null | undefined> | V
+    <T, V>(predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean, orElse: (target: readonly NoInfer<T>[]) => V): (target: readonly T[]) => Exclude<T, null | undefined> | V
+    <T, U extends T, V>(target: readonly T[], predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => value is U, orElse: (target: readonly Exclude<T, U>[]) => V): Exclude<U, null | undefined> | V
+    <T, V>(target: readonly T[], predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean, orElse: (target: readonly NoInfer<T>[]) => V): Exclude<T, null | undefined> | V
+} = dfdlT(<T, V>(target: readonly T[], predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean, orElse: (target: readonly NoInfer<T>[]) => V): any => {
     return target.find(predicate) ?? orElse(target)
 }, 3)

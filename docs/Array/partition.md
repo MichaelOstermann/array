@@ -1,9 +1,13 @@
 # partition
 
 ```ts
-function Array.partition(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean
+function Array.partition<T>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
 ): [T[], T[]]
 ```
 

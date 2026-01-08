@@ -1,12 +1,12 @@
 # replaceOrElse
 
 ```ts
-function Array.replaceOrElse(
-    array: T[],
-    oldValue: U,
-    newValue: V,
-    fallback: (array: T[]) => W
-): T[] | W
+function Array.replaceOrElse<T, U>(
+    target: readonly T[],
+    value: NoInfer<T>,
+    replacement: NoInfer<T>,
+    orElse: (target: readonly NoInfer<T>[]) => U,
+): readonly T[] | U
 ```
 
 Replaces the first occurrence of `value` in `target` with `replacement`. If `value` is not found, calls `orElse` with the original array.

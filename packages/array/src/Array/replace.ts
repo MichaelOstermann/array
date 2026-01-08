@@ -5,7 +5,11 @@ import { cloneArray } from "@monstermann/remmi"
  * # replace
  *
  * ```ts
- * function Array.replace(array: T[], oldValue: U, newValue: V): T[]
+ * function Array.replace<T>(
+ *     target: readonly T[],
+ *     value: NoInfer<T>,
+ *     replacement: NoInfer<T>,
+ * ): readonly T[]
  * ```
  *
  * Replaces the first occurrence of `value` with `replacement` in `target` array. If the value is not found or if value and replacement are the same, returns the original array unchanged.

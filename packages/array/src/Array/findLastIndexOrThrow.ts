@@ -1,13 +1,16 @@
-import type { ArrayPredicate } from "./internals/types"
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
  * # findLastIndexOrThrow
  *
  * ```ts
- * function Array.findLastIndexOrThrow(
- *     array: T[],
- *     predicate: (value: T, index: number, array: T[]) => boolean
+ * function Array.findLastIndexOrThrow<T>(
+ *     target: readonly T[],
+ *     predicate: (
+ *         value: NoInfer<T>,
+ *         index: number,
+ *         target: readonly NoInfer<T>[],
+ *     ) => boolean,
  * ): number
  * ```
  *
@@ -38,9 +41,9 @@ import { dfdlT } from "@monstermann/dfdl"
  *
  */
 export const findLastIndexOrThrow: {
-    <T>(predicate: ArrayPredicate<T>): (target: readonly T[]) => number
-    <T>(target: readonly T[], predicate: ArrayPredicate<T>): number
-} = dfdlT(<T>(target: readonly T[], predicate: ArrayPredicate<T>): number => {
+    <T>(predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean): (target: readonly T[]) => number
+    <T>(target: readonly T[], predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean): number
+} = dfdlT(<T>(target: readonly T[], predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean): number => {
     const idx = target.findLastIndex(predicate)
     if (idx < 0) throw new Error("Array.findLastIndexOrThrow: No value found.")
     return idx

@@ -1,7 +1,10 @@
 # firstOr
 
 ```ts
-function Array.firstOr(array: T[], fallback: U): T | U
+function Array.firstOr<T, U>(
+    target: readonly T[],
+    or: U,
+): Exclude<T, null | undefined> | U
 ```
 
 Returns the first element of `array`, or `fallback` if the array is empty.

@@ -1,7 +1,7 @@
 # random
 
 ```ts
-function Array.random(array: T[]): T | undefined
+function Array.random<T>(target: readonly T[]): T | undefined
 ```
 
 Returns a random element from `array`, or `undefined` if the array is empty.

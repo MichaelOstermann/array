@@ -1,7 +1,10 @@
 # includes
 
 ```ts
-function Array.includes(array: T[], value: T): boolean
+function Array.includes<T>(
+    target: readonly T[],
+    value: NoInfer<T>,
+): boolean
 ```
 
 Returns `true` if `array` contains `value`, otherwise returns `false`.

@@ -1,7 +1,10 @@
 # maxOr
 
 ```ts
-function Array.maxOr(array: number[], fallback: U): number | U
+function Array.maxOr<T>(
+    target: readonly number[],
+    or: T,
+): number | T
 ```
 
 Returns the maximum value in the number `array`, or `fallback` if the array is empty.

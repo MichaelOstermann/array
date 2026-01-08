@@ -1,7 +1,9 @@
 # firstOrThrow
 
 ```ts
-function Array.firstOrThrow(array: T[]): T
+function Array.firstOrThrow<T>(
+    target: readonly T[],
+): Exclude<T, null | undefined>
 ```
 
 Returns the first element of `array`, or throws an error if the array is empty.

@@ -1,7 +1,11 @@
 # slice
 
 ```ts
-function Array.slice(array: T[], start?: number, end?: number): T[]
+function Array.slice<T>(
+    target: readonly T[],
+    start: number,
+    end?: number,
+): T[]
 ```
 
 Extracts a section of `target` array from `start` index to `end` index (exclusive). If `end` is not provided, extracts to the end of the array.

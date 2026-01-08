@@ -5,7 +5,10 @@ import { cloneArray } from "@monstermann/remmi"
  * # append
  *
  * ```ts
- * function Array.append(array: T[], value: T): T[]
+ * function Array.append<T>(
+ *     target: readonly T[],
+ *     value: NoInfer<T>,
+ * ): T[]
  * ```
  *
  * Appends `value` to the end of `array`.

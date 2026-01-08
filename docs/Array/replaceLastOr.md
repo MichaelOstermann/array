@@ -1,12 +1,12 @@
 # replaceLastOr
 
 ```ts
-function Array.replaceLastOr(
-    array: T[],
-    oldValue: U,
-    newValue: V,
-    fallback: W
-): T[] | W
+function Array.replaceLastOr<T, U>(
+    target: readonly T[],
+    value: NoInfer<T>,
+    replacement: NoInfer<T>,
+    or: U,
+): readonly T[] | U
 ```
 
 Replaces the last occurrence of `value` with `replacement` in `target` array. If the value is not found, returns the fallback value `or`. If value and replacement are the same, returns the original array unchanged.

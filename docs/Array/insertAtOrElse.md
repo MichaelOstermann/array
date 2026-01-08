@@ -1,12 +1,12 @@
 # insertAtOrElse
 
 ```ts
-function Array.insertAtOrElse(
-    array: T[],
-    index: number,
-    value: U,
-    fallback: (array: T[]) => V
-): T[] | V
+function Array.insertAtOrElse<T, U>(
+    target: readonly T[],
+    idx: number,
+    value: NoInfer<T>,
+    orElse: (target: readonly NoInfer<T>[]) => U,
+): T[] | U
 ```
 
 Inserts `value` at the specified `index` in `array`, returning a new array with the inserted element, or the result of calling `callback` with the array if the index is out of bounds.

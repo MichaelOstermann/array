@@ -1,4 +1,3 @@
-import type { ArrayMap } from "./internals/types"
 import { dfdlT } from "@monstermann/dfdl"
 import { cloneArray } from "@monstermann/remmi"
 import { resolveOffset } from "./internals/offset"
@@ -7,11 +6,15 @@ import { resolveOffset } from "./internals/offset"
  * # mapAtOrThrow
  *
  * ```ts
- * function Array.mapAtOrThrow(
- *     array: T[],
- *     index: number,
- *     mapper: (value: T, index: number, array: T[]) => U
- * ): T[]
+ * function Array.mapAtOrThrow<T>(
+ *     target: readonly T[],
+ *     idx: number,
+ *     map: (
+ *         value: NoInfer<T>,
+ *         index: number,
+ *         target: readonly NoInfer<T>[],
+ *     ) => T,
+ * ): readonly T[]
  * ```
  *
  * Applies the `mapper` function to the element at the specified `index` in `array`, returning a new array with the mapped element, or throws an error if the index is out of bounds.
@@ -35,12 +38,12 @@ import { resolveOffset } from "./internals/offset"
  *
  */
 export const mapAtOrThrow: {
-    <T>(idx: number, map: ArrayMap<T>): (target: T[]) => T[]
-    <T>(idx: number, map: ArrayMap<T>): (target: readonly T[]) => readonly T[]
+    <T>(idx: number, map: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => T): (target: T[]) => T[]
+    <T>(idx: number, map: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => T): (target: readonly T[]) => readonly T[]
 
-    <T>(target: T[], idx: number, map: ArrayMap<T>): T[]
-    <T>(target: readonly T[], idx: number, map: ArrayMap<T>): readonly T[]
-} = dfdlT(<T>(target: T[], idx: number, map: ArrayMap<T>): T[] => {
+    <T>(target: T[], idx: number, map: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => T): T[]
+    <T>(target: readonly T[], idx: number, map: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => T): readonly T[]
+} = dfdlT(<T>(target: T[], idx: number, map: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => T): T[] => {
     const offset = resolveOffset(target, idx)
     if (offset < 0) throw new Error("Array.mapAtOrThrow: Index is out of range.")
     const prev = target[offset]! as T

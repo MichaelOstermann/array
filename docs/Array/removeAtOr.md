@@ -1,7 +1,11 @@
 # removeAtOr
 
 ```ts
-function Array.removeAtOr(array: T[], index: number, fallback: U): T[] | U
+function Array.removeAtOr<T, U>(
+    target: readonly T[],
+    idx: number,
+    or: U,
+): T[] | U
 ```
 
 Removes the element at index `idx` from `target` array. Supports negative indices to count from the end. If the index is out of bounds, returns the fallback value `or`.

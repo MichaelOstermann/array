@@ -5,7 +5,11 @@ import { cloneArray } from "@monstermann/remmi"
  * # replaceLast
  *
  * ```ts
- * function Array.replaceLast(array: T[], oldValue: U, newValue: V): T[]
+ * function Array.replaceLast<T>(
+ *     target: readonly T[],
+ *     value: NoInfer<T>,
+ *     replacement: NoInfer<T>,
+ * ): readonly T[]
  * ```
  *
  * Replaces the last occurrence of `value` with `replacement` in `target` array. If the value is not found or if value and replacement are the same, returns the original array unchanged.

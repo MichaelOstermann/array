@@ -4,7 +4,10 @@ import { dfdlT } from "@monstermann/dfdl"
  * # lastIndexOfOrThrow
  *
  * ```ts
- * function Array.lastIndexOfOrThrow(array: T[], value: T): number
+ * function Array.lastIndexOfOrThrow<T>(
+ *     target: readonly T[],
+ *     value: NoInfer<T>,
+ * ): number
  * ```
  *
  * Returns the index of the last occurrence of `value` in `target`. If `value` is not found, throws an error.

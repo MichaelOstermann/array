@@ -5,7 +5,7 @@ import { markAsMutable } from "@monstermann/remmi"
  * # concat
  *
  * ```ts
- * function Array.concat(array: T[], source: T[]): T[]
+ * function Array.concat<T>(target: T[], source: NoInfer<T>[]): T[]
  * ```
  *
  * Concatenates `source` array to the end of `array`, returning a new array with the combined elements.

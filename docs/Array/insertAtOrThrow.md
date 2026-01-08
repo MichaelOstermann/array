@@ -1,7 +1,11 @@
 # insertAtOrThrow
 
 ```ts
-function Array.insertAtOrThrow(array: T[], index: number, value: U): T[]
+function Array.insertAtOrThrow<T>(
+    target: readonly T[],
+    idx: number,
+    value: NoInfer<T>,
+): T[]
 ```
 
 Inserts `value` at the specified `index` in `array`, returning a new array with the inserted element, or throws an error if the index is out of bounds.

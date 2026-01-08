@@ -1,7 +1,7 @@
 # isEmpty
 
 ```ts
-function Array.isEmpty(array: T[]): boolean
+function Array.isEmpty<T>(target: readonly T[]): boolean
 ```
 
 Returns `true` if `array` has no elements, otherwise returns `false`.

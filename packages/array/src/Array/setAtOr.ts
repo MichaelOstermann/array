@@ -6,7 +6,12 @@ import { resolveOffset } from "./internals/offset"
  * # setAtOr
  *
  * ```ts
- * function Array.setAtOr(array: T[], index: number, value: U, fallback: V): T[] | V
+ * function Array.setAtOr<T, U>(
+ *     target: readonly T[],
+ *     idx: number,
+ *     value: NoInfer<T>,
+ *     or: U,
+ * ): readonly T[] | U
  * ```
  *
  * Sets the value at the specified `idx` in `target` to `value`. If the index is out of bounds, returns `or`.

@@ -1,7 +1,10 @@
 # takeLast
 
 ```ts
-function Array.takeLast(array: T[], count: number): T[]
+function Array.takeLast<T>(
+    target: readonly T[],
+    amount: number,
+): readonly T[]
 ```
 
 Returns a new array containing the last `amount` elements from `array`.

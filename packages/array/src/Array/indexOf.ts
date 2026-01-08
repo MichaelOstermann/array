@@ -4,7 +4,10 @@ import { dfdlT } from "@monstermann/dfdl"
  * # indexOf
  *
  * ```ts
- * function Array.indexOf(array: T[], value: T): number
+ * function Array.indexOf<T>(
+ *     target: readonly T[],
+ *     value: NoInfer<T>,
+ * ): number
  * ```
  *
  * Returns the first index at which `value` can be found in `array`, or -1 if it is not present.

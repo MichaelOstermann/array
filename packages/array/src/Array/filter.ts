@@ -1,4 +1,3 @@
-import type { ArrayGuard, ArrayPredicate } from "./internals/types"
 import { dfdlT } from "@monstermann/dfdl"
 import { cloneArray } from "@monstermann/remmi"
 import { addRange, createRange, hasRange, spliceRange } from "./internals/range"
@@ -7,10 +6,14 @@ import { addRange, createRange, hasRange, spliceRange } from "./internals/range"
  * # filter
  *
  * ```ts
- * function Array.filter(
- *     array: T[],
- *     predicate: (value: T, index: number, array: T[]) => boolean
- * ): T[]
+ * function Array.filter<T>(
+ *     target: readonly T[],
+ *     by: (
+ *         value: NoInfer<T>,
+ *         index: number,
+ *         target: readonly NoInfer<T>[],
+ *     ) => boolean,
+ * ): readonly T[]
  * ```
  *
  * Filters elements from `target` array based on the predicate function `by`.
@@ -34,18 +37,18 @@ import { addRange, createRange, hasRange, spliceRange } from "./internals/range"
  *
  */
 export const filter: {
-    <T, U extends T>(by: ArrayGuard<T, U>): (target: T[]) => U[]
-    <T, U extends T>(by: ArrayGuard<T, U>): (target: readonly T[]) => readonly U[]
+    <T, U extends T>(by: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => value is U): (target: T[]) => U[]
+    <T, U extends T>(by: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => value is U): (target: readonly T[]) => readonly U[]
 
-    <T>(by: ArrayPredicate<T>): (target: T[]) => T[]
-    <T>(by: ArrayPredicate<T>): (target: readonly T[]) => readonly T[]
+    <T>(by: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean): (target: T[]) => T[]
+    <T>(by: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean): (target: readonly T[]) => readonly T[]
 
-    <T, U extends T>(target: T[], by: ArrayGuard<T, U>): U[]
-    <T, U extends T>(target: readonly T[], by: ArrayGuard<T, U>): readonly U[]
+    <T, U extends T>(target: T[], by: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => value is U): U[]
+    <T, U extends T>(target: readonly T[], by: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => value is U): readonly U[]
 
-    <T>(target: T[], by: ArrayPredicate<T>): T[]
-    <T>(target: readonly T[], by: ArrayPredicate<T>): readonly T[]
-} = dfdlT(<T, U extends T>(target: T[], by: ArrayGuard<T, U>): (T | U)[] => {
+    <T>(target: T[], by: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean): T[]
+    <T>(target: readonly T[], by: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean): readonly T[]
+} = dfdlT(<T, U extends T>(target: T[], by: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => value is U): (T | U)[] => {
     const range = createRange()
 
     for (let i = 0; i < target.length; i++) {

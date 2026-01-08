@@ -1,14 +1,17 @@
-import type { ArrayGuard, ArrayPredicate, NonNil } from "./internals/types"
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
  * # findOrThrow
  *
  * ```ts
- * function Array.findOrThrow(
- *     array: T[],
- *     predicate: (value: T, index: number, array: T[]) => boolean
- * ): T
+ * function Array.findOrThrow<T>(
+ *     target: readonly T[],
+ *     predicate: (
+ *         value: NoInfer<T>,
+ *         index: number,
+ *         target: readonly NoInfer<T>[],
+ *     ) => boolean,
+ * ): Exclude<T, null | undefined>
  * ```
  *
  * Returns the first element in `array` that satisfies the provided `predicate` function, or throws an error if no element is found.
@@ -32,11 +35,11 @@ import { dfdlT } from "@monstermann/dfdl"
  *
  */
 export const findOrThrow: {
-    <T, U extends T>(predicate: ArrayGuard<T, U>): (target: readonly T[]) => NonNil<U>
-    <T>(predicate: ArrayPredicate<T>): (target: readonly T[]) => NonNil<T>
-    <T, U extends T>(target: readonly T[], predicate: ArrayGuard<T, U>): NonNil<U>
-    <T>(target: readonly T[], predicate: ArrayPredicate<T>): NonNil<T>
-} = dfdlT(<T>(target: readonly T[], predicate: ArrayPredicate<T>): any => {
+    <T, U extends T>(predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => value is U): (target: readonly T[]) => Exclude<U, null | undefined>
+    <T>(predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean): (target: readonly T[]) => Exclude<T, null | undefined>
+    <T, U extends T>(target: readonly T[], predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => value is U): Exclude<U, null | undefined>
+    <T>(target: readonly T[], predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean): Exclude<T, null | undefined>
+} = dfdlT(<T>(target: readonly T[], predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean): any => {
     const value = target.find(predicate)
     if (value != null) return value
     throw new Error("Array.findOrThrow: Value not found.")

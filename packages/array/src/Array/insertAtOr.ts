@@ -5,7 +5,12 @@ import { cloneArray } from "@monstermann/remmi"
  * # insertAtOr
  *
  * ```ts
- * function Array.insertAtOr(array: T[], index: number, value: U, fallback: V): T[] | V
+ * function Array.insertAtOr<T, U>(
+ *     target: readonly T[],
+ *     idx: number,
+ *     value: NoInfer<T>,
+ *     or: U,
+ * ): T[] | U
  * ```
  *
  * Inserts `value` at the specified `index` in `array`, returning a new array with the inserted element, or `fallback` if the index is out of bounds.

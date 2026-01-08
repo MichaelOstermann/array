@@ -1,4 +1,3 @@
-import type { OrElse } from "./internals/types"
 import { dfdlT } from "@monstermann/dfdl"
 import { cloneArray } from "@monstermann/remmi"
 
@@ -6,12 +5,12 @@ import { cloneArray } from "@monstermann/remmi"
  * # replaceOrElse
  *
  * ```ts
- * function Array.replaceOrElse(
- *     array: T[],
- *     oldValue: U,
- *     newValue: V,
- *     fallback: (array: T[]) => W
- * ): T[] | W
+ * function Array.replaceOrElse<T, U>(
+ *     target: readonly T[],
+ *     value: NoInfer<T>,
+ *     replacement: NoInfer<T>,
+ *     orElse: (target: readonly NoInfer<T>[]) => U,
+ * ): readonly T[] | U
  * ```
  *
  * Replaces the first occurrence of `value` in `target` with `replacement`. If `value` is not found, calls `orElse` with the original array.
@@ -41,12 +40,12 @@ import { cloneArray } from "@monstermann/remmi"
  *
  */
 export const replaceOrElse: {
-    <T, U>(value: NoInfer<T>, replacement: NoInfer<T>, orElse: OrElse<T, U>): (target: T[]) => T[] | U
-    <T, U>(value: NoInfer<T>, replacement: NoInfer<T>, orElse: OrElse<T, U>): (target: readonly T[]) => readonly T[] | U
+    <T, U>(value: NoInfer<T>, replacement: NoInfer<T>, orElse: (target: readonly NoInfer<T>[]) => U): (target: T[]) => T[] | U
+    <T, U>(value: NoInfer<T>, replacement: NoInfer<T>, orElse: (target: readonly NoInfer<T>[]) => U): (target: readonly T[]) => readonly T[] | U
 
-    <T, U>(target: T[], value: NoInfer<T>, replacement: NoInfer<T>, orElse: OrElse<T, U>): T[] | U
-    <T, U>(target: readonly T[], value: NoInfer<T>, replacement: NoInfer<T>, orElse: OrElse<T, U>): readonly T[] | U
-} = dfdlT(<T, U>(target: T[], value: NoInfer<T>, replacement: NoInfer<T>, orElse: OrElse<T, U>): T[] | U => {
+    <T, U>(target: T[], value: NoInfer<T>, replacement: NoInfer<T>, orElse: (target: readonly NoInfer<T>[]) => U): T[] | U
+    <T, U>(target: readonly T[], value: NoInfer<T>, replacement: NoInfer<T>, orElse: (target: readonly NoInfer<T>[]) => U): readonly T[] | U
+} = dfdlT(<T, U>(target: T[], value: NoInfer<T>, replacement: NoInfer<T>, orElse: (target: readonly NoInfer<T>[]) => U): T[] | U => {
     if (value === replacement) return target
     const idx = target.indexOf(value)
     if (idx === -1) return orElse(target)

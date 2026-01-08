@@ -1,7 +1,10 @@
 # randomOrElse
 
 ```ts
-function Array.randomOrElse(array: T[], fallback: (array: T[]) => U): T | U
+function Array.randomOrElse<T, U>(
+    target: readonly T[],
+    orElse: (target: readonly NoInfer<T>[]) => U,
+): T | U
 ```
 
 Returns a random element from `array`, or the result of calling `callback` with the array if the array is empty.

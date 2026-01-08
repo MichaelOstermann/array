@@ -1,7 +1,10 @@
 # at
 
 ```ts
-function Array.at(array: T[], offset: number): T | undefined
+function Array.at<T>(
+    target: readonly T[],
+    offset: number,
+): T | undefined
 ```
 
 Returns the value at the specified `offset`.

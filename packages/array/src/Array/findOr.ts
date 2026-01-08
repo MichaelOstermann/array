@@ -1,15 +1,18 @@
-import type { ArrayGuard, ArrayPredicate, NonNil } from "./internals/types"
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
  * # findOr
  *
  * ```ts
- * function Array.findOr(
- *     array: T[],
- *     predicate: (value: T, index: number, array: T[]) => boolean,
- *     fallback: U
- * ): T | U
+ * function Array.findOr<T, V>(
+ *     target: readonly T[],
+ *     predicate: (
+ *         value: NoInfer<T>,
+ *         index: number,
+ *         target: readonly NoInfer<T>[],
+ *     ) => boolean,
+ *     or: V,
+ * ): Exclude<T, null | undefined> | V
  * ```
  *
  * Returns the first element in `array` that satisfies the provided `predicate` function, or `fallback` if no element is found.
@@ -33,10 +36,10 @@ import { dfdlT } from "@monstermann/dfdl"
  *
  */
 export const findOr: {
-    <T, U extends T, V>(predicate: ArrayGuard<T, U>, or: V): (target: readonly T[]) => NonNil<U> | V
-    <T, V>(predicate: ArrayPredicate<T>, or: V): (target: readonly T[]) => NonNil<T> | V
-    <T, U extends T, V>(target: readonly T[], predicate: ArrayGuard<T, U>, or: V): NonNil<U> | V
-    <T, V>(target: readonly T[], predicate: ArrayPredicate<T>, or: V): NonNil<T> | V
-} = dfdlT(<T, U extends T, V>(target: readonly T[], predicate: ArrayGuard<T, U>, or: V): any => {
+    <T, U extends T, V>(predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => value is U, or: V): (target: readonly T[]) => Exclude<U, null | undefined> | V
+    <T, V>(predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean, or: V): (target: readonly T[]) => Exclude<T, null | undefined> | V
+    <T, U extends T, V>(target: readonly T[], predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => value is U, or: V): Exclude<U, null | undefined> | V
+    <T, V>(target: readonly T[], predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean, or: V): Exclude<T, null | undefined> | V
+} = dfdlT(<T, U extends T, V>(target: readonly T[], predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => value is U, or: V): any => {
     return target.find(predicate) ?? or
 }, 3)

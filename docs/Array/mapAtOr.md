@@ -1,12 +1,16 @@
 # mapAtOr
 
 ```ts
-function Array.mapAtOr(
-    array: T[],
-    index: number,
-    mapper: (value: T, index: number, array: T[]) => U,
-    fallback: V
-): T[] | V
+function Array.mapAtOr<T, U>(
+    target: readonly T[],
+    idx: number,
+    map: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => T,
+    or: U,
+): readonly T[] | U
 ```
 
 Applies the `mapper` function to the element at the specified `index` in `array`, returning a new array with the mapped element, or `fallback` if the index is out of bounds.

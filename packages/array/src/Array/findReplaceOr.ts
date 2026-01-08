@@ -1,4 +1,3 @@
-import type { ArrayPredicate } from "./internals/types"
 import { dfdlT } from "@monstermann/dfdl"
 import { cloneArray } from "@monstermann/remmi"
 
@@ -6,12 +5,16 @@ import { cloneArray } from "@monstermann/remmi"
  * # findReplaceOr
  *
  * ```ts
- * function Array.findReplaceOr(
- *     array: T[],
- *     predicate: (value: T, index: number, array: T[]) => boolean,
- *     value: U,
- *     fallback: V
- * ): T[] | V
+ * function Array.findReplaceOr<T, U>(
+ *     target: readonly T[],
+ *     predicate: (
+ *         value: NoInfer<T>,
+ *         index: number,
+ *         target: readonly NoInfer<T>[],
+ *     ) => boolean,
+ *     replacement: NoInfer<T>,
+ *     or: U,
+ * ): readonly T[] | U
  * ```
  *
  * Finds the first element in `array` that satisfies the provided `predicate` function and replaces it with `replacement`, returning a new array with the replaced element, or `fallback` if no element is found.
@@ -35,12 +38,12 @@ import { cloneArray } from "@monstermann/remmi"
  *
  */
 export const findReplaceOr: {
-    <T, U>(predicate: ArrayPredicate<T>, replacement: NoInfer<T>, or: U): (target: T[]) => T[] | U
-    <T, U>(predicate: ArrayPredicate<T>, replacement: NoInfer<T>, or: U): (target: readonly T[]) => readonly T[] | U
+    <T, U>(predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean, replacement: NoInfer<T>, or: U): (target: T[]) => T[] | U
+    <T, U>(predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean, replacement: NoInfer<T>, or: U): (target: readonly T[]) => readonly T[] | U
 
-    <T, U>(target: T[], predicate: ArrayPredicate<T>, replacement: NoInfer<T>, or: U): T[] | U
-    <T, U>(target: readonly T[], predicate: ArrayPredicate<T>, replacement: NoInfer<T>, or: U): readonly T[] | U
-} = dfdlT(<T, U>(target: T[], predicate: ArrayPredicate<T>, replacement: NoInfer<T>, or: U): T[] | U => {
+    <T, U>(target: T[], predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean, replacement: NoInfer<T>, or: U): T[] | U
+    <T, U>(target: readonly T[], predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean, replacement: NoInfer<T>, or: U): readonly T[] | U
+} = dfdlT(<T, U>(target: T[], predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean, replacement: NoInfer<T>, or: U): T[] | U => {
     const idx = target.findIndex(predicate)
     if (idx === -1) return or
     const prev = target[idx]! as T

@@ -1,11 +1,15 @@
 # findOr
 
 ```ts
-function Array.findOr(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean,
-    fallback: U
-): T | U
+function Array.findOr<T, V>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
+    or: V,
+): Exclude<T, null | undefined> | V
 ```
 
 Returns the first element in `array` that satisfies the provided `predicate` function, or `fallback` if no element is found.

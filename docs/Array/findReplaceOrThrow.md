@@ -1,11 +1,15 @@
 # findReplaceOrThrow
 
 ```ts
-function Array.findReplaceOrThrow(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean,
-    value: U
-): T[]
+function Array.findReplaceOrThrow<T>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
+    replacement: NoInfer<T>,
+): readonly T[]
 ```
 
 Finds the first element in `array` that satisfies the provided `predicate` function and replaces it with `replacement`, returning a new array with the replaced element, or throws an error if no element is found.

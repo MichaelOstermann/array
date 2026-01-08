@@ -1,14 +1,17 @@
-import type { ArrayPredicate } from "./internals/types"
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
  * # findIndexOr
  *
  * ```ts
- * function Array.findIndexOr(
- *     array: T[],
- *     predicate: (value: T, index: number, array: T[]) => boolean,
- *     fallback: U
+ * function Array.findIndexOr<T, U>(
+ *     target: readonly T[],
+ *     predicate: (
+ *         value: NoInfer<T>,
+ *         index: number,
+ *         target: readonly NoInfer<T>[],
+ *     ) => boolean,
+ *     or: U,
  * ): number | U
  * ```
  *
@@ -39,9 +42,9 @@ import { dfdlT } from "@monstermann/dfdl"
  *
  */
 export const findIndexOr: {
-    <T, U>(predicate: ArrayPredicate<T>, or: U): (target: readonly T[]) => number | U
-    <T, U>(target: readonly T[], predicate: ArrayPredicate<T>, or: U): number | U
-} = dfdlT(<T, U>(target: readonly T[], predicate: ArrayPredicate<T>, or: U): number | U => {
+    <T, U>(predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean, or: U): (target: readonly T[]) => number | U
+    <T, U>(target: readonly T[], predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean, or: U): number | U
+} = dfdlT(<T, U>(target: readonly T[], predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean, or: U): number | U => {
     const idx = target.findIndex(predicate)
     return idx < 0 ? or : idx
 }, 3)

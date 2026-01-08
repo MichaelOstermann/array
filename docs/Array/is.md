@@ -1,7 +1,7 @@
 # is
 
 ```ts
-function Array.is(value: unknown): boolean
+function Array.is(target: unknown): target is readonly unknown[]
 ```
 
 Returns `true` if `value` is an array, otherwise returns `false`.

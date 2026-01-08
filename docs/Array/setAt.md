@@ -1,7 +1,11 @@
 # setAt
 
 ```ts
-function Array.setAt(array: T[], index: number, value: U): T[]
+function Array.setAt<T>(
+    target: readonly T[],
+    idx: number,
+    value: NoInfer<T>,
+): readonly T[]
 ```
 
 Sets the value at the specified `idx` in `target` to `value`. Returns the original array if the index is out of bounds or the value is already the same.

@@ -1,7 +1,7 @@
 # medianOrThrow
 
 ```ts
-function Array.medianOrThrow(array: number[]): number
+function Array.medianOrThrow(target: readonly number[]): number
 ```
 
 Returns the median value from `array`, or throws an error if the array is empty.

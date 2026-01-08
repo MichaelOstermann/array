@@ -1,7 +1,11 @@
 # atOr
 
 ```ts
-function Array.atOr(array: T[], offset: number, fallback: U): T | U
+function Array.atOr<T, U>(
+    target: readonly T[],
+    offset: number,
+    or: U,
+): Exclude<T, null | undefined> | U
 ```
 
 Returns the value at the specified `offset`. Returns `fallback` if the `offset` was out of range, or the retrieved value was nullable.

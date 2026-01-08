@@ -1,4 +1,3 @@
-import type { OrElse } from "./internals/types"
 import { dfdlT } from "@monstermann/dfdl"
 import { insertAllAt } from "./insertAllAt"
 
@@ -6,12 +5,12 @@ import { insertAllAt } from "./insertAllAt"
  * # insertAllAtOrElse
  *
  * ```ts
- * function Array.insertAllAtOrElse(
- *     array: T[],
- *     index: number,
- *     values: U[],
- *     fallback: (array: T[]) => V
- * ): T[] | V
+ * function Array.insertAllAtOrElse<T, U>(
+ *     target: readonly T[],
+ *     idx: number,
+ *     values: Iterable<NoInfer<T>>,
+ *     orElse: (target: readonly NoInfer<T>[]) => U,
+ * ): readonly T[] | U
  * ```
  *
  * Inserts all `values` at the specified `idx` in `target`. If the index is out of bounds, calls `orElse` with the original array. Supports iterables.
@@ -41,12 +40,12 @@ import { insertAllAt } from "./insertAllAt"
  *
  */
 export const insertAllAtOrElse: {
-    <T, U>(idx: number, values: Iterable<NoInfer<T>>, orElse: OrElse<T, U>): (target: T[]) => T[] | U
-    <T, U>(idx: number, values: Iterable<NoInfer<T>>, orElse: OrElse<T, U>): (target: readonly T[]) => readonly T[] | U
+    <T, U>(idx: number, values: Iterable<NoInfer<T>>, orElse: (target: readonly NoInfer<T>[]) => U): (target: T[]) => T[] | U
+    <T, U>(idx: number, values: Iterable<NoInfer<T>>, orElse: (target: readonly NoInfer<T>[]) => U): (target: readonly T[]) => readonly T[] | U
 
-    <T, U>(target: T[], idx: number, values: Iterable<NoInfer<T>>, orElse: OrElse<T, U>): T[] | U
-    <T, U>(target: readonly T[], idx: number, values: Iterable<NoInfer<T>>, orElse: OrElse<T, U>): readonly T[] | U
-} = dfdlT(<T, U>(target: T[], idx: number, values: Iterable<NoInfer<T>>, orElse: OrElse<T, U>): T[] | U => {
+    <T, U>(target: T[], idx: number, values: Iterable<NoInfer<T>>, orElse: (target: readonly NoInfer<T>[]) => U): T[] | U
+    <T, U>(target: readonly T[], idx: number, values: Iterable<NoInfer<T>>, orElse: (target: readonly NoInfer<T>[]) => U): readonly T[] | U
+} = dfdlT(<T, U>(target: T[], idx: number, values: Iterable<NoInfer<T>>, orElse: (target: readonly NoInfer<T>[]) => U): T[] | U => {
     if (idx < 0 || idx > target.length) return orElse(target)
     return insertAllAt(target, idx, values)
 }, 4)

@@ -1,4 +1,3 @@
-import type { ArrayPredicate } from "./internals/types"
 import { dfdlT } from "@monstermann/dfdl"
 import { cloneArray } from "@monstermann/remmi"
 
@@ -6,10 +5,14 @@ import { cloneArray } from "@monstermann/remmi"
  * # findRemoveOr
  *
  * ```ts
- * function Array.findRemoveOr(
- *     array: T[],
- *     predicate: (value: T, index: number, array: T[]) => boolean,
- *     fallback: U
+ * function Array.findRemoveOr<T, U>(
+ *     target: readonly T[],
+ *     predicate: (
+ *         value: NoInfer<T>,
+ *         index: number,
+ *         target: readonly NoInfer<T>[],
+ *     ) => boolean,
+ *     or: U,
  * ): T[] | U
  * ```
  *
@@ -34,9 +37,9 @@ import { cloneArray } from "@monstermann/remmi"
  *
  */
 export const findRemoveOr: {
-    <T, U>(predicate: ArrayPredicate<T>, or: U): (target: readonly T[]) => T[] | U
-    <T, U>(target: readonly T[], predicate: ArrayPredicate<T>, or: U): T[] | U
-} = dfdlT(<T, U>(target: readonly T[], predicate: ArrayPredicate<T>, or: U): T[] | U => {
+    <T, U>(predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean, or: U): (target: readonly T[]) => T[] | U
+    <T, U>(target: readonly T[], predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean, or: U): T[] | U
+} = dfdlT(<T, U>(target: readonly T[], predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean, or: U): T[] | U => {
     const idx = target.findIndex(predicate)
     if (idx === -1) return or
     const result = cloneArray(target)

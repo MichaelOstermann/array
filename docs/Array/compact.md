@@ -1,7 +1,9 @@
 # compact
 
 ```ts
-function Array.compact(array: T[]): T[]
+function Array.compact<T>(
+    target: readonly T[],
+): readonly Exclude<T, null | undefined>[]
 ```
 
 Removes all nullable values from `array`.

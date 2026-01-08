@@ -1,10 +1,14 @@
 # forEachRight
 
 ```ts
-function Array.forEachRight(
-    array: T[],
-    callback: (value: T, index: number, array: T[]) => void
-): T[]
+function Array.forEachRight<T>(
+    target: readonly T[],
+    callback: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => any,
+): readonly T[]
 ```
 
 Executes the provided `callback` function once for each element in `array` in reverse order and returns the original array.

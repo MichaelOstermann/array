@@ -1,7 +1,7 @@
 # clone
 
 ```ts
-function Array.clone(array: T[]): T[]
+function Array.clone<T>(target: readonly T[]): T[]
 ```
 
 Creates a shallow copy of `array`, unless marked as mutable with `markAsMutable` inside a mutation context (see [@monstermann/remmi](https://michaelostermann.github.io/remmi/#clonearray-array)).

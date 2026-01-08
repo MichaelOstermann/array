@@ -1,11 +1,19 @@
 # findMapAll
 
 ```ts
-function Array.findMapAll(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean,
-    mapper: (value: T, index: number, array: T[]) => U
-): T[]
+function Array.findMapAll<T>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
+    mapper: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => T,
+): readonly T[]
 ```
 
 Finds all elements in `array` that satisfy the provided `predicate` function and applies the `mapper` function to each of them, returning a new array with the mapped elements.

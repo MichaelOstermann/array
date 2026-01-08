@@ -1,12 +1,20 @@
 # findMapOr
 
 ```ts
-function Array.findMapOr(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean,
-    mapper: (value: T, index: number, array: T[]) => U,
-    fallback: V
-): T[] | V
+function Array.findMapOr<T, V>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
+    mapper: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => T,
+    or: V,
+): readonly T[] | V
 ```
 
 Finds the first element in `array` that satisfies the provided `predicate` function and applies the `mapper` function to it, returning a new array with the mapped element, or `fallback` if no element is found.

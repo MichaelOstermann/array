@@ -4,10 +4,15 @@ import { dfdlT } from "@monstermann/dfdl"
  * # reduce
  *
  * ```ts
- * function Array.reduce(
- *     array: T[],
- *     reducer: (acc: U, value: T, index: number, array: T[]) => U,
- *     initial: U
+ * function Array.reduce<T, U>(
+ *     target: readonly T[],
+ *     acc: U,
+ *     reducer: (
+ *         acc: NoInfer<U>,
+ *         value: NoInfer<T>,
+ *         idx: number,
+ *         target: readonly NoInfer<T>[],
+ *     ) => NoInfer<U>,
  * ): U
  * ```
  *

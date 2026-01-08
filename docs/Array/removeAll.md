@@ -1,7 +1,12 @@
 # removeAll
 
 ```ts
-function Array.removeAll(array: T[], values: Iterable<T>): T[]
+function Array.removeAll<T, const U extends T>(
+    target: readonly T[],
+    values: Iterable<U>,
+): IsLiteral<U> extends true
+    ? readonly Exclude<T, U>[]
+    : readonly T[]
 ```
 
 Removes all occurrences of each value in `values` from `target` array. If no values are found, returns the original array unchanged.

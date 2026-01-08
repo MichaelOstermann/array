@@ -1,12 +1,12 @@
 # setAtOrElse
 
 ```ts
-function Array.setAtOrElse(
-    array: T[],
-    index: number,
-    value: U,
-    fallback: (array: T[]) => V
-): T[] | V
+function Array.setAtOrElse<T, U>(
+    target: readonly T[],
+    idx: number,
+    value: NoInfer<T>,
+    orElse: (target: readonly NoInfer<T>[]) => U,
+): readonly T[] | U
 ```
 
 Sets the value at the specified `idx` in `target` to `value`. If the index is out of bounds, calls `orElse` with the original array.

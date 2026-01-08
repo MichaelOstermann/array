@@ -1,9 +1,13 @@
 # some
 
 ```ts
-function Array.some(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean
+function Array.some<T>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
 ): boolean
 ```
 

@@ -5,7 +5,11 @@ import { markAsMutable } from "@monstermann/remmi"
  * # insertAllAt
  *
  * ```ts
- * function Array.insertAllAt(array: T[], index: number, values: U[]): T[]
+ * function Array.insertAllAt<T>(
+ *     target: readonly T[],
+ *     idx: number,
+ *     values: Iterable<NoInfer<T>>,
+ * ): readonly T[]
  * ```
  *
  * Inserts all elements from `values` at the specified `index` in `array`, returning a new array with the inserted elements. Supports iterables for the `values` parameter.

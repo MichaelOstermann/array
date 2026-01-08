@@ -1,10 +1,14 @@
 # findRemoveLastOrElse
 
 ```ts
-function Array.findRemoveLastOrElse(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean,
-    fallback: (array: T[]) => U
+function Array.findRemoveLastOrElse<T, U>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
+    orElse: (target: readonly NoInfer<T>[]) => U,
 ): T[] | U
 ```
 

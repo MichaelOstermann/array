@@ -1,10 +1,14 @@
 # findRemoveOrElse
 
 ```ts
-function Array.findRemoveOrElse(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean,
-    fallback: (array: T[]) => U
+function Array.findRemoveOrElse<T, U>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
+    orElse: (target: readonly NoInfer<T>[]) => U,
 ): T[] | U
 ```
 

@@ -1,13 +1,16 @@
-import type { ArrayPredicate } from "./internals/types"
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
  * # countBy
  *
  * ```ts
- * function Array.countBy(
- *     array: T[],
- *     predicate: (value: T, index: number, array: T[]) => boolean
+ * function Array.countBy<T>(
+ *     target: readonly T[],
+ *     predicate: (
+ *         value: NoInfer<T>,
+ *         index: number,
+ *         target: readonly NoInfer<T>[],
+ *     ) => boolean,
  * ): number
  * ```
  *
@@ -31,8 +34,8 @@ import { dfdlT } from "@monstermann/dfdl"
  *
  */
 export const countBy: {
-    <T>(predicate: ArrayPredicate<T>): (target: readonly T[]) => number
-    <T>(target: readonly T[], predicate: ArrayPredicate<T>): number
-} = dfdlT(<T>(target: readonly T[], predicate: ArrayPredicate<T>): number => {
+    <T>(predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean): (target: readonly T[]) => number
+    <T>(target: readonly T[], predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean): number
+} = dfdlT(<T>(target: readonly T[], predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean): number => {
     return target.reduce((acc, value, idx, target) => acc + (predicate(value, idx, target) ? 1 : 0), 0)
 }, 2)

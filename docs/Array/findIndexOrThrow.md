@@ -1,9 +1,13 @@
 # findIndexOrThrow
 
 ```ts
-function Array.findIndexOrThrow(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean
+function Array.findIndexOrThrow<T>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
 ): number
 ```
 

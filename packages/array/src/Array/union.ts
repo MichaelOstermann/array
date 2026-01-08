@@ -5,7 +5,10 @@ import { cloneArray } from "@monstermann/remmi"
  * # union
  *
  * ```ts
- * function Array.union(target: T[], source: T[]): T[]
+ * function Array.union<T>(
+ *     target: readonly T[],
+ *     source: Iterable<NoInfer<T>>,
+ * ): readonly T[]
  * ```
  *
  * Returns a new array containing all unique elements from both `target` and `source`. Elements from `source` that are not already in `target` are added to the result.

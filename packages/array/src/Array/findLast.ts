@@ -1,13 +1,16 @@
-import type { ArrayGuard, ArrayPredicate } from "./internals/types"
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
  * # findLast
  *
  * ```ts
- * function Array.findLast(
- *     array: T[],
- *     predicate: (value: T, index: number, array: T[]) => boolean
+ * function Array.findLast<T>(
+ *     target: readonly T[],
+ *     predicate: (
+ *         value: NoInfer<T>,
+ *         index: number,
+ *         target: readonly NoInfer<T>[],
+ *     ) => boolean,
  * ): T | undefined
  * ```
  *
@@ -32,10 +35,10 @@ import { dfdlT } from "@monstermann/dfdl"
  *
  */
 export const findLast: {
-    <T, U extends T>(predicate: ArrayGuard<T, U>): (target: readonly T[]) => U | undefined
-    <T>(predicate: ArrayPredicate<T>): (target: readonly T[]) => T | undefined
-    <T, U extends T>(target: readonly T[], predicate: ArrayGuard<T, U>): U | undefined
-    <T>(target: readonly T[], predicate: ArrayPredicate<T>): T | undefined
-} = dfdlT(<T, U extends T>(target: readonly T[], predicate: ArrayGuard<T, U>): U | undefined => {
+    <T, U extends T>(predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => value is U): (target: readonly T[]) => U | undefined
+    <T>(predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean): (target: readonly T[]) => T | undefined
+    <T, U extends T>(target: readonly T[], predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => value is U): U | undefined
+    <T>(target: readonly T[], predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean): T | undefined
+} = dfdlT(<T, U extends T>(target: readonly T[], predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => value is U): U | undefined => {
     return target.findLast(predicate)
 }, 2)

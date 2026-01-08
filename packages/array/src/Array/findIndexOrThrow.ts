@@ -1,13 +1,16 @@
-import type { ArrayPredicate } from "./internals/types"
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
  * # findIndexOrThrow
  *
  * ```ts
- * function Array.findIndexOrThrow(
- *     array: T[],
- *     predicate: (value: T, index: number, array: T[]) => boolean
+ * function Array.findIndexOrThrow<T>(
+ *     target: readonly T[],
+ *     predicate: (
+ *         value: NoInfer<T>,
+ *         index: number,
+ *         target: readonly NoInfer<T>[],
+ *     ) => boolean,
  * ): number
  * ```
  *
@@ -38,9 +41,9 @@ import { dfdlT } from "@monstermann/dfdl"
  *
  */
 export const findIndexOrThrow: {
-    <T>(predicate: ArrayPredicate<T>): (target: readonly T[]) => number
-    <T>(target: readonly T[], predicate: ArrayPredicate<T>): number
-} = dfdlT(<T>(target: readonly T[], predicate: ArrayPredicate<T>): number => {
+    <T>(predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean): (target: readonly T[]) => number
+    <T>(target: readonly T[], predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean): number
+} = dfdlT(<T>(target: readonly T[], predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean): number => {
     const idx = target.findIndex(predicate)
     if (idx < 0) throw new Error("Array.findIndexOrThrow: No value found.")
     return idx

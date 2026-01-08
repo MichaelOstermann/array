@@ -1,7 +1,10 @@
 # take
 
 ```ts
-function Array.take(array: T[], count: number): T[]
+function Array.take<T>(
+    target: readonly T[],
+    amount: number,
+): readonly T[]
 ```
 
 Returns a new array containing the first `amount` elements from `array`.

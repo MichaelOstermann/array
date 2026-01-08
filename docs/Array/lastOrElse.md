@@ -1,7 +1,10 @@
 # lastOrElse
 
 ```ts
-function Array.lastOrElse(array: T[], fallback: (array: T[]) => U): T | U
+function Array.lastOrElse<T, U>(
+    target: readonly T[],
+    orElse: (target: readonly NoInfer<T>[]) => U,
+): Exclude<T, null | undefined> | U
 ```
 
 Returns the last element of `array`, or the result of calling `callback` with the array if the array is empty.

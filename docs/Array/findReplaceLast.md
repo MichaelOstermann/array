@@ -1,11 +1,15 @@
 # findReplaceLast
 
 ```ts
-function Array.findReplaceLast(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean,
-    value: U
-): T[]
+function Array.findReplaceLast<T>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
+    replacement: NoInfer<T>,
+): readonly T[]
 ```
 
 Finds the last element in `array` that satisfies the provided `predicate` function and replaces it with `replacement`, returning a new array with the replaced element.

@@ -5,12 +5,12 @@ import { cloneArray } from "@monstermann/remmi"
  * # replaceOr
  *
  * ```ts
- * function Array.replaceOr(
- *     array: T[],
- *     oldValue: U,
- *     newValue: V,
- *     fallback: W
- * ): T[] | W
+ * function Array.replaceOr<T, U>(
+ *     target: readonly T[],
+ *     value: NoInfer<T>,
+ *     replacement: NoInfer<T>,
+ *     or: U,
+ * ): readonly T[] | U
  * ```
  *
  * Replaces the first occurrence of `value` in `target` with `replacement`. If `value` is not found, returns `or`.

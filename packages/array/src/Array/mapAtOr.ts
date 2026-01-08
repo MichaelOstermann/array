@@ -1,4 +1,3 @@
-import type { ArrayMap } from "./internals/types"
 import { dfdlT } from "@monstermann/dfdl"
 import { cloneArray } from "@monstermann/remmi"
 import { resolveOffset } from "./internals/offset"
@@ -7,12 +6,16 @@ import { resolveOffset } from "./internals/offset"
  * # mapAtOr
  *
  * ```ts
- * function Array.mapAtOr(
- *     array: T[],
- *     index: number,
- *     mapper: (value: T, index: number, array: T[]) => U,
- *     fallback: V
- * ): T[] | V
+ * function Array.mapAtOr<T, U>(
+ *     target: readonly T[],
+ *     idx: number,
+ *     map: (
+ *         value: NoInfer<T>,
+ *         index: number,
+ *         target: readonly NoInfer<T>[],
+ *     ) => T,
+ *     or: U,
+ * ): readonly T[] | U
  * ```
  *
  * Applies the `mapper` function to the element at the specified `index` in `array`, returning a new array with the mapped element, or `fallback` if the index is out of bounds.
@@ -36,12 +39,12 @@ import { resolveOffset } from "./internals/offset"
  *
  */
 export const mapAtOr: {
-    <T, U>(idx: number, map: ArrayMap<T>, or: U): (target: T[]) => T[] | U
-    <T, U>(idx: number, map: ArrayMap<T>, or: U): (target: readonly T[]) => readonly T[] | U
+    <T, U>(idx: number, map: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => T, or: U): (target: T[]) => T[] | U
+    <T, U>(idx: number, map: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => T, or: U): (target: readonly T[]) => readonly T[] | U
 
-    <T, U>(target: T[], idx: number, map: ArrayMap<T>, or: U): T[] | U
-    <T, U>(target: readonly T[], idx: number, map: ArrayMap<T>, or: U): readonly T[] | U
-} = dfdlT(<T, U>(target: T[], idx: number, map: ArrayMap<T>, or: U): T[] | U => {
+    <T, U>(target: T[], idx: number, map: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => T, or: U): T[] | U
+    <T, U>(target: readonly T[], idx: number, map: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => T, or: U): readonly T[] | U
+} = dfdlT(<T, U>(target: T[], idx: number, map: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => T, or: U): T[] | U => {
     const offset = resolveOffset(target, idx)
     if (offset < 0) return or
     const prev = target[offset]! as T

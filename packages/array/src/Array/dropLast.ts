@@ -5,7 +5,10 @@ import { cloneArray, markAsMutable } from "@monstermann/remmi"
  * # dropLast
  *
  * ```ts
- * function Array.dropLast(array: T[], amount: number): T[]
+ * function Array.dropLast<T>(
+ *     target: readonly T[],
+ *     amount: number,
+ * ): readonly T[]
  * ```
  *
  * Removes `amount` of elements from the end of the `target` array.

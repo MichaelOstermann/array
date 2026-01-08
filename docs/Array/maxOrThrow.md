@@ -1,7 +1,7 @@
 # maxOrThrow
 
 ```ts
-function Array.maxOrThrow(array: number[]): number
+function Array.maxOrThrow(target: readonly number[]): number
 ```
 
 Returns the maximum value from `array`, or throws an error if the array is empty.

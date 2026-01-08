@@ -1,11 +1,14 @@
-import type { NonNil } from "./internals/types"
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
  * # atOr
  *
  * ```ts
- * function Array.atOr(array: T[], offset: number, fallback: U): T | U
+ * function Array.atOr<T, U>(
+ *     target: readonly T[],
+ *     offset: number,
+ *     or: U,
+ * ): Exclude<T, null | undefined> | U
  * ```
  *
  * Returns the value at the specified `offset`. Returns `fallback` if the `offset` was out of range, or the retrieved value was nullable.
@@ -26,8 +29,8 @@ import { dfdlT } from "@monstermann/dfdl"
  *
  */
 export const atOr: {
-    <U>(offset: number, or: U): <T>(target: readonly T[]) => NonNil<T> | U
-    <T, U>(target: readonly T[], offset: number, or: U): NonNil<T> | U
-} = dfdlT(<T, U>(target: readonly T[], offset: number, or: U): NonNil<T> | U => {
-    return target.at(offset) as NonNil<T> ?? or
+    <U>(offset: number, or: U): <T>(target: readonly T[]) => Exclude<T, null | undefined> | U
+    <T, U>(target: readonly T[], offset: number, or: U): Exclude<T, null | undefined> | U
+} = dfdlT(<T, U>(target: readonly T[], offset: number, or: U): Exclude<T, null | undefined> | U => {
+    return target.at(offset) as Exclude<T, null | undefined> ?? or
 }, 3)

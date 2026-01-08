@@ -1,13 +1,16 @@
-import type { ArrayGuard, ArrayPredicate } from "./internals/types"
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
  * # partition
  *
  * ```ts
- * function Array.partition(
- *     array: T[],
- *     predicate: (value: T, index: number, array: T[]) => boolean
+ * function Array.partition<T>(
+ *     target: readonly T[],
+ *     predicate: (
+ *         value: NoInfer<T>,
+ *         index: number,
+ *         target: readonly NoInfer<T>[],
+ *     ) => boolean,
  * ): [T[], T[]]
  * ```
  *
@@ -32,10 +35,10 @@ import { dfdlT } from "@monstermann/dfdl"
  *
  */
 export const partition: {
-    <T, U extends T>(predicate: ArrayGuard<T, U>): (target: readonly T[]) => [U[], Exclude<T, U>[]]
-    <T>(predicate: ArrayPredicate<T>): (target: readonly T[]) => [T[], T[]]
-    <T, U extends T>(target: readonly T[], predicate: ArrayGuard<T, U>): [U[], Exclude<T, U>[]]
-    <T>(target: readonly T[], predicate: ArrayPredicate<T>): [T[], T[]]
+    <T, U extends T>(predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => value is U): (target: readonly T[]) => [U[], Exclude<T, U>[]]
+    <T>(predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean): (target: readonly T[]) => [T[], T[]]
+    <T, U extends T>(target: readonly T[], predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => value is U): [U[], Exclude<T, U>[]]
+    <T>(target: readonly T[], predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean): [T[], T[]]
 } = dfdlT(<T>(target: readonly T[], predicate: (value: NoInfer<T>, idx: number, target: readonly T[]) => boolean): [T[], T[]] => {
     const left: T[] = []
     const right: T[] = []

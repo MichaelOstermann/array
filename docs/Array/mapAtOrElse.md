@@ -1,12 +1,16 @@
 # mapAtOrElse
 
 ```ts
-function Array.mapAtOrElse(
-    array: T[],
-    index: number,
-    mapper: (value: T, index: number, array: T[]) => U,
-    fallback: (array: T[]) => V
-): T[] | V
+function Array.mapAtOrElse<T, U>(
+    target: readonly T[],
+    idx: number,
+    map: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => T,
+    orElse: (target: readonly NoInfer<T>[]) => U,
+): readonly T[] | U
 ```
 
 Applies the `mapper` function to the element at the specified `index` in `array`, returning a new array with the mapped element, or the result of calling `callback` with the array if the index is out of bounds.

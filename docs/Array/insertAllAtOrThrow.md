@@ -1,7 +1,11 @@
 # insertAllAtOrThrow
 
 ```ts
-function Array.insertAllAtOrThrow(array: T[], index: number, values: U[]): T[]
+function Array.insertAllAtOrThrow<T>(
+    target: readonly T[],
+    idx: number,
+    values: Iterable<NoInfer<T>>,
+): readonly T[]
 ```
 
 Inserts all `values` at the specified `idx` in `target`. If the index is out of bounds, throws an error. Supports iterables.

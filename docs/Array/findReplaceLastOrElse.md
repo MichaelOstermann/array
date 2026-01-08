@@ -1,12 +1,16 @@
 # findReplaceLastOrElse
 
 ```ts
-function Array.findReplaceLastOrElse(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean,
-    value: U,
-    fallback: (array: T[]) => V
-): T[] | V
+function Array.findReplaceLastOrElse<T, U>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
+    replacement: NoInfer<T>,
+    orElse: (target: readonly NoInfer<T>[]) => U,
+): readonly T[] | U
 ```
 
 Finds the last element in `array` that satisfies the provided `predicate` function and replaces it with `replacement`, returning a new array with the replaced element, or the result of calling `callback` with the array if no element is found.

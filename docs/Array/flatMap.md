@@ -1,10 +1,14 @@
 # flatMap
 
 ```ts
-function Array.flatMap(
-    array: T[],
-    mapper: (value: T, index: number, array: T[]) => U[]
-): U[]
+function Array.flatMap<T, U>(
+    target: readonly T[],
+    mapper: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => U[],
+): readonly U[]
 ```
 
 Maps each element in `array` using the `mapper` function and flattens the result by one level.

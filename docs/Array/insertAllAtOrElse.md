@@ -1,12 +1,12 @@
 # insertAllAtOrElse
 
 ```ts
-function Array.insertAllAtOrElse(
-    array: T[],
-    index: number,
-    values: U[],
-    fallback: (array: T[]) => V
-): T[] | V
+function Array.insertAllAtOrElse<T, U>(
+    target: readonly T[],
+    idx: number,
+    values: Iterable<NoInfer<T>>,
+    orElse: (target: readonly NoInfer<T>[]) => U,
+): readonly T[] | U
 ```
 
 Inserts all `values` at the specified `idx` in `target`. If the index is out of bounds, calls `orElse` with the original array. Supports iterables.

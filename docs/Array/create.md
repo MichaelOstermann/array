@@ -1,10 +1,7 @@
 # create
 
 ```ts
-function Array.create(
-    target: Iterable<T> | ArrayLike<T>,
-    map?: (value: T, index: number) => U
-): U[]
+function Array.create(...args: any): any
 ```
 
 An alias for `Array.from(target, map?)`.

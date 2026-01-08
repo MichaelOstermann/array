@@ -4,7 +4,10 @@ import { dfdlT } from "@monstermann/dfdl"
  * # indexOfOrThrow
  *
  * ```ts
- * function Array.indexOfOrThrow(array: T[], value: T): number
+ * function Array.indexOfOrThrow<T>(
+ *     target: readonly T[],
+ *     value: NoInfer<T>,
+ * ): number
  * ```
  *
  * Returns the index of the first occurrence of `value` in `target`. If `value` is not found, throws an error.

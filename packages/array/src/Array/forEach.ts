@@ -1,14 +1,17 @@
-import type { ArrayMap } from "./internals/types"
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
  * # forEach
  *
  * ```ts
- * function Array.forEach(
- *     array: T[],
- *     callback: (value: T, index: number, array: T[]) => void
- * ): T[]
+ * function Array.forEach<T>(
+ *     target: readonly T[],
+ *     callback: (
+ *         value: NoInfer<T>,
+ *         index: number,
+ *         target: readonly NoInfer<T>[],
+ *     ) => any,
+ * ): readonly T[]
  * ```
  *
  * Executes the provided `callback` function once for each element in `array` and returns the original array.
@@ -32,12 +35,12 @@ import { dfdlT } from "@monstermann/dfdl"
  *
  */
 export const forEach: {
-    <T>(callback: ArrayMap<T, any>): (target: T[]) => T[]
-    <T>(callback: ArrayMap<T, any>): (target: readonly T[]) => readonly T[]
+    <T>(callback: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => any): (target: T[]) => T[]
+    <T>(callback: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => any): (target: readonly T[]) => readonly T[]
 
-    <T>(target: T[], callback: ArrayMap<T, any>): T[]
-    <T>(target: readonly T[], callback: ArrayMap<T, any>): readonly T[]
-} = dfdlT(<T>(target: T[], callback: ArrayMap<T, any>): T[] => {
+    <T>(target: T[], callback: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => any): T[]
+    <T>(target: readonly T[], callback: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => any): readonly T[]
+} = dfdlT(<T>(target: T[], callback: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => any): T[] => {
     target.forEach(callback)
     return target
 }, 2)

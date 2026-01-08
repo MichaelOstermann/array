@@ -1,10 +1,14 @@
 # findLastOrThrow
 
 ```ts
-function Array.findLastOrThrow(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean
-): T
+function Array.findLastOrThrow<T>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
+): Exclude<T, null | undefined>
 ```
 
 Returns the last element in `array` that satisfies the provided `predicate` function, or throws an error if no element is found.

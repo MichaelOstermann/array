@@ -1,10 +1,14 @@
 # filter
 
 ```ts
-function Array.filter(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean
-): T[]
+function Array.filter<T>(
+    target: readonly T[],
+    by: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
+): readonly T[]
 ```
 
 Filters elements from `target` array based on the predicate function `by`.

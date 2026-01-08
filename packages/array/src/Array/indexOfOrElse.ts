@@ -1,14 +1,13 @@
-import type { OrElse } from "./internals/types"
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
  * # indexOfOrElse
  *
  * ```ts
- * function Array.indexOfOrElse(
- *     array: T[],
- *     value: T,
- *     fallback: (array: T[]) => U
+ * function Array.indexOfOrElse<T, U>(
+ *     target: readonly T[],
+ *     value: NoInfer<T>,
+ *     orElse: (target: readonly NoInfer<T>[]) => U,
  * ): number | U
  * ```
  *
@@ -39,9 +38,9 @@ import { dfdlT } from "@monstermann/dfdl"
  *
  */
 export const indexOfOrElse: {
-    <T, U>(value: NoInfer<T>, orElse: OrElse<T, U>): (target: readonly T[]) => number | U
-    <T, U>(target: readonly T[], value: NoInfer<T>, orElse: OrElse<T, U>): number | U
-} = dfdlT(<T, U>(target: readonly T[], value: NoInfer<T>, orElse: OrElse<T, U>): number | U => {
+    <T, U>(value: NoInfer<T>, orElse: (target: readonly NoInfer<T>[]) => U): (target: readonly T[]) => number | U
+    <T, U>(target: readonly T[], value: NoInfer<T>, orElse: (target: readonly NoInfer<T>[]) => U): number | U
+} = dfdlT(<T, U>(target: readonly T[], value: NoInfer<T>, orElse: (target: readonly NoInfer<T>[]) => U): number | U => {
     const idx = target.indexOf(value)
     return idx < 0 ? orElse(target) : idx
 }, 3)

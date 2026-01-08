@@ -1,10 +1,14 @@
 # findRemove
 
 ```ts
-function Array.findRemove(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean
-): T[]
+function Array.findRemove<T>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
+): readonly T[]
 ```
 
 Finds the first element in `array` that satisfies the provided `predicate` function and removes it, returning a new array without the removed element.

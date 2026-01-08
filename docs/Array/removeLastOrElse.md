@@ -1,11 +1,11 @@
 # removeLastOrElse
 
 ```ts
-function Array.removeLastOrElse(
-    array: T[],
-    value: U,
-    fallback: (array: T[]) => V
-): T[] | V
+function Array.removeLastOrElse<T, U>(
+    target: readonly T[],
+    value: NoInfer<T>,
+    orElse: (target: readonly NoInfer<T>[]) => U,
+): T[] | U
 ```
 
 Removes the last occurrence of `value` from `target` array. If the value is not found, calls the `orElse` function with the original array and returns its result.

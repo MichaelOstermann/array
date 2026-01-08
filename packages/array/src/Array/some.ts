@@ -1,13 +1,16 @@
-import type { ArrayPredicate } from "./internals/types"
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
  * # some
  *
  * ```ts
- * function Array.some(
- *     array: T[],
- *     predicate: (value: T, index: number, array: T[]) => boolean
+ * function Array.some<T>(
+ *     target: readonly T[],
+ *     predicate: (
+ *         value: NoInfer<T>,
+ *         index: number,
+ *         target: readonly NoInfer<T>[],
+ *     ) => boolean,
  * ): boolean
  * ```
  *
@@ -32,8 +35,8 @@ import { dfdlT } from "@monstermann/dfdl"
  *
  */
 export const some: {
-    <T>(predicate: ArrayPredicate<T>): (target: readonly T[]) => boolean
-    <T>(target: readonly T[], predicate: ArrayPredicate<T>): boolean
-} = dfdlT(<T>(target: readonly T[], predicate: ArrayPredicate<T>): boolean => {
+    <T>(predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean): (target: readonly T[]) => boolean
+    <T>(target: readonly T[], predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean): boolean
+} = dfdlT(<T>(target: readonly T[], predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean): boolean => {
     return target.some(predicate)
 }, 2)

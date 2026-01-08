@@ -4,10 +4,14 @@ import { dfdlT } from "@monstermann/dfdl"
  * # groupBy
  *
  * ```ts
- * function Array.groupBy(
- *     array: T[],
- *     keySelector: (value: T, index: number, array: T[]) => string
- * ): Record<string, T[]>
+ * function Array.groupBy<T extends object, U extends PropertyKey>(
+ *     target: readonly T[],
+ *     by: (
+ *         value: NoInfer<T>,
+ *         idx: number,
+ *         target: readonly NoInfer<T>[],
+ *     ) => U,
+ * ): Record<U, T[]>
  * ```
  *
  * Groups elements in `array` by the result of calling `grouper` function on each element, optionally transforming each element with `transform`, returning an object with keys as group values and values as arrays of elements.

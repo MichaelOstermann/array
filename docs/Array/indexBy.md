@@ -1,10 +1,14 @@
 # indexBy
 
 ```ts
-function Array.indexBy(
-    array: T[],
-    keySelector: (value: T, index: number, array: T[]) => string
-): Record<string, T>
+function Array.indexBy<T extends object, U extends PropertyKey>(
+    target: readonly T[],
+    by: (
+        value: NoInfer<T>,
+        idx: number,
+        target: readonly NoInfer<T>[],
+    ) => U,
+): Record<U, T>
 ```
 
 Creates a record by indexing the `target` array using the `by` function to generate keys. Optionally transforms values using the `transform` function.

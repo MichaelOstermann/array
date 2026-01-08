@@ -1,10 +1,10 @@
 # minOrElse
 
 ```ts
-function Array.minOrElse(
-    array: number[],
-    fallback: (array: number[]) => U
-): number | U
+function Array.minOrElse<T>(
+    target: readonly number[],
+    orElse: (target: readonly NoInfer<number>[]) => T,
+): number | T
 ```
 
 Returns the minimum value from `target` array, or calls `orElse` if the array is empty.

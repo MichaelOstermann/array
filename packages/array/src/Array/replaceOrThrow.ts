@@ -5,7 +5,11 @@ import { cloneArray } from "@monstermann/remmi"
  * # replaceOrThrow
  *
  * ```ts
- * function Array.replaceOrThrow(array: T[], oldValue: U, newValue: V): T[]
+ * function Array.replaceOrThrow<T>(
+ *     target: readonly T[],
+ *     value: NoInfer<T>,
+ *     replacement: NoInfer<T>,
+ * ): readonly T[]
  * ```
  *
  * Replaces the first occurrence of `value` in `target` with `replacement`. If `value` is not found, throws an error.

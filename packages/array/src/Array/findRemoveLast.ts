@@ -1,4 +1,3 @@
-import type { ArrayPredicate } from "./internals/types"
 import { dfdlT } from "@monstermann/dfdl"
 import { cloneArray } from "@monstermann/remmi"
 
@@ -6,10 +5,14 @@ import { cloneArray } from "@monstermann/remmi"
  * # findRemoveLast
  *
  * ```ts
- * function Array.findRemoveLast(
- *     array: T[],
- *     predicate: (value: T, index: number, array: T[]) => boolean
- * ): T[]
+ * function Array.findRemoveLast<T>(
+ *     target: readonly T[],
+ *     predicate: (
+ *         value: NoInfer<T>,
+ *         index: number,
+ *         target: readonly NoInfer<T>[],
+ *     ) => boolean,
+ * ): readonly T[]
  * ```
  *
  * Finds the last element in `array` that satisfies the provided `predicate` function and removes it, returning a new array without the removed element.
@@ -33,12 +36,12 @@ import { cloneArray } from "@monstermann/remmi"
  *
  */
 export const findRemoveLast: {
-    <T>(predicate: ArrayPredicate<T>): (target: T[]) => T[]
-    <T>(predicate: ArrayPredicate<T>): (target: readonly T[]) => readonly T[]
+    <T>(predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean): (target: T[]) => T[]
+    <T>(predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean): (target: readonly T[]) => readonly T[]
 
-    <T>(target: T[], predicate: ArrayPredicate<T>): T[]
-    <T>(target: readonly T[], predicate: ArrayPredicate<T>): readonly T[]
-} = dfdlT(<T>(target: T[], predicate: ArrayPredicate<T>): T[] => {
+    <T>(target: T[], predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean): T[]
+    <T>(target: readonly T[], predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean): readonly T[]
+} = dfdlT(<T>(target: T[], predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean): T[] => {
     const idx = target.findLastIndex(predicate)
     if (idx === -1) return target
     const result = cloneArray(target)

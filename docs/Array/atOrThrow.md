@@ -1,7 +1,10 @@
 # atOrThrow
 
 ```ts
-function Array.atOrThrow(array: T[], offset: number): T
+function Array.atOrThrow<T>(
+    target: readonly T[],
+    offset: number,
+): Exclude<T, null | undefined>
 ```
 
 Returns the value at the specified `offset`, throws an exception if the `offset` was out of range, or the retrieved value was nullable.

@@ -1,7 +1,9 @@
 # lastOrThrow
 
 ```ts
-function Array.lastOrThrow(array: T[]): T
+function Array.lastOrThrow<T>(
+    target: readonly T[],
+): Exclude<T, null | undefined>
 ```
 
 Returns the last element of `array`, or throws an error if the array is empty.

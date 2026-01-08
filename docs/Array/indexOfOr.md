@@ -1,7 +1,11 @@
 # indexOfOr
 
 ```ts
-function Array.indexOfOr(array: T[], value: T, fallback: U): number | U
+function Array.indexOfOr<T, U>(
+    target: readonly T[],
+    value: NoInfer<T>,
+    or: U,
+): number | U
 ```
 
 Returns the index of the first occurrence of `value` in `target`. If `value` is not found, returns `or`.

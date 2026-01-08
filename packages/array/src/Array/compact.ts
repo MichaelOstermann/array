@@ -1,4 +1,3 @@
-import type { NonNil } from "./internals/types"
 import { dfdlT } from "@monstermann/dfdl"
 import { filter } from "./filter"
 
@@ -6,7 +5,9 @@ import { filter } from "./filter"
  * # compact
  *
  * ```ts
- * function Array.compact(array: T[]): T[]
+ * function Array.compact<T>(
+ *     target: readonly T[],
+ * ): readonly Exclude<T, null | undefined>[]
  * ```
  *
  * Removes all nullable values from `array`.
@@ -27,11 +28,11 @@ import { filter } from "./filter"
  *
  */
 export const compact: {
-    (): <T>(target: T[]) => NonNil<T>[]
-    (): <T>(target: readonly T[]) => readonly NonNil<T>[]
+    (): <T>(target: T[]) => Exclude<T, null | undefined>[]
+    (): <T>(target: readonly T[]) => readonly Exclude<T, null | undefined>[]
 
-    <T>(target: T[]): NonNil<T>[]
-    <T>(target: readonly T[]): readonly NonNil<T>[]
+    <T>(target: T[]): Exclude<T, null | undefined>[]
+    <T>(target: readonly T[]): readonly Exclude<T, null | undefined>[]
 } = dfdlT(<T>(target: T[]): any => {
     return filter(target, v => v != null)
 }, 1)

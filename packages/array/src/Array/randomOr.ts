@@ -4,7 +4,7 @@ import { dfdlT } from "@monstermann/dfdl"
  * # randomOr
  *
  * ```ts
- * function Array.randomOr(array: T[], fallback: U): T | U
+ * function Array.randomOr<T, U>(target: readonly T[], or: U): T | U
  * ```
  *
  * Returns a random element from `array`, or `fallback` if the array is empty.

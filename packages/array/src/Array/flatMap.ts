@@ -1,4 +1,3 @@
-import type { ArrayMap } from "./internals/types"
 import { dfdlT } from "@monstermann/dfdl"
 import { markAsMutable } from "@monstermann/remmi"
 
@@ -6,10 +5,14 @@ import { markAsMutable } from "@monstermann/remmi"
  * # flatMap
  *
  * ```ts
- * function Array.flatMap(
- *     array: T[],
- *     mapper: (value: T, index: number, array: T[]) => U[]
- * ): U[]
+ * function Array.flatMap<T, U>(
+ *     target: readonly T[],
+ *     mapper: (
+ *         value: NoInfer<T>,
+ *         index: number,
+ *         target: readonly NoInfer<T>[],
+ *     ) => U[],
+ * ): readonly U[]
  * ```
  *
  * Maps each element in `array` using the `mapper` function and flattens the result by one level.
@@ -33,12 +36,12 @@ import { markAsMutable } from "@monstermann/remmi"
  *
  */
 export const flatMap: {
-    <T, U>(mapper: ArrayMap<T, U[]>): (target: T[]) => U[]
-    <T, U>(mapper: ArrayMap<T, U[]>): (target: readonly T[]) => readonly U[]
+    <T, U>(mapper: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => U[]): (target: T[]) => U[]
+    <T, U>(mapper: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => U[]): (target: readonly T[]) => readonly U[]
 
-    <T, U>(target: T[], mapper: ArrayMap<T, U[]>): U[]
-    <T, U>(target: readonly T[], mapper: ArrayMap<T, U[]>): readonly U[]
-} = dfdlT(<T, U>(target: T[], mapper: ArrayMap<T, U[]>): U[] => {
+    <T, U>(target: T[], mapper: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => U[]): U[]
+    <T, U>(target: readonly T[], mapper: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => U[]): readonly U[]
+} = dfdlT(<T, U>(target: T[], mapper: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => U[]): U[] => {
     let hasChanges = false
     const result = target.flatMap((a, b, c) => {
         const output = mapper(a, b, c)

@@ -1,7 +1,10 @@
 # lastIndexOf
 
 ```ts
-function Array.lastIndexOf(array: T[], value: T): number
+function Array.lastIndexOf<T>(
+    target: readonly T[],
+    value: NoInfer<T>,
+): number
 ```
 
 Returns the last index at which `value` can be found in `array`, or -1 if it is not present.

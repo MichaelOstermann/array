@@ -1,7 +1,10 @@
 # sort
 
 ```ts
-function Array.sort(array: T[], compareFn?: (a: T, b: T) => number): T[]
+function Array.sort<T>(
+    target: readonly T[],
+    comparator: (a: NoInfer<T>, b: NoInfer<T>) => number,
+): T[]
 ```
 
 Returns a new array with the elements of `target` sorted using the provided `comparator` function.

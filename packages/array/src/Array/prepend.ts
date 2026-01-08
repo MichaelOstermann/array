@@ -5,7 +5,10 @@ import { cloneArray } from "@monstermann/remmi"
  * # prepend
  *
  * ```ts
- * function Array.prepend(array: T[], value: U): T[]
+ * function Array.prepend<T>(
+ *     target: readonly T[],
+ *     value: NoInfer<T>,
+ * ): T[]
  * ```
  *
  * Adds `value` to the beginning of `array`.

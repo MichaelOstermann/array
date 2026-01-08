@@ -1,7 +1,7 @@
 # minOrThrow
 
 ```ts
-function Array.minOrThrow(array: number[]): number
+function Array.minOrThrow(target: readonly number[]): number
 ```
 
 Returns the minimum value from `target` array, or throws an error if the array is empty.

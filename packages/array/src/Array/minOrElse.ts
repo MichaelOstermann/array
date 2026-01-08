@@ -1,14 +1,13 @@
-import type { OrElse } from "./internals/types"
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
  * # minOrElse
  *
  * ```ts
- * function Array.minOrElse(
- *     array: number[],
- *     fallback: (array: number[]) => U
- * ): number | U
+ * function Array.minOrElse<T>(
+ *     target: readonly number[],
+ *     orElse: (target: readonly NoInfer<number>[]) => T,
+ * ): number | T
  * ```
  *
  * Returns the minimum value from `target` array, or calls `orElse` if the array is empty.
@@ -38,9 +37,9 @@ import { dfdlT } from "@monstermann/dfdl"
  *
  */
 export const minOrElse: {
-    <T>(orElse: OrElse<number, T>): (target: readonly number[]) => number | T
-    <T>(target: readonly number[], orElse: OrElse<number, T>): number | T
-} = dfdlT(<T>(target: readonly number[], orElse: OrElse<number, T>): number | T => {
+    <T>(orElse: (target: readonly NoInfer<number>[]) => T): (target: readonly number[]) => number | T
+    <T>(target: readonly number[], orElse: (target: readonly NoInfer<number>[]) => T): number | T
+} = dfdlT(<T>(target: readonly number[], orElse: (target: readonly NoInfer<number>[]) => T): number | T => {
     if (target.length === 0) return orElse(target)
     return target.reduce((a, b) => Math.min(a, b), 0)
 }, 2)

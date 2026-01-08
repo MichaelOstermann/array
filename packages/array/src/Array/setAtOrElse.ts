@@ -1,4 +1,3 @@
-import type { OrElse } from "./internals/types"
 import { dfdlT } from "@monstermann/dfdl"
 import { cloneArray } from "@monstermann/remmi"
 import { resolveOffset } from "./internals/offset"
@@ -7,12 +6,12 @@ import { resolveOffset } from "./internals/offset"
  * # setAtOrElse
  *
  * ```ts
- * function Array.setAtOrElse(
- *     array: T[],
- *     index: number,
- *     value: U,
- *     fallback: (array: T[]) => V
- * ): T[] | V
+ * function Array.setAtOrElse<T, U>(
+ *     target: readonly T[],
+ *     idx: number,
+ *     value: NoInfer<T>,
+ *     orElse: (target: readonly NoInfer<T>[]) => U,
+ * ): readonly T[] | U
  * ```
  *
  * Sets the value at the specified `idx` in `target` to `value`. If the index is out of bounds, calls `orElse` with the original array.
@@ -48,12 +47,12 @@ import { resolveOffset } from "./internals/offset"
  *
  */
 export const setAtOrElse: {
-    <T, U>(idx: number, value: NoInfer<T>, orElse: OrElse<T, U>): (target: T[]) => T[] | U
-    <T, U>(idx: number, value: NoInfer<T>, orElse: OrElse<T, U>): (target: readonly T[]) => readonly T[] | U
+    <T, U>(idx: number, value: NoInfer<T>, orElse: (target: readonly NoInfer<T>[]) => U): (target: T[]) => T[] | U
+    <T, U>(idx: number, value: NoInfer<T>, orElse: (target: readonly NoInfer<T>[]) => U): (target: readonly T[]) => readonly T[] | U
 
-    <T, U>(target: T[], idx: number, value: NoInfer<T>, orElse: OrElse<T, U>): T[] | U
-    <T, U>(target: readonly T[], idx: number, value: NoInfer<T>, orElse: OrElse<T, U>): readonly T[] | U
-} = dfdlT(<T, U>(target: T[], idx: number, value: NoInfer<T>, orElse: OrElse<T, U>): T[] | U => {
+    <T, U>(target: T[], idx: number, value: NoInfer<T>, orElse: (target: readonly NoInfer<T>[]) => U): T[] | U
+    <T, U>(target: readonly T[], idx: number, value: NoInfer<T>, orElse: (target: readonly NoInfer<T>[]) => U): readonly T[] | U
+} = dfdlT(<T, U>(target: T[], idx: number, value: NoInfer<T>, orElse: (target: readonly NoInfer<T>[]) => U): T[] | U => {
     const offset = resolveOffset(target, idx)
     if (offset < 0) return orElse(target)
     if (target[offset] === value) return target

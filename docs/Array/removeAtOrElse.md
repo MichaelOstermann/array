@@ -1,10 +1,10 @@
 # removeAtOrElse
 
 ```ts
-function Array.removeAtOrElse(
-    array: T[],
-    index: number,
-    fallback: (array: T[]) => U
+function Array.removeAtOrElse<T, U>(
+    target: readonly T[],
+    idx: number,
+    orElse: (target: readonly NoInfer<T>[]) => U,
 ): T[] | U
 ```
 

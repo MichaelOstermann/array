@@ -4,7 +4,10 @@ import { dfdlT } from "@monstermann/dfdl"
  * # meanOr
  *
  * ```ts
- * function Array.meanOr(array: number[], fallback: U): number | U
+ * function Array.meanOr(
+ *     target: readonly number[],
+ *     or: number,
+ * ): number
  * ```
  *
  * Returns the mean (average) value of the number `array`, or `fallback` if the array is empty.

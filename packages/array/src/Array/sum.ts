@@ -4,7 +4,7 @@ import { dfdlT } from "@monstermann/dfdl"
  * # sum
  *
  * ```ts
- * function Array.sum(array: number[]): number
+ * function Array.sum(target: readonly number[]): number
  * ```
  *
  * Returns the sum of all numbers in `array`.

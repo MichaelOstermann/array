@@ -1,4 +1,3 @@
-import type { ArrayPredicate, OrElse } from "./internals/types"
 import { dfdlT } from "@monstermann/dfdl"
 import { cloneArray } from "@monstermann/remmi"
 
@@ -6,12 +5,16 @@ import { cloneArray } from "@monstermann/remmi"
  * # findReplaceOrElse
  *
  * ```ts
- * function Array.findReplaceOrElse(
- *     array: T[],
- *     predicate: (value: T, index: number, array: T[]) => boolean,
- *     value: U,
- *     fallback: (array: T[]) => V
- * ): T[] | V
+ * function Array.findReplaceOrElse<T, U>(
+ *     target: readonly T[],
+ *     predicate: (
+ *         value: NoInfer<T>,
+ *         index: number,
+ *         target: readonly NoInfer<T>[],
+ *     ) => boolean,
+ *     replacement: NoInfer<T>,
+ *     orElse: (target: readonly NoInfer<T>[]) => U,
+ * ): readonly T[] | U
  * ```
  *
  * Finds the first element in `array` that satisfies the provided `predicate` function and replaces it with `replacement`, returning a new array with the replaced element, or the result of calling `callback` with the array if no element is found.
@@ -44,12 +47,12 @@ import { cloneArray } from "@monstermann/remmi"
  *
  */
 export const findReplaceOrElse: {
-    <T, U>(predicate: ArrayPredicate<T>, replacement: NoInfer<T>, orElse: OrElse<T, U>): (target: T[]) => T[] | U
-    <T, U>(predicate: ArrayPredicate<T>, replacement: NoInfer<T>, orElse: OrElse<T, U>): (target: readonly T[]) => readonly T[] | U
+    <T, U>(predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean, replacement: NoInfer<T>, orElse: (target: readonly NoInfer<T>[]) => U): (target: T[]) => T[] | U
+    <T, U>(predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean, replacement: NoInfer<T>, orElse: (target: readonly NoInfer<T>[]) => U): (target: readonly T[]) => readonly T[] | U
 
-    <T, U>(target: T[], predicate: ArrayPredicate<T>, replacement: NoInfer<T>, orElse: OrElse<T, U>): T[] | U
-    <T, U>(target: readonly T[], predicate: ArrayPredicate<T>, replacement: NoInfer<T>, orElse: OrElse<T, U>): readonly T[] | U
-} = dfdlT(<T, U>(target: T[], predicate: ArrayPredicate<T>, replacement: NoInfer<T>, orElse: OrElse<T, U>): T[] | U => {
+    <T, U>(target: T[], predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean, replacement: NoInfer<T>, orElse: (target: readonly NoInfer<T>[]) => U): T[] | U
+    <T, U>(target: readonly T[], predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean, replacement: NoInfer<T>, orElse: (target: readonly NoInfer<T>[]) => U): readonly T[] | U
+} = dfdlT(<T, U>(target: T[], predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean, replacement: NoInfer<T>, orElse: (target: readonly NoInfer<T>[]) => U): T[] | U => {
     const idx = target.findIndex(predicate)
     if (idx === -1) return orElse(target)
     const prev = target[idx]! as T

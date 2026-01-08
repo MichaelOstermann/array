@@ -1,7 +1,7 @@
 # meanOrThrow
 
 ```ts
-function Array.meanOrThrow(array: number[]): number
+function Array.meanOrThrow(target: readonly number[]): number
 ```
 
 Returns the mean (average) value from `array`, or throws an error if the array is empty.

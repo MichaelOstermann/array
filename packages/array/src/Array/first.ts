@@ -4,7 +4,7 @@ import { dfdlT } from "@monstermann/dfdl"
  * # first
  *
  * ```ts
- * function Array.first(array: T[]): T | undefined
+ * function Array.first<T>(target: readonly T[]): T | undefined
  * ```
  *
  * Returns the first element of `array`, or `undefined` if the array is empty.

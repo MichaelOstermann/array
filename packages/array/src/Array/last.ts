@@ -4,7 +4,7 @@ import { dfdlT } from "@monstermann/dfdl"
  * # last
  *
  * ```ts
- * function Array.last(array: T[]): T | undefined
+ * function Array.last<T>(target: readonly T[]): T | undefined
  * ```
  *
  * Returns the last element of `array`, or `undefined` if the array is empty.

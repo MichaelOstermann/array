@@ -1,15 +1,14 @@
-import type { NonNil, OrElse } from "./internals/types"
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
  * # atOrElse
  *
  * ```ts
- * function Array.atOrElse(
- *     array: T[],
+ * function Array.atOrElse<T, U>(
+ *     target: readonly T[],
  *     offset: number,
- *     fallback: (array: T[]) => U
- * ): T | U
+ *     orElse: (target: readonly NoInfer<T>[]) => U,
+ * ): Exclude<T, null | undefined> | U
  * ```
  *
  * Returns the value at the specified `offset`. Calls `fallback` if the `offset` was out of range, or the retrieved value was nullable.
@@ -33,8 +32,8 @@ import { dfdlT } from "@monstermann/dfdl"
  *
  */
 export const atOrElse: {
-    <T, U>(offset: number, orElse: OrElse<T, U>): (target: readonly T[]) => NonNil<T> | U
-    <T, U>(target: readonly T[], offset: number, orElse: OrElse<T, U>): NonNil<T> | U
-} = dfdlT(<T, U>(target: readonly T[], offset: number, orElse: OrElse<T, U>): NonNil<T> | U => {
-    return target.at(offset) as NonNil<T> ?? orElse(target)
+    <T, U>(offset: number, orElse: (target: readonly NoInfer<T>[]) => U): (target: readonly T[]) => Exclude<T, null | undefined> | U
+    <T, U>(target: readonly T[], offset: number, orElse: (target: readonly NoInfer<T>[]) => U): Exclude<T, null | undefined> | U
+} = dfdlT(<T, U>(target: readonly T[], offset: number, orElse: (target: readonly NoInfer<T>[]) => U): Exclude<T, null | undefined> | U => {
+    return target.at(offset) as Exclude<T, null | undefined> ?? orElse(target)
 }, 3)

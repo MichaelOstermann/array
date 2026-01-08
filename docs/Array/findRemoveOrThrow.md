@@ -1,9 +1,13 @@
 # findRemoveOrThrow
 
 ```ts
-function Array.findRemoveOrThrow(
-    array: T[],
-    predicate: (value: T, index: number, array: T[]) => boolean
+function Array.findRemoveOrThrow<T>(
+    target: readonly T[],
+    predicate: (
+        value: NoInfer<T>,
+        index: number,
+        target: readonly NoInfer<T>[],
+    ) => boolean,
 ): T[]
 ```
 
