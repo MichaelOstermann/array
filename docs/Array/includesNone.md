@@ -1,10 +1,10 @@
 # includesNone
 
 ```ts
-function Array.includesNone<T, U extends T>(
+function Array.includesNone<T>(
     target: readonly T[],
-    values: Iterable<U>,
-): target is Exclude<T, U>[]
+    values: Iterable<NoInfer<T>>,
+): boolean
 ```
 
 Returns `true` if `array` contains none of the `values`, otherwise returns `false`. Supports iterables for the `values` parameter.

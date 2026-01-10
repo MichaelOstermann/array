@@ -51,14 +51,14 @@ import { cloneArray } from "@monstermann/remmi"
  *
  */
 export const findMapOrElse: {
-    <T, U extends T, V>(predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => value is U, mapper: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => T, orElse: (target: readonly NoInfer<T>[]) => V): (target: T[]) => T[] | V
-    <T, U extends T, V>(predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => value is U, mapper: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => T, orElse: (target: readonly NoInfer<T>[]) => V): (target: readonly T[]) => readonly T[] | V
+    <T, U extends T, V>(predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => value is U, mapper: (value: NoInfer<U>, index: number, target: readonly NoInfer<T>[]) => T, orElse: (target: readonly NoInfer<T>[]) => V): (target: T[]) => T[] | V
+    <T, U extends T, V>(predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => value is U, mapper: (value: NoInfer<U>, index: number, target: readonly NoInfer<T>[]) => T, orElse: (target: readonly NoInfer<T>[]) => V): (target: readonly T[]) => readonly T[] | V
 
     <T, V>(predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean, mapper: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => T, orElse: (target: readonly NoInfer<T>[]) => V): (target: T[]) => T[] | V
     <T, V>(predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean, mapper: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => T, orElse: (target: readonly NoInfer<T>[]) => V): (target: readonly T[]) => readonly T[] | V
 
-    <T, U extends T, V>(target: T[], predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => value is U, mapper: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => T, orElse: (target: readonly NoInfer<T>[]) => V): T[] | V
-    <T, U extends T, V>(target: readonly T[], predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => value is U, mapper: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => T, orElse: (target: readonly NoInfer<T>[]) => V): readonly T[] | V
+    <T, U extends T, V>(target: T[], predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => value is U, mapper: (value: NoInfer<U>, index: number, target: readonly NoInfer<T>[]) => T, orElse: (target: readonly NoInfer<T>[]) => V): T[] | V
+    <T, U extends T, V>(target: readonly T[], predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => value is U, mapper: (value: NoInfer<U>, index: number, target: readonly NoInfer<T>[]) => T, orElse: (target: readonly NoInfer<T>[]) => V): readonly T[] | V
 
     <T, V>(target: T[], predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean, mapper: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => T, orElse: (target: readonly NoInfer<T>[]) => V): T[] | V
     <T, V>(target: readonly T[], predicate: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => boolean, mapper: (value: NoInfer<T>, index: number, target: readonly NoInfer<T>[]) => T, orElse: (target: readonly NoInfer<T>[]) => V): readonly T[] | V

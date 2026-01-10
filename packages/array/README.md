@@ -2372,10 +2372,10 @@ pipe([1, 2, 3, 4], Array.includesAny([5, 6, 2])); // true
 ### includesNone
 
 ```ts
-function Array.includesNone<T, U extends T>(
+function Array.includesNone<T>(
     target: readonly T[],
-    values: Iterable<U>,
-): target is Exclude<T, U>[]
+    values: Iterable<NoInfer<T>>,
+): boolean
 ```
 
 Returns `true` if `array` contains none of the `values`, otherwise returns `false`. Supports iterables for the `values` parameter.
@@ -2839,7 +2839,7 @@ pipe([], Array.isEmpty()); // true
 function Array.isShallowEqual<T, U extends T>(
     target: readonly T[],
     source: readonly U[],
-): target is U[]
+): target is readonly U[]
 ```
 
 Returns `true` if `target` and `source` have the same length and their elements are equal using shallow comparison, otherwise returns `false`.

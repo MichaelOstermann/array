@@ -7,7 +7,7 @@ import { dfdlT } from "@monstermann/dfdl"
  * function Array.isShallowEqual<T, U extends T>(
  *     target: readonly T[],
  *     source: readonly U[],
- * ): target is U[]
+ * ): target is readonly U[]
  * ```
  *
  * Returns `true` if `target` and `source` have the same length and their elements are equal using shallow comparison, otherwise returns `false`.
@@ -28,9 +28,12 @@ import { dfdlT } from "@monstermann/dfdl"
  *
  */
 export const isShallowEqual: {
-    <T, U extends T>(source: readonly U[]): (target: readonly T[]) => target is U[]
-    <T, U extends T>(target: readonly T[], source: readonly U[]): target is U[]
-} = dfdlT(<T, U extends T>(a: readonly T[], b: readonly U[]): a is U[] => {
+    <T, U extends T>(source: readonly U[]): (target: T[]) => target is U[]
+    <T, U extends T>(source: readonly U[]): (target: readonly T[]) => target is readonly U[]
+
+    <T, U extends T>(target: T[], source: readonly U[]): target is U[]
+    <T, U extends T>(target: readonly T[], source: readonly U[]): target is readonly U[]
+} = dfdlT((<T, U extends T>(a: T[], b: U[]): a is U[] => {
     if (a === b || Object.is(a, b)) return true
     const len = a.length
     if (len !== b.length) return false
@@ -38,4 +41,4 @@ export const isShallowEqual: {
         if (a[i] !== b[i] || !Object.is(a[i], b[i])) return false
     }
     return true
-}, 2)
+}) as any, 2)

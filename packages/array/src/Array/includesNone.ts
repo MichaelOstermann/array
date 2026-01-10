@@ -4,10 +4,10 @@ import { dfdlT } from "@monstermann/dfdl"
  * # includesNone
  *
  * ```ts
- * function Array.includesNone<T, U extends T>(
+ * function Array.includesNone<T>(
  *     target: readonly T[],
- *     values: Iterable<U>,
- * ): target is Exclude<T, U>[]
+ *     values: Iterable<NoInfer<T>>,
+ * ): boolean
  * ```
  *
  * Returns `true` if `array` contains none of the `values`, otherwise returns `false`. Supports iterables for the `values` parameter.
@@ -28,9 +28,9 @@ import { dfdlT } from "@monstermann/dfdl"
  *
  */
 export const includesNone: {
-    <T, U extends T>(values: Iterable<U>): (target: readonly T[]) => target is Exclude<T, U>[]
-    <T, U extends T>(target: readonly T[], values: Iterable<U>): target is Exclude<T, U>[]
-} = dfdlT(<T, U extends T>(target: readonly T[], values: Iterable<U>): target is Exclude<T, U>[] => {
+    <T>(values: Iterable<NoInfer<T>>): (target: readonly T[]) => boolean
+    <T>(target: readonly T[], values: Iterable<NoInfer<T>>): boolean
+} = dfdlT(<T>(target: readonly T[], values: Iterable<NoInfer<T>>): boolean => {
     for (const value of values) {
         if (target.includes(value)) return false
     }
