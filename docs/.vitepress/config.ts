@@ -175,6 +175,7 @@ export default defineConfig({
                     { link: "slice", text: "slice" },
                     { link: "some", text: "some" },
                     { link: "sort", text: "sort" },
+                    { link: "splice", text: "splice" },
                     { link: "sum", text: "sum" },
                     { link: "take", text: "take" },
                     { link: "takeLast", text: "takeLast" },

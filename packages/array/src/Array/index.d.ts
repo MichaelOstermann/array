@@ -151,6 +151,7 @@ import { shuffle } from "./shuffle.js";
 import { slice } from "./slice.js";
 import { some } from "./some.js";
 import { sort } from "./sort.js";
+import { splice } from "./splice.js";
 import { sum } from "./sum.js";
 import { take } from "./take.js";
 import { takeLast } from "./takeLast.js";
@@ -306,6 +307,7 @@ declare namespace Array {
         slice,
         some,
         sort,
+        splice,
         sum,
         take,
         takeLast,
